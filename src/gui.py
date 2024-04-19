@@ -5,7 +5,7 @@ import firebase_admin
 from firebase_admin import credentials
 import requests
 
-cred = credentials.Certificate(r"solace-21bce-firebase-adminsdk-hffpr-a829169bc9.json")
+cred = credentials.Certificate(r"Solace_key.json")
 firebase_admin.initialize_app(cred)
 
 WIDTH, HEIGHT = 480, 854
