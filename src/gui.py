@@ -33,6 +33,10 @@ class GUI:
         self.logo_full = ImageTk.PhotoImage(self.logo_full_img)
 
         self.password_visible = False
+        self.remember_var = tk.IntVar()
+        self.remember_email = None
+        self.remember_password = None
+        self.remember_token = None
 
         self.create_frames()
 
@@ -175,6 +179,19 @@ class GUI:
                                 rely=0.6,
                                 anchor='center')
         
+        self.remember_checkbox = CTkCheckBox(master=self.start_frame,
+                                             text='Remember Me',
+                                             variable=self.remember_var,
+                                             fg_color=BACKGROUND_LIGHT,
+                                             text_color=BACKGROUND_LIGHT,
+                                             hover=False,
+                                             corner_radius=25,
+                                             border_width=2,
+                                             border_color=BACKGROUND_LIGHT,
+                                             width=3,
+                                             height=3)
+        self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center')
+        
     
     def toggle_show_password(self):
         if self.password_visible:
@@ -215,8 +232,17 @@ class GUI:
         if response.ok:
             self.token = response_data.get('idToken')
             self.switch_frame(self.profile_menu)
+            self.remember_login()
         else:
             print("Login failed:", response_data)
+
+    
+    def remember_login(self) -> None:
+        if self.remember_var.get() == 1:
+            self.remember_email = self.email_entry.get()
+            self.remember_password = self.password_entry.get()
+            self.remember_token = self.token
+            print("Remembering login")
 
 
     def registration_handler(self, email, password) -> None:
