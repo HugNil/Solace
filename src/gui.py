@@ -9,8 +9,8 @@ cred = credentials.Certificate(r"Solace_key.json")
 firebase_admin.initialize_app(cred)
 
 WIDTH, HEIGHT = 480, 854
-BACKGROUND_MAIN = '#014F86'
-BACKGROUND_SECONDARY = '#89C2D9'
+BACKGROUND_DARK = '#014F86'
+BACKGROUND_LIGHT = '#89C2D9'
 BUTTON_COLOR = '#A9D6E5'
 APP_NAME = 'Solace'
 
@@ -21,7 +21,7 @@ class GUI:
         self.app.geometry(f'{WIDTH}x{HEIGHT}')
         self.app.minsize(WIDTH, HEIGHT)
         self.app.maxsize(WIDTH, HEIGHT)
-        self.app.configure(bg=BACKGROUND_MAIN)
+        self.app.configure(bg=BACKGROUND_DARK)
         set_appearance_mode('dark')
 
         self.logo_icon_img = Image.open('assests/Solace logo1 trans.png')
@@ -32,6 +32,7 @@ class GUI:
         self.logo_full_img.thumbnail((450, 300))
         self.logo_full = ImageTk.PhotoImage(self.logo_full_img)
 
+        self.password_visible = False
 
         self.create_frames()
 
@@ -40,12 +41,12 @@ class GUI:
 
     def create_frames(self) -> None:
         self.start_frame = CTkFrame(master=self.app,
-                                    fg_color=BACKGROUND_MAIN)
+                                    fg_color=BACKGROUND_DARK)
         self.start_frame.configure(width=WIDTH,
                                    height=HEIGHT)
 
         self.profile_frame = CTkFrame(master=self.app,
-                                      fg_color=BACKGROUND_MAIN)
+                                      fg_color=BACKGROUND_DARK)
         self.profile_frame.configure(width=WIDTH,
                                      height=HEIGHT)
 
@@ -74,27 +75,37 @@ class GUI:
                                     expand=True)
         
         # Logo
-        self.logo_full_img_label = CTkLabel(master=self.start_frame, image=self.logo_full, text='')
-        self.logo_full_img_label.place(relx=0.5, rely=0.2, anchor='center')
+        self.logo_full_img_label = CTkLabel(master=self.start_frame,
+                                            image=self.logo_full,
+                                            text='')
+        self.logo_full_img_label.place(relx=0.5,
+                                       rely=0.2,
+                                       anchor='center')
 
-        self.logo_icon_label = CTkLabel(master=self.start_frame, image=self.logo_icon, text='')
-        self.logo_icon_label.bind('<Button-1>', lambda e: self.switch_frame(self.first_menu))
-        self.logo_icon_label.place(relx=0.075, rely=0.05, anchor='center')
+        self.logo_icon_label = CTkLabel(master=self.start_frame,
+                                        image=self.logo_icon, text='')
+        self.logo_icon_label.bind('<Button-1>',
+                                  lambda e: self.switch_frame(self.first_menu))
+        self.logo_icon_label.place(relx=0.075,
+                                   rely=0.05,
+                                   anchor='center')
 
         # Creates alla the elements for the first frame
         self.email_label = CTkLabel(master=self.start_frame,
                                     text='Email',
                                     font=('Arial', 12, 'bold'),
-                                    text_color='black')
+                                    text_color=BACKGROUND_LIGHT)
         
         self.email_label.place(relx=0.5,
                                rely=0.37,
                                anchor='center')
         self.email_entry = CTkEntry(master=self.start_frame,
-                                    width=150, height=2,
+                                    width=180,
+                                    height=2,
                                     fg_color=BUTTON_COLOR,
                                     text_color='black',
-                                    border_color='black')
+                                    border_color=BACKGROUND_LIGHT,
+                                    border_width=2)
         self.email_entry.place(relx=0.5,
                                rely=0.4,
                                anchor='center')
@@ -104,45 +115,69 @@ class GUI:
                                       corner_radius=32,
                                       fg_color=BUTTON_COLOR,
                                       text_color='black',
-                                      border_color='black',
+                                      border_color=BACKGROUND_LIGHT,
                                       border_width=2,
                                       hover_color='white',
                                       command=lambda:
                                       self.login_handler(self.email_entry.get(), self.password_entry.get()))
         self.login_button.place(relx=0.32,
-                                rely=0.55,
+                                rely=0.6,
                                 anchor='center')
         
         self.password_label = CTkLabel(master=self.start_frame,
                                        text='Password',
                                        font=('Arial', 12, 'bold'),
-                                       text_color='black')
+                                       text_color=BACKGROUND_LIGHT)
         self.password_label.place(relx=0.5,
                                   rely=0.45,
                                   anchor='center')
         self.password_entry = CTkEntry(master=self.start_frame,
-                                       width=150,
+                                       width=180,
                                        height=2,
                                        fg_color=BUTTON_COLOR,
                                        text_color='black',
-                                       border_color='black')
+                                       border_color=BACKGROUND_LIGHT,
+                                       border_width=2,
+                                       show='*')
         self.password_entry.place(relx=0.5,
                                   rely=0.48,
                                   anchor='center')
+        
+        self.show_image = ImageTk.PhotoImage(Image.open('assests/noun-vision-4299574.png').resize((20, 20)))
+        self.hide_image = ImageTk.PhotoImage(Image.open('assests/noun-blind-4299556.png').resize((20, 20)))
+
+        self.show_password_button = CTkLabel(master=self.start_frame,
+                                         image=self.hide_image,
+                                         text='')
+        self.show_password_button.bind('<Button-1>', lambda e: self.toggle_show_password())
+        self.show_password_button.place(relx=0.7,
+                                   rely=0.465,)
+        
         
         self.register_button = CTkButton(master=self.start_frame,
                                       text='Register',
                                       corner_radius=32,
                                       fg_color=BUTTON_COLOR,
                                       text_color='black',
-                                      border_color='black',
+                                      border_color=BACKGROUND_LIGHT,
                                       border_width=2,
                                       hover_color='white',
                                       command=lambda:
                                       self.registration_handler(self.email_entry.get(), self.password_entry.get()))
         self.register_button.place(relx=0.68,
-                                rely=0.55,
+                                rely=0.6,
                                 anchor='center')
+        
+    
+    def toggle_show_password(self):
+        if self.password_visible:
+            self.password_entry.configure(show='*')
+            self.show_password_button.configure(image=self.hide_image)
+            self.password_visible = False
+        else:
+            self.password_entry.configure(show='')
+            self.show_password_button.configure(image=self.show_image)
+            self.password_visible = True
         
 
     def profile_menu(self):
