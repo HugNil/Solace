@@ -11,6 +11,7 @@ firebase_admin.initialize_app(cred)
 WIDTH, HEIGHT = 480, 854
 BACKGROUND_MAIN = '#014F86'
 BACKGROUND_SECONDARY = '#89C2D9'
+BUTTON_COLOR = '#A9D6E5'
 APP_NAME = 'Solace'
 
 class GUI:
@@ -22,6 +23,15 @@ class GUI:
         self.app.maxsize(WIDTH, HEIGHT)
         self.app.configure(bg=BACKGROUND_MAIN)
         set_appearance_mode('dark')
+
+        self.logo_icon_img = Image.open('assests/Solace logo1 trans.png')
+        self.logo_icon_img.thumbnail((300, 300))
+        self.logo_icon = ImageTk.PhotoImage(self.logo_icon_img)
+
+        self.logo_full_img = Image.open('assests/Solace logo2 trans.png')
+        self.logo_full_img.thumbnail((450, 300))
+        self.logo_full = ImageTk.PhotoImage(self.logo_full_img)
+
 
         self.create_frames()
 
@@ -63,57 +73,88 @@ class GUI:
         self.start_frame.pack(fill=tk.BOTH,
                                     expand=True)
         
+        # Logo
+        self.logo_full_img_label = CTkLabel(master=self.start_frame, image=self.logo_full, text='')
+        self.logo_full_img_label.place(relx=0.5, rely=0.2, anchor='center')
+
+        self.logo_icon_label = CTkLabel(master=self.start_frame, image=self.logo_icon, text='')
+        self.logo_icon_label.bind('<Button-1>', lambda e: self.switch_frame(self.first_menu))
+        self.logo_icon_label.place(relx=0.075, rely=0.05, anchor='center')
+
         # Creates alla the elements for the first frame
         self.email_label = CTkLabel(master=self.start_frame,
                                     text='Email',
-                                    font=('Arial', 10, 'bold'),
+                                    font=('Arial', 12, 'bold'),
                                     text_color='black')
+        
         self.email_label.place(relx=0.5,
-                               rely=0.5,
+                               rely=0.37,
                                anchor='center')
         self.email_entry = CTkEntry(master=self.start_frame,
                                     width=150, height=2,
-                                    fg_color='transparent',
+                                    fg_color=BUTTON_COLOR,
                                     text_color='black',
                                     border_color='black')
         self.email_entry.place(relx=0.5,
-                               rely=0.55,
+                               rely=0.4,
                                anchor='center')
         
         self.login_button = CTkButton(master=self.start_frame,
                                       text='Login',
                                       corner_radius=32,
-                                      fg_color='transparent',
+                                      fg_color=BUTTON_COLOR,
                                       text_color='black',
                                       border_color='black',
                                       border_width=2,
                                       hover_color='white',
                                       command=lambda:
                                       self.login_handler(self.email_entry.get(), self.password_entry.get()))
-        self.login_button.place(relx=0.5,
-                                rely=0.75,
+        self.login_button.place(relx=0.32,
+                                rely=0.55,
                                 anchor='center')
         
         self.password_label = CTkLabel(master=self.start_frame,
                                        text='Password',
-                                       font=('Arial', 10, 'bold'),
+                                       font=('Arial', 12, 'bold'),
                                        text_color='black')
         self.password_label.place(relx=0.5,
-                                  rely=0.6,
+                                  rely=0.45,
                                   anchor='center')
         self.password_entry = CTkEntry(master=self.start_frame,
                                        width=150,
                                        height=2,
-                                       fg_color='transparent',
+                                       fg_color=BUTTON_COLOR,
                                        text_color='black',
                                        border_color='black')
         self.password_entry.place(relx=0.5,
-                                  rely=0.65,
+                                  rely=0.48,
                                   anchor='center')
+        
+        self.register_button = CTkButton(master=self.start_frame,
+                                      text='Register',
+                                      corner_radius=32,
+                                      fg_color=BUTTON_COLOR,
+                                      text_color='black',
+                                      border_color='black',
+                                      border_width=2,
+                                      hover_color='white',
+                                      command=lambda:
+                                      self.registration_handler(self.email_entry.get(), self.password_entry.get()))
+        self.register_button.place(relx=0.68,
+                                rely=0.55,
+                                anchor='center')
         
 
     def profile_menu(self):
-        pass
+        self.profile_frame.pack(fill=tk.BOTH,
+                                    expand=True)
+        
+        self.logo_icon_label = CTkLabel(master=self.profile_frame,
+                                         image=self.logo_icon, text='')
+        self.logo_icon_label.bind('<Button-1>', lambda e: self.switch_frame(self.first_menu))
+        self.logo_icon_label.place(relx=0.075,
+                                   rely=0.05,
+                                   anchor='center')
         
 
     def login_handler(self, email, password) -> None:
