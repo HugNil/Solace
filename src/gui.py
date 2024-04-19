@@ -27,7 +27,7 @@ class GUI:
 
         self.switch_frame(self.first_menu)
 
-    
+
     def create_frames(self) -> None:
         self.start_frame = CTkFrame(master=self.app,
                                     fg_color=BACKGROUND_MAIN)
