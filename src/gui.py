@@ -24,8 +24,8 @@ class GUI:
         self.app.configure(bg=BACKGROUND_DARK)
         set_appearance_mode('dark')
 
-        self.logo_icon_img = Image.open('assests/Solace logo1 trans.png')
-        self.logo_icon_img.thumbnail((300, 300))
+        self.logo_icon_img = Image.open('assests/Solace logo1_klippt.png')
+        self.logo_icon_img.thumbnail((65, 65))
         self.logo_icon = ImageTk.PhotoImage(self.logo_icon_img)
 
         self.logo_full_img = Image.open('assests/Solace logo2 trans.png')
@@ -40,13 +40,18 @@ class GUI:
 
 
     def create_frames(self) -> None:
+        # Generates the frames
         self.start_frame = CTkFrame(master=self.app,
-                                    fg_color=BACKGROUND_DARK)
+                                    fg_color=BACKGROUND_DARK,
+                                    border_color=BACKGROUND_LIGHT,
+                                    border_width=2)
         self.start_frame.configure(width=WIDTH,
                                    height=HEIGHT)
 
         self.profile_frame = CTkFrame(master=self.app,
-                                      fg_color=BACKGROUND_DARK)
+                                      fg_color=BACKGROUND_DARK,
+                                      border_color=BACKGROUND_LIGHT,
+                                      border_width=2)
         self.profile_frame.configure(width=WIDTH,
                                      height=HEIGHT)
 
@@ -57,6 +62,7 @@ class GUI:
 
     
     def switch_frame(self, frame):
+        # Clear old frames and open the new one
         self.clear_frames()
         frame()
 
@@ -74,7 +80,7 @@ class GUI:
         self.start_frame.pack(fill=tk.BOTH,
                                     expand=True)
         
-        # Logo
+        # Full logo
         self.logo_full_img_label = CTkLabel(master=self.start_frame,
                                             image=self.logo_full,
                                             text='')
@@ -82,6 +88,7 @@ class GUI:
                                        rely=0.2,
                                        anchor='center')
 
+        # Icon logo as home button
         self.logo_icon_label = CTkLabel(master=self.start_frame,
                                         image=self.logo_icon, text='')
         self.logo_icon_label.bind('<Button-1>',
