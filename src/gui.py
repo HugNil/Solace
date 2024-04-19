@@ -143,8 +143,8 @@ class GUI:
                                   rely=0.48,
                                   anchor='center')
         
-        self.show_image = ImageTk.PhotoImage(Image.open('assests/noun-vision-4299574.png').resize((20, 20)))
-        self.hide_image = ImageTk.PhotoImage(Image.open('assests/noun-blind-4299556.png').resize((20, 20)))
+        self.show_image = ImageTk.PhotoImage(Image.open('assests/show.png').resize((20, 20)))
+        self.hide_image = ImageTk.PhotoImage(Image.open('assests/hide.png').resize((20, 20)))
 
         self.show_password_button = CTkLabel(master=self.start_frame,
                                          image=self.hide_image,
