@@ -14,7 +14,7 @@ class FirebaseConnection:
     
     def register_user(self, email, password):
         try:
-            self.new_user = auth.create_user(email=email, password=password)
+            self.new_user = self.auth.create_user(email=email, password=password)
             print(f"Successfully created user: {self.new_user.uid}")
             return True
 
