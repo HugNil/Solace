@@ -306,7 +306,8 @@ class GUI:
         
 
     def login_handler(self, email, password) -> None:
-        if self.firebase.login_user(email, password):
+        self.token = self.firebase.login_user(email, password)
+        if self.token != None:
             self.remember_login()
             self.switch_frame(self.profile_menu)
 

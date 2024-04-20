@@ -40,7 +40,7 @@ class FirebaseConnection:
 
         if response.ok:
             self.token = response_data.get('idToken')
-            return True
+            return self.token
         else:
             print("Login failed:", response_data)
-            return False
+            return None
