@@ -1,4 +1,5 @@
 from customtkinter import *
+from tkinter import *
 import tkinter as tk
 from PIL import Image, ImageTk
 import firebase_admin
@@ -39,6 +40,7 @@ class GUI:
 
 
         self.password_visible = False
+        self.option_visible = False
         self.remember_var = tk.IntVar()
         self.remember_email = None
         self.remember_password = None
@@ -65,6 +67,13 @@ class GUI:
                                       border_width=2)
         self.profile_frame.configure(width=WIDTH,
                                      height=HEIGHT)
+        
+        self.option_frame = CTkFrame(master=self.start_frame,
+                                     fg_color=BACKGROUND_DARK,
+                                     border_color=BACKGROUND_LIGHT,
+                                     border_width=2,
+                                     width=120,
+                                     height=150)
 
         self.frames = [
             self.start_frame,
@@ -98,7 +107,6 @@ class GUI:
         self.logo_full_img_label.place(relx=0.5,
                                        rely=0.2,
                                        anchor='center')
-        
 
         # Icon logo as home button
         self.logo_icon_label = CTkLabel(master=self.start_frame,
@@ -106,7 +114,7 @@ class GUI:
         
         #Icon logo as mini-menu 
         self.logo_icon_label.bind("<Button-1>",
-                                  command= lambda e: self.input())
+                                  command= lambda e: self.option_toggle())
 
         #self.logo_icon_label.bind('<Button-1>',
                                   #lambda e: self.switch_frame(self.first_menu))
@@ -205,8 +213,15 @@ class GUI:
         self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center'),
     
     
-    def input(self):
-        self.dialog = CTkInputDialog(title="Menu") 
+    def option_toggle(self):
+        if self.option_visible:
+            self.option_frame.lower()
+            self.option_frame.place_forget()
+            self.option_visible = False
+        else:
+            self.option_frame.lift()
+            self.option_frame.place(relx=0.075, rely=0.16, anchor='center')
+            self.option_visible = True
         
     
     def toggle_show_password(self):
