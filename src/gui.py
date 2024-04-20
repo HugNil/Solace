@@ -2,12 +2,8 @@ from customtkinter import *
 from tkinter import *
 import tkinter as tk
 from PIL import Image, ImageTk
-import firebase_admin
-from firebase_admin import credentials, firestore, auth
-import requests
+from firebase_connection import FirebaseConnection
 
-cred = credentials.Certificate(r"Solace_key.json")
-firebase_admin.initialize_app(cred)
 
 WIDTH, HEIGHT = 480, 854
 BACKGROUND_DARK = '#014F86'
@@ -27,6 +23,8 @@ class GUI:
         self.app.maxsize(WIDTH, HEIGHT)
         self.app.configure(bg=BACKGROUND_DARK)
         set_appearance_mode('dark')
+
+        self.firebase = FirebaseConnection()
 
         self.logo_icon_img = Image.open('assests/menu logo.png')
         self.logo_icon_img.thumbnail((30, 30))
@@ -241,7 +239,7 @@ class GUI:
                                       border_color=BACKGROUND_LIGHT,
                                       border_width=2,
                                       hover_color='white',
-                                      command=lambda: self.register_handler())
+                                      command=lambda: self.register_handler(self.email_entry.get(), self.password_entry.get()))
         self.register_button.place(relx=0.68,
                                 rely=0.6,
                                 anchor='center')
@@ -308,24 +306,9 @@ class GUI:
         
 
     def login_handler(self, email, password) -> None:
-        input_data = {
-        'email': email,
-        'password': password,
-        'returnSecureToken': True
-        }
-
-        # Replace [YOUR_API_KEY] with your actual Firebase API key
-        url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCl5W4V73WVV6OdMAYWYvPmKGbKFLIJ6Oc"
-
-        response = requests.post(url, json=input_data)
-        response_data = response.json()
-
-        if response.ok:
-            self.token = response_data.get('idToken')
-            self.switch_frame(self.profile_menu)
+        if self.firebase.login_user(email, password):
             self.remember_login()
-        else:
-            print("Login failed:", response_data)
+            self.switch_frame(self.profile_menu)
 
     
     def remember_login(self) -> None:
@@ -336,18 +319,9 @@ class GUI:
             print("Remembering login")
 
 
-    def register_handler(self):
-        try:
-            self.new_user = auth.create_user(email=self.email_entry.get(), password=self.password_entry.get())
-            print(f"Successfully created user: {self.new_user.uid}")
+    def register_handler(self, email, password):
+        if self.firebase.register_user(email, password):
             self.switch_frame(self.profile_menu)
-
-        except firebase_admin.auth.EmailAlreadyExistsError:
-            print("Error: The user with the provided email already exists.")
-            
-        except Exception as e:
-            print("Error creating user:", e)
-
         
         
 
