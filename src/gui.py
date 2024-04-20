@@ -88,7 +88,9 @@ class GUI:
 
         self.frames = [
             self.start_frame,
-            self.profile_frame
+            self.profile_frame,
+            self.option_frame,
+            self.option_frame1
         ]
 
     
