@@ -13,6 +13,9 @@ BACKGROUND_DARK = '#014F86'
 BACKGROUND_LIGHT = '#89C2D9'
 BUTTON_COLOR = '#A9D6E5'
 APP_NAME = 'Solace'
+GRADIENT = "NightTrain.json"
+
+
 
 class GUI:
     def __init__(self, app) -> None:
@@ -24,19 +27,23 @@ class GUI:
         self.app.configure(bg=BACKGROUND_DARK)
         set_appearance_mode('dark')
 
-        self.logo_icon_img = Image.open('assests/Solace logo1_klippt.png')
-        self.logo_icon_img.thumbnail((65, 65))
+        self.logo_icon_img = Image.open('assests/menu logo.png')
+        self.logo_icon_img.thumbnail((30, 30))
         self.logo_icon = ImageTk.PhotoImage(self.logo_icon_img)
 
         self.logo_full_img = Image.open('assests/Solace logo2 trans.png')
         self.logo_full_img.thumbnail((450, 300))
         self.logo_full = ImageTk.PhotoImage(self.logo_full_img)
 
+        
+
+
         self.password_visible = False
         self.remember_var = tk.IntVar()
         self.remember_email = None
         self.remember_password = None
         self.remember_token = None
+
 
         self.create_frames()
 
@@ -91,12 +98,18 @@ class GUI:
         self.logo_full_img_label.place(relx=0.5,
                                        rely=0.2,
                                        anchor='center')
+        
 
         # Icon logo as home button
         self.logo_icon_label = CTkLabel(master=self.start_frame,
                                         image=self.logo_icon, text='')
-        self.logo_icon_label.bind('<Button-1>',
-                                  lambda e: self.switch_frame(self.first_menu))
+        
+        #Icon logo as mini-menu 
+        self.logo_icon_label.bind("<Button-1>",
+                                  command= lambda e: self.input())
+
+        #self.logo_icon_label.bind('<Button-1>',
+                                  #lambda e: self.switch_frame(self.first_menu))
         self.logo_icon_label.place(relx=0.075,
                                    rely=0.05,
                                    anchor='center')
@@ -190,7 +203,11 @@ class GUI:
                                              border_color=BACKGROUND_LIGHT,
                                              width=3,
                                              height=3)
-        self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center')
+        self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center'),
+    
+    
+    def input(self):
+        self.dialog = CTkInputDialog(title="Menu") 
         
     
     def toggle_show_password(self):
