@@ -2,7 +2,7 @@ from customtkinter import *
 import tkinter as tk
 from PIL import Image, ImageTk
 import firebase_admin
-from firebase_admin import credentials
+from firebase_admin import credentials, firestore, auth
 import requests
 
 cred = credentials.Certificate(r"Solace_key.json")
@@ -186,8 +186,7 @@ class GUI:
                                       border_color=BACKGROUND_LIGHT,
                                       border_width=2,
                                       hover_color='white',
-                                      command=lambda:
-                                      self.registration_handler(self.email_entry.get(), self.password_entry.get()))
+                                      command=lambda: self.register_handler())
         self.register_button.place(relx=0.68,
                                 rely=0.6,
                                 anchor='center')
@@ -227,7 +226,8 @@ class GUI:
         
         self.logo_icon_label = CTkLabel(master=self.profile_frame,
                                          image=self.logo_icon, text='')
-        self.logo_icon_label.bind('<Button-1>', lambda e: self.switch_frame(self.first_menu))
+        self.logo_icon_label.bind('<Button-1>',
+                                  lambda e: self.switch_frame(self.first_menu))
         self.logo_icon_label.place(relx=0.075,
                                    rely=0.05,
                                    anchor='center')
@@ -262,8 +262,17 @@ class GUI:
             print("Remembering login")
 
 
-    def registration_handler(self, email, password) -> None:
-        pass
+    def register_handler(self):
+        try:
+            self.new_user = auth.create_user(email=self.email_entry.get(), password=self.password_entry.get())
+            print(f"Successfully created user: {self.new_user.uid}")
+            self.switch_frame(self.profile_menu)
+
+        except firebase_admin.auth.EmailAlreadyExistsError:
+            print("Error: The user with the provided email already exists.")
+            
+        except Exception as e:
+            print("Error creating user:", e)
 
         
         
