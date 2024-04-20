@@ -78,6 +78,13 @@ class GUI:
                                      border_width=2,
                                      width=120,
                                      height=150)
+        
+        self.option_frame1 = CTkFrame(master=self.profile_frame,
+                                     fg_color=BACKGROUND_DARK,
+                                     border_color=BACKGROUND_LIGHT,
+                                     border_width=2,
+                                     width=120,
+                                     height=150)
 
         self.frames = [
             self.start_frame,
@@ -120,18 +127,18 @@ class GUI:
                                        anchor='center')
 
         # Icon logo as home button
-        self.logo_icon_label = CTkLabel(master=self.start_frame,
+        self.logo_icon_label1 = CTkLabel(master=self.start_frame,
                                         image=self.logo_icon, text='')
         
         #Icon logo as mini-menu 
-        self.logo_icon_label.bind("<Button-1>",
-                                  command= lambda e: self.option_toggle())
+        self.logo_icon_label1.bind("<Button-1>",
+                                  command= lambda e: self.option_toggle('home'))
 
-        #self.logo_icon_label.bind('<Button-1>',
-                                  #lambda e: self.switch_frame(self.first_menu))
-        self.logo_icon_label.place(relx=0.075,
+        
+        self.logo_icon_label1.place(relx=0.075,
                                    rely=0.05,
                                    anchor='center')
+        
 
         # Creates alla the elements for the first frame
         self.email_label = CTkLabel(master=self.start_frame,
@@ -224,15 +231,25 @@ class GUI:
         self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center'),
     
     
-    def option_toggle(self):
-        if self.option_visible:
-            self.option_frame.lower()
-            self.option_frame.place_forget()
-            self.option_visible = False
-        else:
-            self.option_frame.lift()
-            self.option_frame.place(relx=0.075, rely=0.16, anchor='center')
-            self.option_visible = True
+    def option_toggle(self, menu_choice):
+        if menu_choice == 'home':
+            if self.option_visible:
+                self.option_frame.lower()
+                self.option_frame.place_forget()
+                self.option_visible = False
+            else:
+                self.option_frame.lift()
+                self.option_frame.place(relx=0.075, rely=0.16, anchor='center')
+                self.option_visible = True
+        elif menu_choice == 'profile':
+            if self.option_visible:
+                self.option_frame1.lower()
+                self.option_frame1.place_forget()
+                self.option_visible = False
+            else:
+                self.option_frame1.lift()
+                self.option_frame1.place(relx=0.075, rely=0.16, anchor='center')
+                self.option_visible = True
         
     
     def toggle_show_password(self):
@@ -253,7 +270,7 @@ class GUI:
         self.logo_icon_label = CTkLabel(master=self.profile_frame,
                                          image=self.logo_icon, text='')
         self.logo_icon_label.bind('<Button-1>',
-                                  lambda e: self.switch_frame(self.first_menu))
+                                  lambda e: self.option_toggle('profile'))
         self.logo_icon_label.place(relx=0.075,
                                    rely=0.05,
                                    anchor='center')
