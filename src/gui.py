@@ -36,6 +36,10 @@ class GUI:
         self.logo_full_img.thumbnail((450, 300))
         self.logo_full = ImageTk.PhotoImage(self.logo_full_img)
 
+        self.foregound_img = Image.open('assests/Solace_background1.png')
+        self.foregound_img.thumbnail((700, 500))
+        self.foreground = ImageTk.PhotoImage(self.foregound_img)
+
         
 
 
@@ -100,12 +104,19 @@ class GUI:
         self.start_frame.pack(fill=tk.BOTH,
                                     expand=True)
         
+        self.foregound_img = CTkLabel(master=self.start_frame,
+                                      image=self.foreground,
+                                      text="")
+        self.foregound_img.place(relx=0.5,
+                                    rely=0.45,
+                                    anchor='center')
+
         # Full logo
         self.logo_full_img_label = CTkLabel(master=self.start_frame,
                                             image=self.logo_full,
                                             text='')
         self.logo_full_img_label.place(relx=0.5,
-                                       rely=0.2,
+                                       rely=0.175,
                                        anchor='center')
 
         # Icon logo as home button
