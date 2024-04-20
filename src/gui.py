@@ -40,7 +40,13 @@ class GUI:
         self.foregound_img.thumbnail((700, 500))
         self.foreground = ImageTk.PhotoImage(self.foregound_img)
 
-        
+        self.copyright_img = Image.open('assests/Copyright.png')
+        self.copyright_img.thumbnail((400, 200))
+        self.copyright = ImageTk.PhotoImage(self.copyright_img)
+
+        self.line_img = Image.open('assests/Line.png')
+        self.line_img.thumbnail((540,440))
+        self.line = ImageTk.PhotoImage(self.line_img)
 
 
         self.password_visible = False
@@ -78,6 +84,8 @@ class GUI:
                                      border_width=2,
                                      width=120,
                                      height=150)
+        
+
 
         self.frames = [
             self.start_frame,
@@ -110,6 +118,7 @@ class GUI:
         self.foregound_img.place(relx=0.5,
                                     rely=0.45,
                                     anchor='center')
+        
 
         # Full logo
         self.logo_full_img_label = CTkLabel(master=self.start_frame,
@@ -118,8 +127,25 @@ class GUI:
         self.logo_full_img_label.place(relx=0.5,
                                        rely=0.175,
                                        anchor='center')
+        
+        #Copyright text
+        self.copyright_img = CTkLabel(master=self.start_frame,
+                                      image=self.copyright,
+                                      text="")
 
-        # Icon logo as home button
+        self.copyright_img.place(relx=0.43,
+                                 rely=0.92,
+                                 anchor="center")
+        
+        self.line_img = CTkLabel(master=self.start_frame,
+                                 image=self.line,
+                                 text="")
+        
+        self.line_img.place(relx=0.45,
+                                 rely=0.8,
+                                 anchor="center")
+
+        # Icon logo as option-menu
         self.logo_icon_label = CTkLabel(master=self.start_frame,
                                         image=self.logo_icon, text='')
         
@@ -231,7 +257,7 @@ class GUI:
             self.option_visible = False
         else:
             self.option_frame.lift()
-            self.option_frame.place(relx=0.075, rely=0.16, anchor='center')
+            self.option_frame.place(relx=0.165, rely=0.16, anchor='center')
             self.option_visible = True
         
     
