@@ -8,7 +8,7 @@ import warnings
 
 warnings.filterwarnings("ignore", message="CTkLabel Warning: Given image is not CTkImage*")
 
-WIDTH, HEIGHT = 480, 854
+WIDTH, HEIGHT = 365, 650
 BACKGROUND_DARK = '#014F86'
 BACKGROUND_LIGHT = '#89C2D9'
 BUTTON_COLOR = '#A9D6E5'
@@ -21,7 +21,6 @@ class GUI:
     def __init__(self, app) -> None:
         self.app = app
         self.app.title(APP_NAME)
-        customtkinter.set_window_scaling(0.76) 
         self.app.geometry(f'{WIDTH}x{HEIGHT}')
         self.app.minsize(WIDTH, HEIGHT)
         self.app.maxsize(WIDTH, HEIGHT)
