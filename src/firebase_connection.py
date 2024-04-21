@@ -1,6 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
 import requests
+import datetime
 
 cred = credentials.Certificate(r"Solace_key.json")
 firebase_admin.initialize_app(cred)
@@ -44,3 +45,31 @@ class FirebaseConnection:
         else:
             print("Login failed:", response_data)
             return None
+        
+    
+    def write_to_db(self, email, place, data, date):
+        doc_ref = self.db.collection(u'users').document(email)
+        mood_collection = doc_ref.collection(place) # place represents which collection to add data to, could be for example 'mood-form'
+        mood_collection.document(date).set(data) # The data should be in the form of a dictionary and date makes it easier to sort data by date
+    
+
+    def read_from_db(self, email, place):
+        doc_ref = self.db.collection(u'users').document(email)
+        mood_collection = doc_ref.collection(place)
+        docs = mood_collection.stream()
+
+        for doc in docs:
+            # This will print the document ID and the data in the form of a dictionary
+            # This could be changed to return specific data or all data instead of printing it
+            print(f'{doc.id} => {doc.to_dict()}')
+
+
+    def test_write_read_to_db():
+        data = {'mood': 4,
+            'stress': 2}
+        fbc = FirebaseConnection()
+        email = '02hugo.nilsson@gmail.com'
+        place = u'mood-form'
+        date = datetime.datetime.now().isoformat()
+        fbc.write_to_db(email, place, data, date)
+        fbc.read_from_db(email, place)
