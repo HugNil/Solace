@@ -1,4 +1,5 @@
 from customtkinter import *
+import customtkinter
 from tkinter import *
 import tkinter as tk
 from PIL import Image, ImageTk
@@ -20,6 +21,10 @@ class GUI:
     def __init__(self, app) -> None:
         self.app = app
         self.app.title(APP_NAME)
+        height = self.app.winfo_screenheight()
+        if height < HEIGHT:
+            scale = (height - 70) / HEIGHT
+            customtkinter.set_window_scaling(scale) 
         self.app.geometry(f'{WIDTH}x{HEIGHT}')
         self.app.minsize(WIDTH, HEIGHT)
         self.app.maxsize(WIDTH, HEIGHT)
