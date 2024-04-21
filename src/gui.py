@@ -3,7 +3,9 @@ from tkinter import *
 import tkinter as tk
 from PIL import Image, ImageTk
 from firebase_connection import FirebaseConnection
+import warnings
 
+warnings.filterwarnings("ignore", message="CTkLabel Warning: Given image is not CTkImage*")
 
 WIDTH, HEIGHT = 480, 854
 BACKGROUND_DARK = '#014F86'
