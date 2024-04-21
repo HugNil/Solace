@@ -21,10 +21,7 @@ class GUI:
     def __init__(self, app) -> None:
         self.app = app
         self.app.title(APP_NAME)
-        height = self.app.winfo_screenheight()
-        if height < HEIGHT:
-            scale = (height - 70) / HEIGHT
-            customtkinter.set_window_scaling(scale) 
+        customtkinter.set_window_scaling(0.76) 
         self.app.geometry(f'{WIDTH}x{HEIGHT}')
         self.app.minsize(WIDTH, HEIGHT)
         self.app.maxsize(WIDTH, HEIGHT)
