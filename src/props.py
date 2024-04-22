@@ -1,6 +1,7 @@
-
+"""This module contains the Props class which is responsible for the properties of the application."""
 
 class Props:
+    """Props class which is responsible for the properties of the application."""
     def __init__(self, app):
         screen_width = app.winfo_screenwidth()
         screen_height = app.winfo_screenheight()
