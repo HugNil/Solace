@@ -1,4 +1,7 @@
-"""This module contains the GUI class which is responsible for the graphical user interface of the application. """
+"""
+This module contains the GUI class which is responsible for the
+graphical user interface of the application.
+"""
 
 import customtkinter as ctk
 from firebase_connection import FirebaseConnection
@@ -10,7 +13,9 @@ import pygame
 from customtkinter import set_appearance_mode
 
 
-warnings.filterwarnings("ignore", message="CTkLabel Warning: Given image is not CTkImage*")
+warnings.filterwarnings("ignore",
+                        message="CTkLabel Warning:"
+                        "Given image is not CTkImage*")
 
 
 class GUI:
