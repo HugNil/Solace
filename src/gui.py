@@ -17,7 +17,6 @@ APP_NAME = 'Solace'
 GRADIENT = "NightTrain.json"
 
 
-
 class GUI:
     def __init__(self, app) -> None:
         self.app = app
