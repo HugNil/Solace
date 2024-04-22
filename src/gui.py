@@ -62,7 +62,7 @@ class GUI:
 
     def play(self):
         pygame.mixer.music.load("assests/Menu music1.mp3")
-        pygame.mixer.music.play(loops=0)
+        pygame.mixer.music.play(loops=1)
 
         pygame.mixer.music.set_volume(0.009)
 

@@ -42,24 +42,30 @@ class HomePage:
         self.remember_token = None
 
         self.logo_icon_img = Image.open('assests/menu logo.png')
-        self.logo_icon_img.thumbnail((30, 30))
+        self.logo_icon_img.thumbnail((int(self.props.WIDTH * 0.08), int(self.props.HEIGHT * 0.08)))
         self.logo_icon = ImageTk.PhotoImage(self.logo_icon_img)
 
         self.logo_full_img = Image.open('assests/Solace logo2 trans.png')
-        self.logo_full_img.thumbnail((450, 300))
+        self.logo_full_img.thumbnail((int(self.props.WIDTH * 0.95), int(self.props.HEIGHT * 0.95)))
         self.logo_full = ImageTk.PhotoImage(self.logo_full_img)
 
         self.foregound_img = Image.open('assests/Solace_background1.png')
-        self.foregound_img.thumbnail((700, 500))
+        self.foregound_img.thumbnail((int(self.props.WIDTH * 0.95), int(self.props.HEIGHT * 0.95)))
         self.foreground = ImageTk.PhotoImage(self.foregound_img)
 
+        self.password_icon_img = Image.open('assests/PasswordIcon.png')
+        self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.95), int(self.props.HEIGHT * 0.95)))
+        self.password_icon = ImageTk.PhotoImage(self.foregound_img)
+
         self.copyright_img = Image.open('assests/Copyright.png')
-        self.copyright_img.thumbnail((400, 200))
+        self.copyright_img.thumbnail((int(self.props.WIDTH * 0.85), int(self.props.HEIGHT * 0.85)))
         self.copyright = ImageTk.PhotoImage(self.copyright_img)
 
         self.line_img = Image.open('assests/Line.png')
-        self.line_img.thumbnail((540, 440))
+        self.line_img.thumbnail((int(self.props.WIDTH * 1.124), int(self.props.HEIGHT * 1.124)))
         self.line = ImageTk.PhotoImage(self.line_img)
+
+    
 
     def clear_frame(self):
         """Clear all the frames in the application."""
