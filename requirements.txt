@@ -3,3 +3,4 @@ tkinter
 pillow
 firebase_admin
 requests
+pygame
