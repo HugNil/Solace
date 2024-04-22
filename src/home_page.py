@@ -90,7 +90,7 @@ class HomePage:
                                        rely=0.175,
                                        anchor='center')
 
-        #Copyright text
+        # Copyright text
         self.copyright_img = ctk.CTkLabel(master=self.start_frame,
                                           image=self.copyright,
                                           text="")
@@ -111,7 +111,7 @@ class HomePage:
                                              image=self.logo_icon, text='')
         # Icon logo as mini-menu 
         self.logo_icon_label1.bind("<Button-1>",
-                                   command=lambda e: self.option_toggle('home'))
+                                   command=lambda e: self.option_toggle())
 
         self.logo_icon_label1.place(relx=0.075,
                                     rely=0.05,
@@ -206,26 +206,16 @@ class HomePage:
                                                  height=3)
         self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center')
 
-    def option_toggle(self, menu_choice):
+    def option_toggle(self):
         """Toggle the option menu on and off."""
-        if menu_choice == 'home':
-            if self.option_visible:
-                self.option_frame.lower()
-                self.option_frame.place_forget()
-                self.option_visible = False
-            else:
-                self.option_frame.lift()
-                self.option_frame.place(relx=0.075, rely=0.16, anchor='center')
-                self.option_visible = True
-        elif menu_choice == 'profile':
-            if self.option_visible:
-                self.option_frame.lower()
-                self.option_frame.place_forget()
-                self.option_visible = False
-            else:
-                self.option_frame.lift()
-                self.option_frame.place(relx=0.075, rely=0.16, anchor='center')
-                self.option_visible = True
+        if self.option_visible:
+            self.option_frame.lower()
+            self.option_frame.place_forget()
+            self.option_visible = False
+        else:
+            self.option_frame.lift()
+            self.option_frame.place(relx=0.075, rely=0.16, anchor='center')
+            self.option_visible = True
 
     def toggle_show_password(self):
         """Toggle the visibility of the password entry."""
