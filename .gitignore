@@ -1,1 +1,3 @@
+# Ignoring the following files
 Solace_key.json
+__pycache__/
