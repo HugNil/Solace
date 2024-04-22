@@ -26,6 +26,7 @@ class GUI:
         self.app.minsize(WIDTH, HEIGHT)
         self.app.maxsize(WIDTH, HEIGHT)
         self.app.configure(bg=BACKGROUND_DARK)
+        self.app.iconbitmap("assests/Solace logo1_klippt.ico")
         set_appearance_mode('dark')
 
         self.firebase = FirebaseConnection()
