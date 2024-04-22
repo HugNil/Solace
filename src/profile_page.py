@@ -34,6 +34,8 @@ class ProfilePage(tk.Frame):
                                          border_width=2,
                                          width=120,
                                          height=150)
+        
+        self.frames = [self.option_frame, self.profile_frame]
 
     def open_images(self):
         self.logo_icon_img = Image.open('assests/menu logo.png')
@@ -61,3 +63,8 @@ class ProfilePage(tk.Frame):
             self.option_frame.lift()
             self.option_frame.place(relx=0.075, rely=0.16, anchor='center')
             self.option_visible = True
+
+    def clear_frame(self):
+        """Clear all the frames in the application."""
+        for frame in self.frames:
+            frame.pack_forget()
