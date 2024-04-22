@@ -12,18 +12,11 @@ from customtkinter import set_appearance_mode
 
 warnings.filterwarnings("ignore", message="CTkLabel Warning: Given image is not CTkImage*")
 
-WIDTH, HEIGHT = 365, 650
-BACKGROUND_DARK = '#014F86'
-BACKGROUND_LIGHT = '#89C2D9'
-BUTTON_COLOR = '#A9D6E5'
-APP_NAME = 'Solace'
-GRADIENT = "NightTrain.json"
-
 
 class GUI:
     def __init__(self, app) -> None:
         self.app = app
-        
+
         self.props = Props(self.app)
         self.app.title(self.props.APP_NAME)
         self.app.geometry(f'{self.props.WIDTH}x{self.props.HEIGHT}')
