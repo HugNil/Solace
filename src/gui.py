@@ -6,6 +6,8 @@ from PIL import Image, ImageTk
 from firebase_connection import FirebaseConnection
 import warnings
 from home_page import HomePage
+from profile_page import ProfilePage
+from props import Props
 
 warnings.filterwarnings("ignore", message="CTkLabel Warning: Given image is not CTkImage*")
 
@@ -20,15 +22,18 @@ GRADIENT = "NightTrain.json"
 class GUI:
     def __init__(self, app) -> None:
         self.app = app
-        self.app.title(APP_NAME)
-        self.app.geometry(f'{WIDTH}x{HEIGHT}')
-        self.app.minsize(WIDTH, HEIGHT)
-        self.app.maxsize(WIDTH, HEIGHT)
-        self.app.configure(bg=BACKGROUND_DARK)
-        set_appearance_mode('dark')
+        self.props = Props(self.app)
+        self.app.title(self.props.APP_NAME)
+        self.app.geometry(f'{self.props.WIDTH}x{self.props.HEIGHT}')
+        self.app.minsize(self.props.WIDTH, self.props.HEIGHT)
+        self.app.maxsize(self.props.WIDTH, self.props.HEIGHT)
+        self.app.configure(bg=self.props.BACKGROUND_DARK)
+        set_appearance_mode(self.props.THEME)
 
         self.firebase = FirebaseConnection()
+
         self.home_page = HomePage(self.app, self.firebase, self.return_to_gui)
+        self.profile_page = ProfilePage(self.app, self.return_to_gui)
 
         self.logo_icon_img = Image.open('assests/menu logo.png')
         self.logo_icon_img.thumbnail((30, 30))
@@ -63,7 +68,7 @@ class GUI:
         self.clear_frames()
         self.move = self.home_page.first_menu()
         if self.move == 'profile':
-            self.switch_frame(self.profile_menu)
+            self.move = self.profile_page.profile_menu()
 
         self.switch_frame(self.first_menu)
 

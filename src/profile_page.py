@@ -10,7 +10,7 @@ class ProfilePage(tk.Frame):
     """Profile page of the application"""
 
     def __init__(self, app, return_to_gui):
-        self.props = Props()
+        self.props = Props(app)
         self.return_to_gui = return_to_gui
 
         self.app = app
@@ -28,7 +28,7 @@ class ProfilePage(tk.Frame):
         self.profile_frame.configure(width=self.props.WIDTH,
                                      height=self.props.HEIGHT)
 
-        self.option_frame = ctk.CTkFrame(master=self.start_frame,
+        self.option_frame = ctk.CTkFrame(master=self.profile_frame,
                                          fg_color=self.props.BACKGROUND_DARK,
                                          border_color=self.props.BACKGROUND_LIGHT,
                                          border_width=2,
@@ -37,7 +37,7 @@ class ProfilePage(tk.Frame):
 
     def open_images(self):
         self.logo_icon_img = Image.open('assests/menu logo.png')
-        self.logo_icon_img.thumbnail((30, 30))
+        self.logo_icon_img.thumbnail((int(self.props.WIDTH * 0.25), int(self.props.HEIGHT * 0.25)))
         self.logo_icon = ImageTk.PhotoImage(self.logo_icon_img)
 
     def profile_menu(self):

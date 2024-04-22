@@ -11,7 +11,7 @@ class HomePage:
 
     def __init__(self, app, firebase, return_to_gui):
         """Initialize the first page of the application."""
-        self.props = Props()
+        self.props = Props(app)
         self.firebase = firebase
         self.return_to_gui = return_to_gui
 
