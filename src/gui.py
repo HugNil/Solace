@@ -5,6 +5,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from firebase_connection import FirebaseConnection
 import warnings
+from home_page import HomePage
 
 warnings.filterwarnings("ignore", message="CTkLabel Warning: Given image is not CTkImage*")
 
@@ -28,6 +29,7 @@ class GUI:
         set_appearance_mode('dark')
 
         self.firebase = FirebaseConnection()
+        self.home_page = HomePage(self.app, self.firebase, self.return_to_gui)
 
         self.logo_icon_img = Image.open('assests/menu logo.png')
         self.logo_icon_img.thumbnail((30, 30))
@@ -59,6 +61,10 @@ class GUI:
 
 
         self.create_frames()
+        self.clear_frames()
+        self.move = self.home_page.first_menu()
+        if self.move == 'profile':
+            self.switch_frame(self.profile_menu)
 
         self.switch_frame(self.first_menu)
 
@@ -325,6 +331,11 @@ class GUI:
 
     def register_handler(self, email, password):
         if self.firebase.register_user(email, password):
+            self.switch_frame(self.profile_menu)
+
+    
+    def return_to_gui(self, frame):
+        if frame == 'profile':
             self.switch_frame(self.profile_menu)
         
         
