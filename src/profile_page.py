@@ -45,7 +45,7 @@ class ProfilePage(tk.Frame):
             int(self.props.WIDTH * 0.08),
             int(self.props.HEIGHT * 0.08)
             ))
-        self.logo_icon = ImageTk.PhotoImage(self.logo_icon_img)
+        self.logo_icon = ctk.CTkImage(self.logo_icon_img)
 
     def profile_menu(self):
         self.profile_frame.pack(fill=tk.BOTH,

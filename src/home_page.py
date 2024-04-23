@@ -62,39 +62,43 @@ class HomePage:
         self.logo_icon_img = Image.open('assests/menu logo.png')
         self.logo_icon_img.thumbnail((int(self.props.WIDTH * 0.08),
                                       int(self.props.HEIGHT * 0.08)))
-        self.logo_icon = ImageTk.PhotoImage(self.logo_icon_img)
+        self.logo_icon = ctk.CTkImage(self.logo_icon_img)
 
         self.logo_full_img = Image.open('assests/Solace logo2 trans.png')
         self.logo_full_img.thumbnail((int(self.props.WIDTH * 0.95),
                                       int(self.props.HEIGHT * 0.95)))
-        self.logo_full = ImageTk.PhotoImage(self.logo_full_img)
+        self.logo_full = ctk.CTkImage(self.logo_full_img,
+                                      size=(int(self.props.WIDTH * 0.72),
+                                            int(self.props.HEIGHT * 0.17)))
 
         self.foregound_img = Image.open('assests/Solace_background1.png')
         self.foregound_img.thumbnail((int(self.props.WIDTH * 1.25),
                                       int(self.props.HEIGHT * 1.25)))
-        self.foreground = ImageTk.PhotoImage(self.foregound_img)
+        self.foreground = ctk.CTkImage(self.foregound_img)
 
         self.password_icon_img = Image.open('assests/PasswordIcon.png')
         self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
                                           int(self.props.HEIGHT * 0.1)))
-        self.password_icon = ImageTk.PhotoImage(self.password_icon_img)
+        self.password_icon = ctk.CTkImage(self.password_icon_img)
 
         self.email_icon_img = Image.open('assests/UserNameIcon.png')
         self.email_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
-                                       int(self.props.HEIGHT * 0.1)))
-        self.email_icon = ImageTk.PhotoImage(self.email_icon_img)
+                                       int(self.props.HEIGHT * 0.08)))
+        self.email_icon = ctk.CTkImage(self.email_icon_img)
 
         self.copyright_img = Image.open('assests/Copyright.png')
         self.copyright_img.thumbnail((int(self.props.WIDTH * 0.85),
                                       int(self.props.HEIGHT * 0.85)))
-        self.copyright = ImageTk.PhotoImage(self.copyright_img)
+        self.copyright = ctk.CTkImage(self.copyright_img,
+                                      size=(int(self.props.WIDTH * 0.85),
+                                            int(self.props.HEIGHT * 0.15)))
 
         self.line_img = Image.open('assests/line_without_sides.png')
         self.line_img.resize((int(self.props.WIDTH),
                              int(self.props.HEIGHT)))
-        self.line = ImageTk.PhotoImage(self.line_img,
-                                       size=(int(self.props.WIDTH * 0.997),
-                                             int(self.props.HEIGHT)))
+        self.line = ctk.CTkImage(self.line_img,
+                                 size=(int(self.props.WIDTH * 0.997),
+                                       int(self.props.HEIGHT * 0.08)))
 
     def clear_frame(self):
         """Clear all the frames in the application."""
@@ -227,10 +231,10 @@ class HomePage:
                                   rely=0.4,
                                   anchor='center')
 
-        self.show_image = ImageTk.PhotoImage(
+        self.show_image = ctk.CTkImage(
             Image.open('assests/show.png').resize((int(self.props.HEIGHT * 0.035),
                                                    int(self.props.HEIGHT * 0.045))))
-        self.hide_image = ImageTk.PhotoImage(
+        self.hide_image = ctk.CTkImage(
             Image.open('assests/hide.png').resize((int(self.props.HEIGHT * 0.035),
                                                    int(self.props.HEIGHT * 0.045))))
 
