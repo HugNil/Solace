@@ -40,8 +40,17 @@ class HomePage:
             height=int(self.props.HEIGHT * 0.3)
             )
 
+        self.login_frame = ctk.CTkFrame(
+            master=self.start_frame,
+            fg_color=self.props.BACKGROUND_DARK,
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            width=int(self.props.WIDTH * 0.7),
+            height=int(self.props.HEIGHT * 0.4))
+
         self.frames = [self.start_frame,
-                       self.option_frame]
+                       self.option_frame,
+                       self.login_frame]
 
         self.password_visible = False
         self.option_visible = False
@@ -66,9 +75,14 @@ class HomePage:
         self.foreground = ImageTk.PhotoImage(self.foregound_img)
 
         self.password_icon_img = Image.open('assests/PasswordIcon.png')
-        self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.1),
-                                          int(self.props.HEIGHT * 0.1)))
+        self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
+                                          int(self.props.HEIGHT * 0.07)))
         self.password_icon = ImageTk.PhotoImage(self.password_icon_img)
+
+        self.email_icon_img = Image.open('assests/UserNameIcon.png')
+        self.email_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
+                                       int(self.props.HEIGHT * 0.07)))
+        self.email_icon = ImageTk.PhotoImage(self.email_icon_img)
 
         self.copyright_img = Image.open('assests/Copyright.png')
         self.copyright_img.thumbnail((int(self.props.WIDTH * 0.85),
@@ -93,12 +107,16 @@ class HomePage:
         self.start_frame.pack(fill=tk.BOTH,
                               expand=True)
 
+        self.login_frame.place(relx=0.5,
+                               rely=0.5,
+                               anchor='center')
+
         self.foregound_img = ctk.CTkLabel(master=self.start_frame,
                                           image=self.foreground,
                                           text="")
-        self.foregound_img.place(relx=0.5,
-                                 rely=0.45,
-                                 anchor='center')
+        # self.foregound_img.place(relx=0.5,
+        #                         rely=0.45,
+        #                         anchor='center')
 
         # Full logo
         self.logo_full_img_label = ctk.CTkLabel(master=self.start_frame,
@@ -137,17 +155,17 @@ class HomePage:
 
         # Creates alla the elements for the first frame
         self.email_label = ctk.CTkLabel(
-            master=self.start_frame,
+            master=self.login_frame,
             text='Email',
             font=('Arial', int(self.props.HEIGHT * 0.02), 'bold'),
             text_color=self.props.BACKGROUND_LIGHT
             )
 
         self.email_label.place(relx=0.5,
-                               rely=0.37,
+                               rely=0.12,
                                anchor='center')
         self.email_entry = ctk.CTkEntry(
-            master=self.start_frame,
+            master=self.login_frame,
             placeholder_text='Email',
             font=('Arial', int(self.props.HEIGHT * 0.02)),
             width=int(self.props.WIDTH * 0.45),
@@ -158,14 +176,14 @@ class HomePage:
             border_width=2
             )
         self.email_entry.place(relx=0.5,
-                               rely=0.4,
+                               rely=0.2,
                                anchor='center')
 
         self.login_button = ctk.CTkButton(
-            master=self.start_frame,
-            text='   Login   ',
+            master=self.login_frame,
+            text='Login',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
             width=self.button_width,
-            height=self.button_height,
             corner_radius=32,
             fg_color=self.props.BUTTON_COLOR,
             text_color='black',
@@ -177,20 +195,20 @@ class HomePage:
                 self.email_entry.get(),
                 self.password_entry.get()))
         self.login_button.place(relx=0.32,
-                                rely=0.6,
+                                rely=0.8,
                                 anchor='center')
 
         self.password_label = ctk.CTkLabel(
-            master=self.start_frame,
+            master=self.login_frame,
             text='Password',
             font=('Arial', int(self.props.HEIGHT * 0.02), 'bold'),
             text_color=self.props.BACKGROUND_LIGHT
             )
         self.password_label.place(relx=0.5,
-                                  rely=0.45,
+                                  rely=0.32,
                                   anchor='center')
         self.password_entry = ctk.CTkEntry(
-            master=self.start_frame,
+            master=self.login_frame,
             placeholder_text='Password',
             font=('Arial', int(self.props.HEIGHT * 0.02)),
             width=int(self.props.WIDTH * 0.45),
@@ -202,7 +220,7 @@ class HomePage:
             show='*'
             )
         self.password_entry.place(relx=0.5,
-                                  rely=0.48,
+                                  rely=0.4,
                                   anchor='center')
 
         self.show_image = ImageTk.PhotoImage(
@@ -211,20 +229,20 @@ class HomePage:
             Image.open('assests/hide.png').resize((20, 20)))
 
         self.show_password_button = ctk.CTkLabel(
-            master=self.start_frame,
+            master=self.login_frame,
             image=self.hide_image,
             text=''
             )
         self.show_password_button.bind(
             '<Button-1>', lambda e: self.toggle_show_password())
-        self.show_password_button.place(relx=0.735,
-                                        rely=0.44555,)
+        self.show_password_button.place(relx=0.83,
+                                        rely=0.347,)
 
         self.register_button = ctk.CTkButton(
-            master=self.start_frame,
+            master=self.login_frame,
             text='Register',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
             width=self.button_width,
-            height=self.button_height,
             corner_radius=32,
             fg_color=self.props.BUTTON_COLOR,
             text_color='black',
@@ -236,11 +254,11 @@ class HomePage:
                 self.password_entry.get()
                 ))
         self.register_button.place(relx=0.68,
-                                   rely=0.6,
+                                   rely=0.8,
                                    anchor='center')
 
         self.remember_checkbox = ctk.CTkCheckBox(
-            master=self.start_frame,
+            master=self.login_frame,
             text='Remember Me',
             variable=self.remember_var,
             fg_color=self.props.BACKGROUND_LIGHT,
@@ -253,12 +271,19 @@ class HomePage:
             height=int(self.props.HEIGHT * 0.1)
             )
 
-        self.password_icon_label = ctk.CTkLabel(master=self.start_frame,
+        self.password_icon_label = ctk.CTkLabel(master=self.login_frame,
                                                 image=self.password_icon,
                                                 text='')
-        self.password_icon_label.place(relx=0.23,
-                                       rely=0.479,
+        self.password_icon_label.place(relx=0.12,
+                                       rely=0.395,
                                        anchor='center')
+        self.email_icon_label = ctk.CTkLabel(master=self.login_frame,
+                                             image=self.email_icon,
+                                             text='')
+        self.email_icon_label.place(relx=0.12,
+                                    rely=0.195,
+                                    anchor='center')
+
         # self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center')
 
     def option_toggle(self):
@@ -269,7 +294,7 @@ class HomePage:
             self.option_visible = False
         else:
             self.option_frame.lift()
-            self.option_frame.place(relx=0.2, rely=0.22, anchor='center')
+            self.option_frame.place(relx=0.19, rely=0.23, anchor='center')
             self.option_visible = True
 
     def toggle_show_password(self):

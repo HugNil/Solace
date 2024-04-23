@@ -37,7 +37,6 @@ class ProfilePage(tk.Frame):
                                          width=int(self.props.WIDTH * 0.3),
                                          height=int(self.props.HEIGHT * 0.3))
 
-
         self.frames = [self.option_frame, self.profile_frame]
 
     def open_images(self):
@@ -76,7 +75,7 @@ class ProfilePage(tk.Frame):
             self.option_visible = False
         else:
             self.option_frame.lift()
-            self.option_frame.place(relx=0.2, rely=0.22, anchor='center')
+            self.option_frame.place(relx=0.19, rely=0.23, anchor='center')
             self.option_visible = True
 
     def clear_frame(self):
