@@ -89,9 +89,9 @@ class HomePage:
                                       int(self.props.HEIGHT * 0.85)))
         self.copyright = ImageTk.PhotoImage(self.copyright_img)
 
-        self.line_img = Image.open('assests/Line.png')
-        self.line_img.thumbnail((int(self.props.WIDTH * 1.68),
-                                 int(self.props.HEIGHT * 1)))
+        self.line_img = Image.open('assests/line_without_sides.png')
+        self.line_img.thumbnail((int(self.props.WIDTH * 0.997),
+                                 int(self.props.HEIGHT)))
         self.line = ImageTk.PhotoImage(self.line_img)
 
     def clear_frame(self):
@@ -139,7 +139,7 @@ class HomePage:
                                      image=self.line,
                                      text="")
 
-        self.line_img.place(relx=0.45,
+        self.line_img.place(relx=0.497,
                             rely=0.8,
                             anchor="center")
         # Icon logo as home button
@@ -293,11 +293,9 @@ class HomePage:
     def option_toggle(self):
         """Toggle the option menu on and off."""
         if self.option_visible:
-            self.option_frame.lower()
             self.option_frame.place_forget()
             self.option_visible = False
         else:
-            self.option_frame.lift()
             self.option_frame.place(relx=0.19, rely=0.23, anchor='center')
             self.option_visible = True
 
