@@ -9,8 +9,8 @@ from props import Props
 class ProfilePage(tk.Frame):
     """Profile page of the application"""
 
-    def __init__(self, app, return_to_gui):
-        self.props = Props(app)
+    def __init__(self, app, props, return_to_gui):
+        self.props = props
         self.return_to_gui = return_to_gui
 
         self.app = app

@@ -11,9 +11,9 @@ class HomePage:
     The first page of the application, where the user can login or register.
     """
 
-    def __init__(self, app, firebase, return_to_gui):
+    def __init__(self, app, firebase, props, return_to_gui):
         """Initialize the first page of the application."""
-        self.props = Props(app)
+        self.props = props
         self.firebase = firebase
         self.return_to_gui = return_to_gui
 
