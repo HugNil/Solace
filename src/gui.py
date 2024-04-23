@@ -36,7 +36,6 @@ class GUI:
 
         self.create_frames()
         self.clear_frames()
-        self.profile_page.profile_menu()
         self.home_page.first_menu()
 
         pygame.mixer.init()
