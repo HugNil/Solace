@@ -17,6 +17,9 @@ class HomePage:
         self.firebase = firebase
         self.return_to_gui = return_to_gui
 
+        self.button_width = int(self.props.WIDTH * 0.2)
+        self.button_height = int(self.props.HEIGHT * 0.05)
+
         self.app = app
 
         self.start_frame = ctk.CTkFrame(
@@ -33,8 +36,8 @@ class HomePage:
             fg_color=self.props.BACKGROUND_DARK,
             border_color=self.props.BACKGROUND_LIGHT,
             border_width=2,
-            width=120,
-            height=150
+            width=int(self.props.WIDTH * 0.3),
+            height=int(self.props.HEIGHT * 0.3)
             )
 
         self.frames = [self.start_frame,
@@ -58,14 +61,14 @@ class HomePage:
         self.logo_full = ImageTk.PhotoImage(self.logo_full_img)
 
         self.foregound_img = Image.open('assests/Solace_background1.png')
-        self.foregound_img.thumbnail((int(self.props.WIDTH * 0.95),
-                                      int(self.props.HEIGHT * 0.95)))
+        self.foregound_img.thumbnail((int(self.props.WIDTH * 1.25),
+                                      int(self.props.HEIGHT * 1.25)))
         self.foreground = ImageTk.PhotoImage(self.foregound_img)
 
         self.password_icon_img = Image.open('assests/PasswordIcon.png')
-        self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.95),
-                                          int(self.props.HEIGHT * 0.95)))
-        self.password_icon = ImageTk.PhotoImage(self.foregound_img)
+        self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.1),
+                                          int(self.props.HEIGHT * 0.1)))
+        self.password_icon = ImageTk.PhotoImage(self.password_icon_img)
 
         self.copyright_img = Image.open('assests/Copyright.png')
         self.copyright_img.thumbnail((int(self.props.WIDTH * 0.85),
@@ -136,7 +139,7 @@ class HomePage:
         self.email_label = ctk.CTkLabel(
             master=self.start_frame,
             text='Email',
-            font=('Arial', 12, 'bold'),
+            font=('Arial', int(self.props.HEIGHT * 0.02), 'bold'),
             text_color=self.props.BACKGROUND_LIGHT
             )
 
@@ -145,8 +148,10 @@ class HomePage:
                                anchor='center')
         self.email_entry = ctk.CTkEntry(
             master=self.start_frame,
-            width=180,
-            height=2,
+            placeholder_text='Email',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
+            width=int(self.props.WIDTH * 0.45),
+            height=int(self.props.HEIGHT * 0.02),
             fg_color=self.props.BUTTON_COLOR,
             text_color='black',
             border_color=self.props.BACKGROUND_LIGHT,
@@ -158,7 +163,9 @@ class HomePage:
 
         self.login_button = ctk.CTkButton(
             master=self.start_frame,
-            text='Login',
+            text='   Login   ',
+            width=self.button_width,
+            height=self.button_height,
             corner_radius=32,
             fg_color=self.props.BUTTON_COLOR,
             text_color='black',
@@ -176,7 +183,7 @@ class HomePage:
         self.password_label = ctk.CTkLabel(
             master=self.start_frame,
             text='Password',
-            font=('Arial', 12, 'bold'),
+            font=('Arial', int(self.props.HEIGHT * 0.02), 'bold'),
             text_color=self.props.BACKGROUND_LIGHT
             )
         self.password_label.place(relx=0.5,
@@ -184,8 +191,10 @@ class HomePage:
                                   anchor='center')
         self.password_entry = ctk.CTkEntry(
             master=self.start_frame,
-            width=180,
-            height=2,
+            placeholder_text='Password',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
+            width=int(self.props.WIDTH * 0.45),
+            height=int(self.props.HEIGHT * 0.02),
             fg_color=self.props.BUTTON_COLOR,
             text_color='black',
             border_color=self.props.BACKGROUND_LIGHT,
@@ -208,12 +217,14 @@ class HomePage:
             )
         self.show_password_button.bind(
             '<Button-1>', lambda e: self.toggle_show_password())
-        self.show_password_button.place(relx=0.7,
-                                        rely=0.465,)
+        self.show_password_button.place(relx=0.735,
+                                        rely=0.44555,)
 
         self.register_button = ctk.CTkButton(
             master=self.start_frame,
             text='Register',
+            width=self.button_width,
+            height=self.button_height,
             corner_radius=32,
             fg_color=self.props.BUTTON_COLOR,
             text_color='black',
@@ -238,10 +249,17 @@ class HomePage:
             corner_radius=25,
             border_width=2,
             border_color=self.props.BACKGROUND_LIGHT,
-            width=3,
-            height=3
+            width=int(self.props.WIDTH * 0.1),
+            height=int(self.props.HEIGHT * 0.1)
             )
-        self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center')
+
+        self.password_icon_label = ctk.CTkLabel(master=self.start_frame,
+                                                image=self.password_icon,
+                                                text='')
+        self.password_icon_label.place(relx=0.23,
+                                       rely=0.479,
+                                       anchor='center')
+        # self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center')
 
     def option_toggle(self):
         """Toggle the option menu on and off."""
@@ -251,7 +269,7 @@ class HomePage:
             self.option_visible = False
         else:
             self.option_frame.lift()
-            self.option_frame.place(relx=0.075, rely=0.16, anchor='center')
+            self.option_frame.place(relx=0.2, rely=0.22, anchor='center')
             self.option_visible = True
 
     def toggle_show_password(self):
