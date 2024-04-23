@@ -80,19 +80,23 @@ class HomePage:
         self.password_icon_img = Image.open('assests/PasswordIcon.png')
         self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
                                           int(self.props.HEIGHT * 0.1)))
-        self.password_icon = ctk.CTkImage(self.password_icon_img)
+        self.password_icon = ctk.CTkImage(self.password_icon_img,
+                                          size=(int(self.props.WIDTH * 0.06),
+                                                int(self.props.HEIGHT * 0.042)))
 
         self.email_icon_img = Image.open('assests/UserNameIcon.png')
         self.email_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
                                        int(self.props.HEIGHT * 0.08)))
-        self.email_icon = ctk.CTkImage(self.email_icon_img)
+        self.email_icon = ctk.CTkImage(self.email_icon_img,
+                                       size=(int(self.props.WIDTH * 0.06),
+                                             int(self.props.HEIGHT * 0.042)))
 
         self.copyright_img = Image.open('assests/Copyright.png')
         self.copyright_img.thumbnail((int(self.props.WIDTH * 0.85),
-                                      int(self.props.HEIGHT * 0.85)))
+                                      int(self.props.HEIGHT * 0.8)))
         self.copyright = ctk.CTkImage(self.copyright_img,
-                                      size=(int(self.props.WIDTH * 0.85),
-                                            int(self.props.HEIGHT * 0.15)))
+                                      size=(int(self.props.WIDTH * 0.83),
+                                            int(self.props.HEIGHT * 0.14)))
 
         self.line_img = Image.open('assests/line_without_sides.png')
         self.line_img.resize((int(self.props.WIDTH),
@@ -226,21 +230,29 @@ class HomePage:
                                   anchor='center')
 
         self.show_image = ctk.CTkImage(
-            Image.open('assests/show.png').resize((int(self.props.HEIGHT * 0.035),
-                                                   int(self.props.HEIGHT * 0.045))))
+            Image.open('assests/show.png').resize(
+                (int(self.props.HEIGHT * 0.03),
+                 int(self.props.HEIGHT * 0.045))),
+            size=(int(self.props.HEIGHT * 0.03),
+                  int(self.props.HEIGHT * 0.035))
+        )
         self.hide_image = ctk.CTkImage(
-            Image.open('assests/hide.png').resize((int(self.props.HEIGHT * 0.035),
-                                                   int(self.props.HEIGHT * 0.045))))
+            Image.open('assests/hide.png').resize(
+                (int(self.props.HEIGHT * 0.03),
+                 int(self.props.HEIGHT * 0.045))),
+            size=(int(self.props.HEIGHT * 0.03),
+                  int(self.props.HEIGHT * 0.035))
+        )
 
         self.show_password_button = ctk.CTkLabel(
             master=self.login_frame,
             image=self.hide_image,
             text=''
-            )
+        )
         self.show_password_button.bind(
             '<Button-1>', lambda e: self.toggle_show_password())
         self.show_password_button.place(relx=0.83,
-                                        rely=0.32,)
+                                        rely=0.345)
 
         self.register_button = ctk.CTkButton(
             master=self.login_frame,
@@ -279,13 +291,13 @@ class HomePage:
                                                 image=self.password_icon,
                                                 text='')
         self.password_icon_label.place(relx=0.12,
-                                       rely=0.395,
+                                       rely=0.397,
                                        anchor='center')
         self.email_icon_label = ctk.CTkLabel(master=self.login_frame,
                                              image=self.email_icon,
                                              text='')
         self.email_icon_label.place(relx=0.12,
-                                    rely=0.195,
+                                    rely=0.198,
                                     anchor='center')
 
         # self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center')
