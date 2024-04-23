@@ -21,25 +21,41 @@ class ProfilePage(tk.Frame):
         self.option_visible = False
 
     def create_frames(self):
-        self.profile_frame = ctk.CTkFrame(master=self.app,
-                                          fg_color=self.props.BACKGROUND_DARK,
-                                          border_color=self.props.BACKGROUND_LIGHT,
-                                          border_width=2)
+        self.profile_frame = ctk.CTkFrame(
+            master=self.app,
+            fg_color=self.props.BACKGROUND_DARK,
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2
+            )
         self.profile_frame.configure(width=self.props.WIDTH,
                                      height=self.props.HEIGHT)
 
+<<<<<<< HEAD
         self.option_frame = ctk.CTkFrame(master=self.profile_frame,
                                          fg_color=self.props.BACKGROUND_DARK,
                                          border_color=self.props.BACKGROUND_LIGHT,
                                          border_width=2,
                                          width=int(self.props.WIDTH * 0.3),
                                          height=int(self.props.HEIGHT * 0.3))
+=======
+        self.option_frame = ctk.CTkFrame(
+            master=self.profile_frame,
+            fg_color=self.props.BACKGROUND_DARK,
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            width=120,
+            height=150
+            )
+>>>>>>> 1b913b743c9372256da26d8b576c19b360f00a49
 
         self.frames = [self.option_frame, self.profile_frame]
 
     def open_images(self):
         self.logo_icon_img = Image.open('assests/menu logo.png')
-        self.logo_icon_img.thumbnail((int(self.props.WIDTH * 0.08), int(self.props.HEIGHT * 0.08)))
+        self.logo_icon_img.thumbnail((
+            int(self.props.WIDTH * 0.08),
+            int(self.props.HEIGHT * 0.08)
+            ))
         self.logo_icon = ImageTk.PhotoImage(self.logo_icon_img)
 
     def profile_menu(self):
@@ -54,9 +70,11 @@ class ProfilePage(tk.Frame):
                                    rely=0.05,
                                    anchor='center')
 
-        self.test_label = ctk.CTkLabel(master=self.profile_frame,
-                                       text='Profile',
-                                       font=('Arial', (int(self.props.HEIGHT * 0.08))))
+        self.test_label = ctk.CTkLabel(
+            master=self.profile_frame,
+            text='Profile',
+            font=('Arial', (int(self.props.HEIGHT * 0.08)))
+            )
         self.test_label.place(relx=0.5,
                               rely=0.175,
                               anchor='center')
