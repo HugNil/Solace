@@ -2,8 +2,7 @@
 
 import customtkinter as ctk
 import tkinter as tk
-from PIL import Image, ImageTk
-from props import Props
+from PIL import Image
 
 
 class ProfilePage(tk.Frame):
@@ -45,7 +44,9 @@ class ProfilePage(tk.Frame):
             int(self.props.WIDTH * 0.08),
             int(self.props.HEIGHT * 0.08)
             ))
-        self.logo_icon = ctk.CTkImage(self.logo_icon_img)
+        self.logo_icon = ctk.CTkImage(self.logo_icon_img,
+                                      size=(int(self.props.WIDTH * 0.08),
+                                            int(self.props.HEIGHT * 0.05)))
 
     def profile_menu(self):
         self.profile_frame.pack(fill=tk.BOTH,

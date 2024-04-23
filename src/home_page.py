@@ -2,8 +2,7 @@
 
 import customtkinter as ctk
 import tkinter as tk
-from PIL import Image, ImageTk
-from props import Props
+from PIL import Image
 
 
 class HomePage:
@@ -22,6 +21,17 @@ class HomePage:
 
         self.app = app
 
+        self.password_visible = False
+        self.option_visible = False
+        self.remember_var = tk.IntVar()
+        self.remember_email = None
+        self.remember_password = None
+        self.remember_token = None
+
+        self.create_frames()
+        self.open_images()
+
+    def create_frames(self):
         self.start_frame = ctk.CTkFrame(
             master=self.app,
             fg_color=self.props.BACKGROUND_DARK,
@@ -52,29 +62,20 @@ class HomePage:
                        self.option_frame,
                        self.login_frame]
 
-        self.password_visible = False
-        self.option_visible = False
-        self.remember_var = tk.IntVar()
-        self.remember_email = None
-        self.remember_password = None
-        self.remember_token = None
-
+    def open_images(self):
         self.logo_icon_img = Image.open('assests/menu logo.png')
         self.logo_icon_img.thumbnail((int(self.props.WIDTH * 0.08),
                                       int(self.props.HEIGHT * 0.08)))
-        self.logo_icon = ctk.CTkImage(self.logo_icon_img)
+        self.logo_icon = ctk.CTkImage(self.logo_icon_img,
+                                      size=(int(self.props.WIDTH * 0.08),
+                                            int(self.props.HEIGHT * 0.05)))
 
         self.logo_full_img = Image.open('assests/Solace logo2 trans.png')
         self.logo_full_img.thumbnail((int(self.props.WIDTH * 0.95),
                                       int(self.props.HEIGHT * 0.95)))
         self.logo_full = ctk.CTkImage(self.logo_full_img,
-                                      size=(int(self.props.WIDTH * 0.72),
-                                            int(self.props.HEIGHT * 0.17)))
-
-        self.foregound_img = Image.open('assests/Solace_background1.png')
-        self.foregound_img.thumbnail((int(self.props.WIDTH * 1.25),
-                                      int(self.props.HEIGHT * 1.25)))
-        self.foreground = ctk.CTkImage(self.foregound_img)
+                                      size=(int(self.props.WIDTH * 0.77),
+                                            int(self.props.HEIGHT * 0.19)))
 
         self.password_icon_img = Image.open('assests/PasswordIcon.png')
         self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
@@ -116,13 +117,6 @@ class HomePage:
         self.login_frame.place(relx=0.5,
                                rely=0.5,
                                anchor='center')
-
-        self.foregound_img = ctk.CTkLabel(master=self.start_frame,
-                                          image=self.foreground,
-                                          text="")
-        # self.foregound_img.place(relx=0.5,
-        #                         rely=0.45,
-        #                         anchor='center')
 
         # Full logo
         self.logo_full_img_label = ctk.CTkLabel(master=self.start_frame,
