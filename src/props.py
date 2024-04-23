@@ -23,3 +23,6 @@ class Props:
         self.APP_NAME = 'Solace'
         self.GRADIENT = "NightTrain.json"
         self.THEME = 'dark'
+
+        print(screen_width, screen_height)
+        print(self.WIDTH, self.HEIGHT)
