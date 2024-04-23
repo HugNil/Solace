@@ -30,23 +30,13 @@ class ProfilePage(tk.Frame):
         self.profile_frame.configure(width=self.props.WIDTH,
                                      height=self.props.HEIGHT)
 
-<<<<<<< HEAD
         self.option_frame = ctk.CTkFrame(master=self.profile_frame,
                                          fg_color=self.props.BACKGROUND_DARK,
                                          border_color=self.props.BACKGROUND_LIGHT,
                                          border_width=2,
                                          width=int(self.props.WIDTH * 0.3),
                                          height=int(self.props.HEIGHT * 0.3))
-=======
-        self.option_frame = ctk.CTkFrame(
-            master=self.profile_frame,
-            fg_color=self.props.BACKGROUND_DARK,
-            border_color=self.props.BACKGROUND_LIGHT,
-            border_width=2,
-            width=120,
-            height=150
-            )
->>>>>>> 1b913b743c9372256da26d8b576c19b360f00a49
+
 
         self.frames = [self.option_frame, self.profile_frame]
 
