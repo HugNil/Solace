@@ -14,6 +14,7 @@ warnings.filterwarnings("ignore", message="CTkLabel Warning: Given image is not 
 
 
 class GUI:
+    """Class for the graphical user interface of the application"""
     def __init__(self, app) -> None:
         self.app = app
 

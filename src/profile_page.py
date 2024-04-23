@@ -32,8 +32,8 @@ class ProfilePage(tk.Frame):
                                          fg_color=self.props.BACKGROUND_DARK,
                                          border_color=self.props.BACKGROUND_LIGHT,
                                          border_width=2,
-                                         width=120,
-                                         height=150)
+                                         width=int(self.props.WIDTH * 0.3),
+                                         height=int(self.props.HEIGHT * 0.3))
 
         self.frames = [self.option_frame, self.profile_frame]
 
@@ -68,7 +68,7 @@ class ProfilePage(tk.Frame):
             self.option_visible = False
         else:
             self.option_frame.lift()
-            self.option_frame.place(relx=0.075, rely=0.16, anchor='center')
+            self.option_frame.place(relx=0.2, rely=0.22, anchor='center')
             self.option_visible = True
 
     def clear_frame(self):
