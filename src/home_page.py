@@ -333,4 +333,4 @@ class HomePage:
     def register_handler(self, email, password):
         """Handle the registration of the user."""
         if self.firebase.register_user(email, password):
-            return 'profile'
+            self.return_to_gui('profile')
