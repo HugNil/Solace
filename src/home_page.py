@@ -226,9 +226,11 @@ class HomePage:
                                   anchor='center')
 
         self.show_image = ImageTk.PhotoImage(
-            Image.open('assests/show.png').resize((20, 20)))
+            Image.open('assests/show.png').resize((int(self.props.HEIGHT * 0.03),
+                                                   int(self.props.HEIGHT * 0.04))))
         self.hide_image = ImageTk.PhotoImage(
-            Image.open('assests/hide.png').resize((20, 20)))
+            Image.open('assests/hide.png').resize((int(self.props.HEIGHT * 0.03),
+                                                   int(self.props.HEIGHT * 0.04))))
 
         self.show_password_button = ctk.CTkLabel(
             master=self.login_frame,
