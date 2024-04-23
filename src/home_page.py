@@ -226,11 +226,11 @@ class HomePage:
                                   anchor='center')
 
         self.show_image = ImageTk.PhotoImage(
-            Image.open('assests/show.png').resize((int(self.props.HEIGHT * 0.03),
-                                                   int(self.props.HEIGHT * 0.04))))
+            Image.open('assests/show.png').resize((int(self.props.HEIGHT * 0.035),
+                                                   int(self.props.HEIGHT * 0.045))))
         self.hide_image = ImageTk.PhotoImage(
-            Image.open('assests/hide.png').resize((int(self.props.HEIGHT * 0.03),
-                                                   int(self.props.HEIGHT * 0.04))))
+            Image.open('assests/hide.png').resize((int(self.props.HEIGHT * 0.035),
+                                                   int(self.props.HEIGHT * 0.045))))
 
         self.show_password_button = ctk.CTkLabel(
             master=self.login_frame,
@@ -240,7 +240,7 @@ class HomePage:
         self.show_password_button.bind(
             '<Button-1>', lambda e: self.toggle_show_password())
         self.show_password_button.place(relx=0.83,
-                                        rely=0.347,)
+                                        rely=0.32,)
 
         self.register_button = ctk.CTkButton(
             master=self.login_frame,
