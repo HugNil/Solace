@@ -3,6 +3,7 @@
 import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
+from time import strftime
 
 
 class ProfilePage(tk.Frame):
@@ -60,14 +61,84 @@ class ProfilePage(tk.Frame):
                                    rely=0.05,
                                    anchor='center')
 
-        self.test_label = ctk.CTkLabel(
+        self.mood_button = ctk.CTkButton(
             master=self.profile_frame,
-            text='Profile',
-            font=('Arial', (int(self.props.HEIGHT * 0.08)))
-            )
-        self.test_label.place(relx=0.5,
-                              rely=0.175,
-                              anchor='center')
+            text='Mood Form',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
+            width=int(self.props.WIDTH * 0.2),
+            corner_radius=32,
+            fg_color=self.props.BUTTON_COLOR,
+            text_color='black',
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            hover_color='white',
+            command=lambda: self.return_to_gui('mood'))
+        self.mood_button.place(relx=0.3,
+                               rely=0.75,
+                               anchor='center')
+
+        self.excercise_button = ctk.CTkButton(
+            master=self.profile_frame,
+            text='  Excercises ',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
+            width=int(self.props.WIDTH * 0.2),
+            corner_radius=32,
+            fg_color=self.props.BUTTON_COLOR,
+            text_color='black',
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            hover_color='white',
+            command=lambda: self.return_to_gui('excersice'))
+        self.excercise_button.place(relx=0.7,
+                                    rely=0.75,
+                                    anchor='center')
+
+        self.motivation_button = ctk.CTkButton(
+            master=self.profile_frame,
+            text=' Motivation  ',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
+            width=int(self.props.WIDTH * 0.2),
+            corner_radius=32,
+            fg_color=self.props.BUTTON_COLOR,
+            text_color='black',
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            hover_color='white',
+            command=lambda: self.return_to_gui('motivation'))
+        self.motivation_button.place(relx=0.3,
+                                     rely=0.85,
+                                     anchor='center')
+
+        self.random_button = ctk.CTkButton(
+            master=self.profile_frame,
+            text='   Random    ',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
+            width=int(self.props.WIDTH * 0.2),
+            corner_radius=32,
+            fg_color=self.props.BUTTON_COLOR,
+            text_color='black',
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            hover_color='white',
+            command=lambda: self.return_to_gui('random'))
+        self.random_button.place(relx=0.7,
+                                 rely=0.85,
+                                 anchor='center')
+
+        self.date = ctk.CTkLabel(master=self.profile_frame,
+                                 text=strftime("%d %b %Y"),
+                                 font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'))
+        self.date.place(relx=0.5,
+                        rely=0.15,
+                        anchor='center')
+
+        self.time_widget = ctk.CTkLabel(master=self.profile_frame,
+                                        text='',
+                                        font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'))
+        self.time_widget.place(relx=0.5,
+                               rely=0.23,
+                               anchor='center')
+        self.time()
 
     def option_toggle(self):
         if self.option_visible:
@@ -83,3 +154,8 @@ class ProfilePage(tk.Frame):
         """Clear all the frames in the application."""
         for frame in self.frames:
             frame.pack_forget()
+
+    def time(self):
+        time_string = strftime("%H:%M")
+        self.time_widget.configure(text=time_string)
+        self.time_widget.after(1000, self.time)

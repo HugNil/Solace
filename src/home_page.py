@@ -16,9 +16,6 @@ class HomePage:
         self.firebase = firebase
         self.return_to_gui = return_to_gui
 
-        self.button_width = int(self.props.WIDTH * 0.2)
-        self.button_height = int(self.props.HEIGHT * 0.05)
-
         self.app = app
 
         self.password_visible = False
@@ -188,7 +185,7 @@ class HomePage:
             master=self.login_frame,
             text='  Login  ',
             font=('Arial', int(self.props.HEIGHT * 0.02)),
-            width=self.button_width,
+            width=int(self.props.WIDTH * 0.2),
             corner_radius=32,
             fg_color=self.props.BUTTON_COLOR,
             text_color='black',
@@ -258,7 +255,7 @@ class HomePage:
             master=self.login_frame,
             text='Register',
             font=('Arial', int(self.props.HEIGHT * 0.02)),
-            width=self.button_width,
+            width=int(self.props.WIDTH * 0.2),
             corner_radius=32,
             fg_color=self.props.BUTTON_COLOR,
             text_color='black',
