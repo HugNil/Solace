@@ -90,8 +90,8 @@ class HomePage:
         self.copyright = ImageTk.PhotoImage(self.copyright_img)
 
         self.line_img = Image.open('assests/Line.png')
-        self.line_img.thumbnail((int(self.props.WIDTH * 1.124),
-                                 int(self.props.HEIGHT * 1.124)))
+        self.line_img.thumbnail((int(self.props.WIDTH * 1.68),
+                                 int(self.props.HEIGHT * 1)))
         self.line = ImageTk.PhotoImage(self.line_img)
 
     def clear_frame(self):
