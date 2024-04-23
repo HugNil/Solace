@@ -158,6 +158,7 @@ class HomePage:
             master=self.login_frame,
             text='Email',
             font=('Arial', int(self.props.HEIGHT * 0.02), 'bold'),
+            height=int(self.props.HEIGHT * 0.02),
             text_color=self.props.BACKGROUND_LIGHT
             )
 
@@ -181,7 +182,7 @@ class HomePage:
 
         self.login_button = ctk.CTkButton(
             master=self.login_frame,
-            text='Login',
+            text='  Login  ',
             font=('Arial', int(self.props.HEIGHT * 0.02)),
             width=self.button_width,
             corner_radius=32,
@@ -202,6 +203,7 @@ class HomePage:
             master=self.login_frame,
             text='Password',
             font=('Arial', int(self.props.HEIGHT * 0.02), 'bold'),
+            height=int(self.props.HEIGHT * 0.02),
             text_color=self.props.BACKGROUND_LIGHT
             )
         self.password_label.place(relx=0.5,
