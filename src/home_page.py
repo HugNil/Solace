@@ -76,12 +76,12 @@ class HomePage:
 
         self.password_icon_img = Image.open('assests/PasswordIcon.png')
         self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
-                                          int(self.props.HEIGHT * 0.07)))
+                                          int(self.props.HEIGHT * 0.1)))
         self.password_icon = ImageTk.PhotoImage(self.password_icon_img)
 
         self.email_icon_img = Image.open('assests/UserNameIcon.png')
         self.email_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
-                                       int(self.props.HEIGHT * 0.07)))
+                                       int(self.props.HEIGHT * 0.1)))
         self.email_icon = ImageTk.PhotoImage(self.email_icon_img)
 
         self.copyright_img = Image.open('assests/Copyright.png')
