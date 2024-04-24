@@ -342,7 +342,6 @@ class HomePage:
         self.profile_option.bind('<Button-1>',
                                  command=lambda e: self.return_to_gui('profile'))
         self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
-        self.logged_in_toggle()
 
         self.logout_option = ctk.CTkLabel(master=self.option_frame,
                                           text='Logout',
@@ -351,6 +350,7 @@ class HomePage:
                                           text_color=self.props.BACKGROUND_LIGHT)
         self.logout_option.bind('<Button-1>', lambda e: self.logout_handler())
         self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
+        self.logged_in_toggle()
 
     def option_toggle(self):
         """
@@ -422,6 +422,8 @@ class HomePage:
     def logged_in_toggle(self):
         if not self.user.remember_login_var:
             self.profile_option.unbind('<Button-1>')
+        if not self.user.logged_in:
+            self.logout_option.unbind('<Button-1>')
 
     def hide_login_frame(self):
         """
