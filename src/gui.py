@@ -5,7 +5,7 @@ graphical user interface of the application.
 
 import customtkinter as ctk
 from firebase_connection import FirebaseConnection
-import warnings
+# import warnings
 from home_page import HomePage
 from profile_page import ProfilePage
 from settings import Settings
@@ -45,9 +45,24 @@ class GUI:
         """
         Creates all the frames for the application
         """
-        self.home_page = HomePage(self.app, self.firebase, self.props, self.user, self.return_to_gui)
-        self.profile_page = ProfilePage(self.app, self.props, self.user, self.return_to_gui)
-        self.settings = Settings(self.app, self.props, self.return_to_gui)
+        self.home_page = HomePage(
+            self.app,
+            self.firebase,
+            self.props,
+            self.user,
+            self.return_to_gui
+            )
+        self.profile_page = ProfilePage(
+            self.app,
+            self.props,
+            self.user,
+            self.return_to_gui
+            )
+        self.settings = Settings(
+            self.app,
+            self.props,
+            self.return_to_gui
+            )
 
         self.frames = [self.home_page, self.profile_page]
 
