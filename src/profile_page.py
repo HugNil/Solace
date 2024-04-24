@@ -6,7 +6,7 @@ from PIL import Image
 from time import strftime
 
 
-class ProfilePage(tk.Frame):
+class ProfilePage():
     """Profile page of the application"""
 
     def __init__(self, app, props, return_to_gui):

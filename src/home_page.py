@@ -3,6 +3,7 @@
 import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
+from user import User
 
 
 class HomePage:
@@ -17,6 +18,7 @@ class HomePage:
         self.return_to_gui = return_to_gui
 
         self.app = app
+        self.user = User()
 
         self.password_visible = False
         self.option_visible = False
@@ -25,6 +27,7 @@ class HomePage:
         self.remember_password = None
         self.remember_token = None
         self.logged_in = False
+        self.remember_login_var = False
 
         self.create_frames()
         self.open_images()
@@ -111,7 +114,10 @@ class HomePage:
     def first_menu(self):
         """Create the first menu of the application."""
         self.option_visible = True
+        if not self.remember_login_var:
+            self.user.reset()
         self.option_toggle()
+
         # Clear old frames
 
         # Opens the new first_menu
@@ -330,7 +336,6 @@ class HomePage:
         self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
         self.logged_in_toggle()
 
-
     def option_toggle(self):
         """Toggle the option menu on and off."""
         if self.option_visible:
@@ -355,20 +360,27 @@ class HomePage:
 
     def login_handler(self, email, password) -> None:
         """Handle the login of the user."""
-        self.token = self.firebase.login_user(email, password)
-        if self.token is not None:
+        token = self.firebase.login_user(email, password)
+        if token is not None:
             self.logged_in = True
             self.logged_in_toggle()
             self.remember_login()
             self.clear_frame()
+            self.user.email = email
+            self.user.password = password
+            self.user.token = token
             self.return_to_gui('profile')
+        else:
+            self.show_sign_in_sign_up_error()
 
     def remember_login(self) -> None:
         """Remember the login of the user."""
         if self.remember_var.get() == 1:
+            self.remember_login_var = True
             self.remember_email = self.email_entry.get()
             self.remember_password = self.password_entry.get()
             self.remember_token = self.token
+            self.hide_login_frame()
             print("Remembering login")
 
     def register_handler(self, email, password):
@@ -377,7 +389,35 @@ class HomePage:
             self.logged_in = True
             self.logged_in_toggle()
             self.return_to_gui('profile')
+        else:
+            self.show_sign_in_sign_up_error()
 
     def logged_in_toggle(self):
-        if not self.logged_in:
+        if not self.remember_login_var:
             self.profile_option.unbind('<Button-1>')
+
+    def hide_login_frame(self):
+        """Hide the login frame."""
+        self.login_frame.lower()
+        self.login_frame.place_forget()
+
+    def show_sign_in_sign_up_error(self):
+        """Show the sign in sign up error."""
+        popup = ctk.CTkFrame(
+            master=self.start_frame,
+            fg_color='#1D1D1D',
+            border_color='red',
+            border_width=2,
+            width=int(self.props.WIDTH * 0.8),
+            height=int(self.props.HEIGHT * 0.15))
+
+        label = ctk.CTkLabel(master=popup,
+                             text='Error:\nEmail or password is incorrect.',
+                             font=('Arial', (self.props.HEIGHT * 0.02), 'bold'),
+                             height=2)
+        label.place(relx=0.5, rely=0.5, anchor='center')
+
+        popup.lift()
+        popup.place(relx=0.5, rely=0.5, anchor='center')
+
+        popup.after(3000, popup.destroy)
