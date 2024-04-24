@@ -13,6 +13,7 @@ from props import Props
 import pygame
 from customtkinter import set_appearance_mode
 from user import User
+import log_writer
 
 
 class GUI:
@@ -31,6 +32,7 @@ class GUI:
         self.app.configure(bg=self.props.BACKGROUND_DARK)
         set_appearance_mode(self.props.THEME)
         self.app.iconbitmap("assests/Solace logo1_klippt.ico")
+        self.logger = log_writer.Log_writer()
 
         self.firebase = FirebaseConnection()
 
@@ -40,6 +42,9 @@ class GUI:
 
         pygame.mixer.init()
         self.play()
+
+        self.logger.clear_log()
+        self.logger.log('Application started.')
 
     def create_frames(self) -> None:
         """
