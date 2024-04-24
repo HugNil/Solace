@@ -1,4 +1,6 @@
-"""The first page of the application, where the user can login or register."""
+"""
+The first page of the application, where the user can login or register.
+"""
 
 import customtkinter as ctk
 import tkinter as tk
@@ -12,7 +14,9 @@ class HomePage:
     """
 
     def __init__(self, app, firebase, props, return_to_gui):
-        """Initialize the first page of the application."""
+        """
+        Initialize the first page of the application.
+        """
         self.props = props
         self.firebase = firebase
         self.return_to_gui = return_to_gui
@@ -33,6 +37,9 @@ class HomePage:
         self.open_images()
 
     def create_frames(self):
+        """
+        Create all the frames for the home page.
+        """
         self.start_frame = ctk.CTkFrame(
             master=self.app,
             fg_color=self.props.BACKGROUND_DARK,
@@ -64,6 +71,9 @@ class HomePage:
                        self.login_frame]
 
     def open_images(self):
+        """
+        Open images
+        """
         self.logo_icon_img = Image.open('assests/menu logo.png')
         self.logo_icon_img.thumbnail((int(self.props.WIDTH * 0.08),
                                       int(self.props.HEIGHT * 0.08)))
@@ -107,18 +117,22 @@ class HomePage:
                                        int(self.props.HEIGHT * 0.08)))
 
     def clear_frame(self):
-        """Clear all the frames in the application."""
+        """
+        Clear all the frames in the application.
+        """
         for frame in self.frames:
             frame.pack_forget()
 
     def first_menu(self):
-        """Create the first menu of the application."""
-        self.option_visible = True
+        """
+        Create the first menu of the application.
+        """
         if not self.remember_login_var:
+            # Resets the user values if not remember me was checked
             self.user.reset()
+        # Makes sure the option window is closed
+        self.option_visible = True
         self.option_toggle()
-
-        # Clear old frames
 
         # Opens the new first_menu
         self.start_frame.pack(fill=tk.BOTH,
@@ -152,10 +166,9 @@ class HomePage:
         self.line_img.place(relx=0.497,
                             rely=0.8,
                             anchor="center")
-        # Icon logo as home button
+        # Icon logo as option button
         self.logo_icon_label1 = ctk.CTkLabel(master=self.start_frame,
                                              image=self.logo_icon, text='')
-        # Icon logo as mini-menu
         self.logo_icon_label1.bind("<Button-1>",
                                    command=lambda e: self.option_toggle())
 
@@ -163,7 +176,7 @@ class HomePage:
                                     rely=0.05,
                                     anchor='center')
 
-        # Creates alla the elements for the first frame
+        # Creates alla the elements for the login frame
         self.email_label = ctk.CTkLabel(
             master=self.login_frame,
             text='Email',
@@ -337,7 +350,9 @@ class HomePage:
         self.logged_in_toggle()
 
     def option_toggle(self):
-        """Toggle the option menu on and off."""
+        """
+        Toggle the option menu on and off.
+        """
         if self.option_visible:
             self.option_frame.lower()
             self.option_frame.place_forget()
@@ -348,7 +363,9 @@ class HomePage:
             self.option_visible = True
 
     def toggle_show_password(self):
-        """Toggle the visibility of the password entry."""
+        """
+        Toggle the visibility of the password entry.
+        """
         if self.password_visible:
             self.password_entry.configure(show='*')
             self.show_password_button.configure(image=self.hide_image)
@@ -359,7 +376,9 @@ class HomePage:
             self.password_visible = True
 
     def login_handler(self, email, password) -> None:
-        """Handle the login of the user."""
+        """
+        Handle the login of the user.
+        """
         token = self.firebase.login_user(email, password)
         if token is not None:
             self.logged_in = True
@@ -374,7 +393,9 @@ class HomePage:
             self.show_sign_in_sign_up_error()
 
     def remember_login(self) -> None:
-        """Remember the login of the user."""
+        """
+        Remember the login of the user.
+        """
         if self.remember_var.get() == 1:
             self.remember_login_var = True
             self.remember_email = self.email_entry.get()
@@ -384,7 +405,9 @@ class HomePage:
             print("Remembering login")
 
     def register_handler(self, email, password):
-        """Handle the registration of the user."""
+        """
+        Handle the registration of the user.
+        """
         if self.firebase.register_user(email, password):
             self.logged_in = True
             self.logged_in_toggle()
@@ -397,12 +420,16 @@ class HomePage:
             self.profile_option.unbind('<Button-1>')
 
     def hide_login_frame(self):
-        """Hide the login frame."""
+        """
+        Hide the login frame.
+        """
         self.login_frame.lower()
         self.login_frame.place_forget()
 
     def show_sign_in_sign_up_error(self):
-        """Show the sign in sign up error."""
+        """
+        Show the sign in sign up error.
+        """
         popup = ctk.CTkFrame(
             master=self.start_frame,
             fg_color='#1D1D1D',

@@ -19,7 +19,9 @@ warnings.filterwarnings("ignore",
 
 
 class GUI:
-    """Class for the graphical user interface of the application"""
+    """
+    Class for the graphical user interface of the application
+    """
     def __init__(self, app) -> None:
         self.app = app
 
@@ -42,14 +44,18 @@ class GUI:
         self.play()
 
     def create_frames(self) -> None:
-        """Creates all the frames for the application"""
+        """
+        Creates all the frames for the application
+        """
         self.home_page = HomePage(self.app, self.firebase, self.props, self.return_to_gui)
         self.profile_page = ProfilePage(self.app, self.props, self.return_to_gui)
 
         self.frames = [self.home_page, self.profile_page]
 
     def switch_frame(self, frame):
-        """Switches the frame to the given frame"""
+        """
+        Switches the frame to the given frame
+        """
         if frame == 'profile':
             self.clear_frames()
             self.profile_page.profile_menu()
@@ -58,20 +64,31 @@ class GUI:
             self.home_page.first_menu()
 
     def clear_frames(self) -> None:
-        """Clears all the frames"""
+        """
+        Clears all the frames
+        """
         for frame in self.frames:
             frame.clear_frame()
 
     def play(self):
+        """
+        Plays the menu music
+        """
         pygame.mixer.music.load("assests/Menu music1.mp3")
         pygame.mixer.music.play(loops=1)
 
         pygame.mixer.music.set_volume(0.009)
 
     def stop(self):
+        """
+        Stops the menu music
+        """
         pygame.mixer.music.stop()
 
     def return_to_gui(self, frame):
+        """
+        Returns to the gui
+        """
         self.switch_frame(frame)
 
 

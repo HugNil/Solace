@@ -1,4 +1,6 @@
-"""Profile page of the application"""
+"""
+Profile page of the application
+"""
 
 import customtkinter as ctk
 import tkinter as tk
@@ -7,9 +9,14 @@ from time import strftime
 
 
 class ProfilePage():
-    """Profile page of the application"""
+    """
+    Profile page of the application
+    """
 
     def __init__(self, app, props, return_to_gui):
+        """
+        Initialize the first page of the application.
+        """
         self.props = props
         self.return_to_gui = return_to_gui
 
@@ -21,6 +28,9 @@ class ProfilePage():
         self.option_visible = False
 
     def create_frames(self):
+        """
+        Creates all the frames for the application.
+        """
         self.profile_frame = ctk.CTkFrame(
             master=self.app,
             fg_color=self.props.BACKGROUND_DARK,
@@ -40,6 +50,9 @@ class ProfilePage():
         self.frames = [self.option_frame, self.profile_frame]
 
     def open_images(self):
+        """
+        Opens all the images for the page.
+        """
         self.logo_icon_img = Image.open('assests/menu logo.png')
         self.logo_icon_img.thumbnail((
             int(self.props.WIDTH * 0.08),
@@ -50,6 +63,9 @@ class ProfilePage():
                                             int(self.props.HEIGHT * 0.05)))
 
     def profile_menu(self):
+        """
+        Profile menu of the profile page.
+        """
         self.profile_frame.pack(fill=tk.BOTH,
                                 expand=True)
         self.option_visible = True
@@ -168,6 +184,9 @@ class ProfilePage():
         self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
 
     def option_toggle(self):
+        """
+        toggle option menu.
+        """
         if self.option_visible:
             self.option_frame.lower()
             self.option_frame.place_forget()
@@ -178,11 +197,16 @@ class ProfilePage():
             self.option_visible = True
 
     def clear_frame(self):
-        """Clear all the frames in the application."""
+        """
+        Clear all the frames in the application.
+        """
         for frame in self.frames:
             frame.pack_forget()
 
     def time(self):
+        """
+        Time widget.
+        """
         time_string = strftime("%H:%M")
         self.time_widget.configure(text=time_string)
         self.time_widget.after(1000, self.time)
