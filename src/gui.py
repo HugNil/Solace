@@ -53,6 +53,9 @@ class GUI:
         if frame == 'profile':
             self.clear_frames()
             self.profile_page.profile_menu()
+        if frame == 'home':
+            self.clear_frames()
+            self.home_page.first_menu()
 
     def clear_frames(self) -> None:
         """Clears all the frames"""

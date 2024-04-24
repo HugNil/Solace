@@ -24,6 +24,7 @@ class HomePage:
         self.remember_email = None
         self.remember_password = None
         self.remember_token = None
+        self.logged_in = False
 
         self.create_frames()
         self.open_images()
@@ -109,6 +110,8 @@ class HomePage:
 
     def first_menu(self):
         """Create the first menu of the application."""
+        self.option_visible = True
+        self.option_toggle()
         # Clear old frames
 
         # Opens the new first_menu
@@ -273,6 +276,7 @@ class HomePage:
         self.remember_checkbox = ctk.CTkCheckBox(
             master=self.login_frame,
             text='Remember Me',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
             variable=self.remember_var,
             fg_color=self.props.BACKGROUND_LIGHT,
             text_color=self.props.BACKGROUND_LIGHT,
@@ -281,7 +285,7 @@ class HomePage:
             border_width=2,
             border_color=self.props.BACKGROUND_LIGHT,
             width=int(self.props.WIDTH * 0.1),
-            height=int(self.props.HEIGHT * 0.1)
+            height=int(self.props.HEIGHT * 0.05)
             )
 
         self.password_icon_label = ctk.CTkLabel(master=self.login_frame,
@@ -297,7 +301,35 @@ class HomePage:
                                     rely=0.198,
                                     anchor='center')
 
-        # self.remember_checkbox.place(relx=0.5, rely=0.54, anchor='center')
+        self.remember_checkbox.place(relx=0.5, rely=0.6, anchor='center')
+
+        # Option bar
+        self.home_option = ctk.CTkLabel(master=self.option_frame,
+                                        text='Home',
+                                        font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+                                        height=int(self.props.HEIGHT * 0.02),
+                                        text_color=self.props.BACKGROUND_LIGHT)
+        self.home_option.bind('<Button-1>', lambda e: self.return_to_gui('home'))
+        self.home_option.place(relx=0.5, rely=0.15, anchor='center')
+
+        self.settings_option = ctk.CTkLabel(master=self.option_frame,
+                                            text='Settings',
+                                            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+                                            height=int(self.props.HEIGHT * 0.02),
+                                            text_color=self.props.BACKGROUND_LIGHT)
+        self.settings_option.bind('<Button-1>', lambda e: self.return_to_gui('settings'))
+        self.settings_option.place(relx=0.5, rely=0.85, anchor='center')
+
+        self.profile_option = ctk.CTkLabel(master=self.option_frame,
+                                           text='Profile',
+                                           font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+                                           height=int(self.props.HEIGHT * 0.02),
+                                           text_color=self.props.BACKGROUND_LIGHT)
+        self.profile_option.bind('<Button-1>',
+                                 command=lambda e: self.return_to_gui('profile'))
+        self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
+        self.logged_in_toggle()
+
 
     def option_toggle(self):
         """Toggle the option menu on and off."""
@@ -325,6 +357,8 @@ class HomePage:
         """Handle the login of the user."""
         self.token = self.firebase.login_user(email, password)
         if self.token is not None:
+            self.logged_in = True
+            self.logged_in_toggle()
             self.remember_login()
             self.clear_frame()
             self.return_to_gui('profile')
@@ -340,4 +374,10 @@ class HomePage:
     def register_handler(self, email, password):
         """Handle the registration of the user."""
         if self.firebase.register_user(email, password):
+            self.logged_in = True
+            self.logged_in_toggle()
             self.return_to_gui('profile')
+
+    def logged_in_toggle(self):
+        if not self.logged_in:
+            self.profile_option.unbind('<Button-1>')

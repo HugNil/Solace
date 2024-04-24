@@ -52,6 +52,8 @@ class ProfilePage(tk.Frame):
     def profile_menu(self):
         self.profile_frame.pack(fill=tk.BOTH,
                                 expand=True)
+        self.option_visible = True
+        self.option_toggle()
 
         self.logo_icon_label = ctk.CTkLabel(master=self.profile_frame,
                                             image=self.logo_icon, text='')
@@ -139,6 +141,31 @@ class ProfilePage(tk.Frame):
                                rely=0.23,
                                anchor='center')
         self.time()
+
+        # Option bar
+        self.home_option = ctk.CTkLabel(master=self.option_frame,
+                                        text='Home',
+                                        font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+                                        height=int(self.props.HEIGHT * 0.02),
+                                        text_color=self.props.BACKGROUND_LIGHT)
+        self.home_option.bind('<Button-1>', lambda e: self.return_to_gui('home'))
+        self.home_option.place(relx=0.5, rely=0.15, anchor='center')
+
+        self.settings_option = ctk.CTkLabel(master=self.option_frame,
+                                            text='Settings',
+                                            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+                                            height=int(self.props.HEIGHT * 0.02),
+                                            text_color=self.props.BACKGROUND_LIGHT)
+        self.settings_option.bind('<Button-1>', lambda e: self.return_to_gui('settings'))
+        self.settings_option.place(relx=0.5, rely=0.85, anchor='center')
+
+        self.profile_option = ctk.CTkLabel(master=self.option_frame,
+                                           text='Profile',
+                                           font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+                                           height=int(self.props.HEIGHT * 0.02),
+                                           text_color=self.props.BACKGROUND_LIGHT)
+        self.profile_option.bind('<Button-1>', lambda e: self.return_to_gui('profile'))
+        self.profile_option.place(relx=0.5, rely=0.25, anchor='center')
 
     def option_toggle(self):
         if self.option_visible:
