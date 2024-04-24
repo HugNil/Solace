@@ -85,9 +85,10 @@ class HomePage:
         self.password_icon_img = Image.open('assests/PasswordIcon.png')
         self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
                                           int(self.props.HEIGHT * 0.1)))
-        self.password_icon = ctk.CTkImage(self.password_icon_img,
-                                          size=(int(self.props.WIDTH * 0.06),
-                                                int(self.props.HEIGHT * 0.042)))
+        self.password_icon = ctk.CTkImage(
+            self.password_icon_img,
+            size=(int(self.props.WIDTH * 0.06),
+                  int(self.props.HEIGHT * 0.042)))
 
         self.email_icon_img = Image.open('assests/UserNameIcon.png')
         self.email_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
@@ -302,15 +303,18 @@ class HomePage:
             height=int(self.props.HEIGHT * 0.05)
             )
 
-        self.password_icon_label = ctk.CTkLabel(master=self.login_frame,
-                                                image=self.password_icon,
-                                                text='')
+        self.password_icon_label = ctk.CTkLabel(
+            master=self.login_frame,
+            image=self.password_icon,
+            text='')
         self.password_icon_label.place(relx=0.12,
                                        rely=0.397,
                                        anchor='center')
-        self.email_icon_label = ctk.CTkLabel(master=self.login_frame,
-                                             image=self.email_icon,
-                                             text='')
+        self.email_icon_label = ctk.CTkLabel(
+            master=self.login_frame,
+            image=self.email_icon,
+            text=''
+            )
         self.email_icon_label.place(relx=0.12,
                                     rely=0.198,
                                     anchor='center')
@@ -318,36 +322,49 @@ class HomePage:
         self.remember_checkbox.place(relx=0.5, rely=0.6, anchor='center')
 
         # Option bar
-        self.home_option = ctk.CTkLabel(master=self.option_frame,
-                                        text='Home',
-                                        font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-                                        height=int(self.props.HEIGHT * 0.02),
-                                        text_color=self.props.BACKGROUND_LIGHT)
-        self.home_option.bind('<Button-1>', lambda e: self.return_to_gui('home'))
+        self.home_option = ctk.CTkLabel(
+            master=self.option_frame,
+            text='Home',
+            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+            height=int(self.props.HEIGHT * 0.02),
+            text_color=self.props.BACKGROUND_LIGHT
+            )
+        self.home_option.bind(
+            '<Button-1>', lambda e: self.return_to_gui('home')
+            )
         self.home_option.place(relx=0.5, rely=0.15, anchor='center')
 
-        self.settings_option = ctk.CTkLabel(master=self.option_frame,
-                                            text='Settings',
-                                            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-                                            height=int(self.props.HEIGHT * 0.02),
-                                            text_color=self.props.BACKGROUND_LIGHT)
-        self.settings_option.bind('<Button-1>', lambda e: self.return_to_gui('settings'))
+        self.settings_option = ctk.CTkLabel(
+            master=self.option_frame,
+            text='Settings',
+            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+            height=int(self.props.HEIGHT * 0.02),
+            text_color=self.props.BACKGROUND_LIGHT
+            )
+        self.settings_option.bind(
+            '<Button-1>', lambda e: self.return_to_gui('settings')
+            )
         self.settings_option.place(relx=0.5, rely=0.85, anchor='center')
 
-        self.profile_option = ctk.CTkLabel(master=self.option_frame,
-                                           text='Profile',
-                                           font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-                                           height=int(self.props.HEIGHT * 0.02),
-                                           text_color=self.props.BACKGROUND_LIGHT)
-        self.profile_option.bind('<Button-1>',
-                                 command=lambda e: self.return_to_gui('profile'))
+        self.profile_option = ctk.CTkLabel(
+            master=self.option_frame,
+            text='Profile',
+            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+            height=int(self.props.HEIGHT * 0.02),
+            text_color=self.props.BACKGROUND_LIGHT
+            )
+        self.profile_option.bind(
+            '<Button-1>',
+            command=lambda e: self.return_to_gui('profile'))
         self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
 
-        self.logout_option = ctk.CTkLabel(master=self.option_frame,
-                                          text='Logout',
-                                          font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-                                          height=int(self.props.HEIGHT * 0.02),
-                                          text_color=self.props.BACKGROUND_LIGHT)
+        self.logout_option = ctk.CTkLabel(
+            master=self.option_frame,
+            text='Logout',
+            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+            height=int(self.props.HEIGHT * 0.02),
+            text_color=self.props.BACKGROUND_LIGHT
+            )
         self.logout_option.bind('<Button-1>', lambda e: self.logout_handler())
         self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
         self.logged_in_toggle()
@@ -451,10 +468,12 @@ class HomePage:
             width=int(self.props.WIDTH * 0.8),
             height=int(self.props.HEIGHT * 0.15))
 
-        label = ctk.CTkLabel(master=popup,
-                             text='Error:\nEmail or password is incorrect.',
-                             font=('Arial', (self.props.HEIGHT * 0.02), 'bold'),
-                             height=2)
+        label = ctk.CTkLabel(
+            master=popup,
+            text='Error:\nEmail or password is incorrect.',
+            font=('Arial', (self.props.HEIGHT * 0.02), 'bold'),
+            height=2
+            )
         label.place(relx=0.5, rely=0.5, anchor='center')
 
         popup.lift()

@@ -41,12 +41,14 @@ class ProfilePage():
         self.profile_frame.configure(width=self.props.WIDTH,
                                      height=self.props.HEIGHT)
 
-        self.option_frame = ctk.CTkFrame(master=self.profile_frame,
-                                         fg_color=self.props.BACKGROUND_DARK,
-                                         border_color=self.props.BACKGROUND_LIGHT,
-                                         border_width=2,
-                                         width=int(self.props.WIDTH * 0.3),
-                                         height=int(self.props.HEIGHT * 0.3))
+        self.option_frame = ctk.CTkFrame(
+            master=self.profile_frame,
+            fg_color=self.props.BACKGROUND_DARK,
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            width=int(self.props.WIDTH * 0.3),
+            height=int(self.props.HEIGHT * 0.3)
+            )
 
         self.frames = [self.option_frame, self.profile_frame]
 
@@ -144,51 +146,68 @@ class ProfilePage():
                                  rely=0.85,
                                  anchor='center')
 
-        self.date = ctk.CTkLabel(master=self.profile_frame,
-                                 text=strftime("%d %b %Y"),
-                                 font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'))
+        self.date = ctk.CTkLabel(
+            master=self.profile_frame,
+            text=strftime("%d %b %Y"),
+            font=('Arial', int(self.props.HEIGHT * 0.05), 'bold')
+            )
         self.date.place(relx=0.5,
                         rely=0.15,
                         anchor='center')
 
-        self.time_widget = ctk.CTkLabel(master=self.profile_frame,
-                                        text='',
-                                        font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'))
+        self.time_widget = ctk.CTkLabel(
+            master=self.profile_frame,
+            text='',
+            font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'))
         self.time_widget.place(relx=0.5,
                                rely=0.23,
                                anchor='center')
         self.time()
 
         # Option bar
-        self.home_option = ctk.CTkLabel(master=self.option_frame,
-                                        text='Home',
-                                        font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-                                        height=int(self.props.HEIGHT * 0.02),
-                                        text_color=self.props.BACKGROUND_LIGHT)
-        self.home_option.bind('<Button-1>', lambda e: self.return_to_gui('home'))
+        self.home_option = ctk.CTkLabel(
+            master=self.option_frame,
+            text='Home',
+            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+            height=int(self.props.HEIGHT * 0.02),
+            text_color=self.props.BACKGROUND_LIGHT
+            )
+        self.home_option.bind(
+            '<Button-1>', lambda e: self.return_to_gui('home')
+            )
         self.home_option.place(relx=0.5, rely=0.15, anchor='center')
 
-        self.settings_option = ctk.CTkLabel(master=self.option_frame,
-                                            text='Settings',
-                                            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-                                            height=int(self.props.HEIGHT * 0.02),
-                                            text_color=self.props.BACKGROUND_LIGHT)
-        self.settings_option.bind('<Button-1>', lambda e: self.return_to_gui('settings'))
+        self.settings_option = ctk.CTkLabel(
+            master=self.option_frame,
+            text='Settings',
+            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+            height=int(self.props.HEIGHT * 0.02),
+            text_color=self.props.BACKGROUND_LIGHT
+            )
+        self.settings_option.bind(
+            '<Button-1>', lambda e: self.return_to_gui('settings')
+            )
         self.settings_option.place(relx=0.5, rely=0.85, anchor='center')
 
-        self.profile_option = ctk.CTkLabel(master=self.option_frame,
-                                           text='Profile',
-                                           font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-                                           height=int(self.props.HEIGHT * 0.02),
-                                           text_color=self.props.BACKGROUND_LIGHT)
-        self.profile_option.bind('<Button-1>', lambda e: self.return_to_gui('profile'))
+        self.profile_option = ctk.CTkLabel(
+            master=self.option_frame,
+            text='Profile',
+            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+            height=int(self.props.HEIGHT * 0.02),
+            text_color=self.props.BACKGROUND_LIGHT
+            )
+        self.profile_option.bind(
+            '<Button-1>', lambda e: self.return_to_gui('profile')
+            )
         self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
 
-        self.logout_option = ctk.CTkLabel(master=self.option_frame,
-                                          text='Logout',
-                                          font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-                                          height=int(self.props.HEIGHT * 0.02),
-                                          text_color=self.props.BACKGROUND_LIGHT)
+        self.logout_option = ctk.CTkLabel(
+            master=self.option_frame,
+            text='Logout',
+            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+            height=int(self.props.HEIGHT * 0.02),
+            text_color=self.props.BACKGROUND_LIGHT
+            )
         self.logout_option.bind('<Button-1>', lambda e: self.logout_handler())
         self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
 
