@@ -165,7 +165,7 @@ class ProfilePage():
                                            height=int(self.props.HEIGHT * 0.02),
                                            text_color=self.props.BACKGROUND_LIGHT)
         self.profile_option.bind('<Button-1>', lambda e: self.return_to_gui('profile'))
-        self.profile_option.place(relx=0.5, rely=0.25, anchor='center')
+        self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
 
     def option_toggle(self):
         if self.option_visible:
