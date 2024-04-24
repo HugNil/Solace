@@ -1,10 +1,10 @@
 import customtkinter as ctk
-import tkinter as tk
-from PIL import Image
+# import tkinter as tk
+# from PIL import Image
 
 
 class Settings():
-    
+
     def __init__(self, app, props, return_to_gui):
         self.props = props
         self.return_to_gui = return_to_gui
@@ -19,8 +19,8 @@ class Settings():
             border_width=2
             )
         self.settings_frame.configure(width=self.props.WIDTH,
-                                     height=self.props.HEIGHT)
-        
+                                      height=self.props.HEIGHT)
+
     def open_settings(self):
         settings_window = ctk.CTkToplevel(self.app)
         settings_window .title("Settings")

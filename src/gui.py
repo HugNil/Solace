@@ -23,6 +23,10 @@ class GUI:
     def __init__(self, app) -> None:
         self.app = app
 
+        self.logger = log_writer.Log_writer()
+        self.logger.clear_log()
+        self.logger.log('Application started.')
+
         self.user = User()
         self.props = Props(self.app)
         self.app.title(self.props.APP_NAME)
@@ -32,7 +36,6 @@ class GUI:
         self.app.configure(bg=self.props.BACKGROUND_DARK)
         set_appearance_mode(self.props.THEME)
         self.app.iconbitmap("assests/Solace logo1_klippt.ico")
-        self.logger = log_writer.Log_writer()
 
         self.firebase = FirebaseConnection()
 
@@ -42,9 +45,6 @@ class GUI:
 
         pygame.mixer.init()
         self.play()
-
-        self.logger.clear_log()
-        self.logger.log('Application started.')
 
     def create_frames(self) -> None:
         """
@@ -97,14 +97,15 @@ class GUI:
         """
         pygame.mixer.music.load("assests/Menu music1.mp3")
         pygame.mixer.music.play(loops=1)
-
         pygame.mixer.music.set_volume(0.009)
+        self.logger.log('Menu music started.')
 
     def stop(self):
         """
         Stops the menu music
         """
         pygame.mixer.music.stop()
+        self.logger.log('Menu music stopped.')
 
     def return_to_gui(self, frame):
         """

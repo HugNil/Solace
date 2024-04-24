@@ -6,6 +6,7 @@ import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
 from time import strftime
+import log_writer
 
 
 class ProfilePage():
@@ -20,6 +21,8 @@ class ProfilePage():
         self.props = props
         self.return_to_gui = return_to_gui
         self.user = user
+        self.logger = log_writer.Log_writer()
+        self.logger.log('Profile page opened.')
 
         self.app = app
 
@@ -219,10 +222,12 @@ class ProfilePage():
             self.option_frame.lower()
             self.option_frame.place_forget()
             self.option_visible = False
+            self.logger.log('Option menu closed.')
         else:
             self.option_frame.lift()
             self.option_frame.place(relx=0.19, rely=0.23, anchor='center')
             self.option_visible = True
+            self.logger.log('Option menu opened.')
 
     def clear_frame(self):
         """
@@ -243,5 +248,6 @@ class ProfilePage():
         """
         Logout handler.
         """
+        self.logger.log(f'User {self.user.email} logged out.')
         self.user.logout()
         self.return_to_gui('home')

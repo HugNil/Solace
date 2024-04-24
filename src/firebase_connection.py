@@ -6,6 +6,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore, auth
 import requests
 import datetime
+import log_writer
 
 cred = credentials.Certificate(r"Solace_key.json")
 firebase_admin.initialize_app(cred)
@@ -19,6 +20,7 @@ class FirebaseConnection:
         """
         Initialize the connection
         """
+        self.logger = log_writer.Log_writer()
         self.db = firestore.client()
         self.auth = auth
 
@@ -30,13 +32,19 @@ class FirebaseConnection:
             self.new_user = self.auth.create_user(email=email,
                                                   password=password)
             print(f"Successfully created user: {self.new_user.uid}")
+            self.logger.log(
+                f"Successfully created user: {self.new_user.uid}"
+                f"with email: {email}")
             return True
 
         except firebase_admin.auth.EmailAlreadyExistsError:
             print("Error: The user with the provided email already exists.")
+            self.logger.log(
+                "Error: The user with the provided email already exists.")
             return False
 
         except Exception as e:
+            self.logger.log(f"Error creating user: {e}")
             print("Error creating user:", e)
 
     def login_user(self, email, password):
