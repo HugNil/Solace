@@ -32,3 +32,12 @@ class User:
         Logs out the user.
         """
         self.reset()
+
+    def login(self, email, password, token):
+        """
+        Logs in the user.
+        """
+        self.email = email
+        self.password = password
+        self.token = token
+        print('Logged in as'+ self.email)

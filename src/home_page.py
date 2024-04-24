@@ -388,6 +388,7 @@ class HomePage:
             self.logged_in_toggle()
             self.remember_login()
             self.clear_frame()
+            self.user.login(email, password, token)
             self.return_to_gui('profile')
         else:
             self.show_sign_in_sign_up_error()
