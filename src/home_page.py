@@ -384,7 +384,6 @@ class HomePage:
         """
         token = self.firebase.login_user(email, password)
         if token is not None:
-            self.user.logged_in = True
             self.logged_in_toggle()
             self.remember_login()
             self.clear_frame()
@@ -416,9 +415,7 @@ class HomePage:
         Handle the registration of the user.
         """
         if self.firebase.register_user(email, password):
-            self.user.logged_in = True
-            self.logged_in_toggle()
-            self.return_to_gui('profile')
+            self.login_handler(email, password)
         else:
             self.show_sign_in_sign_up_error()
 

@@ -40,4 +40,5 @@ class User:
         self.email = email
         self.password = password
         self.token = token
+        self.logged_in = True
         print('Logged in as'+ self.email)
