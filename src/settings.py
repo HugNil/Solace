@@ -11,11 +11,6 @@ class Settings():
 
         self.app = app
 
-        #Toplevel window that be over the app home- and profile page
-        self.settings_window = ctk.CTkToplevel(self.app)
-        self.settings_window .title("Settings")
-
-    
     def create_frames(self):
         self.settings_frame = ctk.CTkFrame(
             master=self.app,
@@ -27,9 +22,7 @@ class Settings():
                                      height=self.props.HEIGHT)
         
     def open_settings(self):
+        settings_window = ctk.CTkToplevel(self.app)
+        settings_window .title("Settings")
         settings_window = Settings(self.app, self.props, self.return_to_gui)
         settings_window.create_frames()
-  
-
-
-    
