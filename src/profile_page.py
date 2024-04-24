@@ -1,4 +1,6 @@
-"""Profile page of the application"""
+"""
+Profile page of the application
+"""
 
 import customtkinter as ctk
 import tkinter as tk
@@ -6,12 +8,18 @@ from PIL import Image
 from time import strftime
 
 
-class ProfilePage(tk.Frame):
-    """Profile page of the application"""
+class ProfilePage():
+    """
+    Profile page of the application
+    """
 
-    def __init__(self, app, props, return_to_gui):
+    def __init__(self, app, props, user, return_to_gui):
+        """
+        Initialize the first page of the application.
+        """
         self.props = props
         self.return_to_gui = return_to_gui
+        self.user = user
 
         self.app = app
 
@@ -21,6 +29,9 @@ class ProfilePage(tk.Frame):
         self.option_visible = False
 
     def create_frames(self):
+        """
+        Creates all the frames for the application.
+        """
         self.profile_frame = ctk.CTkFrame(
             master=self.app,
             fg_color=self.props.BACKGROUND_DARK,
@@ -40,6 +51,9 @@ class ProfilePage(tk.Frame):
         self.frames = [self.option_frame, self.profile_frame]
 
     def open_images(self):
+        """
+        Opens all the images for the page.
+        """
         self.logo_icon_img = Image.open('assests/menu logo.png')
         self.logo_icon_img.thumbnail((
             int(self.props.WIDTH * 0.08),
@@ -50,6 +64,9 @@ class ProfilePage(tk.Frame):
                                             int(self.props.HEIGHT * 0.05)))
 
     def profile_menu(self):
+        """
+        Profile menu of the profile page.
+        """
         self.profile_frame.pack(fill=tk.BOTH,
                                 expand=True)
         self.option_visible = True
@@ -165,9 +182,20 @@ class ProfilePage(tk.Frame):
                                            height=int(self.props.HEIGHT * 0.02),
                                            text_color=self.props.BACKGROUND_LIGHT)
         self.profile_option.bind('<Button-1>', lambda e: self.return_to_gui('profile'))
-        self.profile_option.place(relx=0.5, rely=0.25, anchor='center')
+        self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
+
+        self.logout_option = ctk.CTkLabel(master=self.option_frame,
+                                          text='Logout',
+                                          font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+                                          height=int(self.props.HEIGHT * 0.02),
+                                          text_color=self.props.BACKGROUND_LIGHT)
+        self.logout_option.bind('<Button-1>', lambda e: self.logout_handler())
+        self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
 
     def option_toggle(self):
+        """
+        toggle option menu.
+        """
         if self.option_visible:
             self.option_frame.lower()
             self.option_frame.place_forget()
@@ -178,11 +206,23 @@ class ProfilePage(tk.Frame):
             self.option_visible = True
 
     def clear_frame(self):
-        """Clear all the frames in the application."""
+        """
+        Clear all the frames in the application.
+        """
         for frame in self.frames:
             frame.pack_forget()
 
     def time(self):
+        """
+        Time widget.
+        """
         time_string = strftime("%H:%M")
         self.time_widget.configure(text=time_string)
         self.time_widget.after(1000, self.time)
+
+    def logout_handler(self):
+        """
+        Logout handler.
+        """
+        self.user.logout()
+        self.return_to_gui('home')

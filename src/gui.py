@@ -12,18 +12,17 @@ from settings import Settings
 from props import Props
 import pygame
 from customtkinter import set_appearance_mode
-
-
-warnings.filterwarnings("ignore",
-                        message="CTkLabel Warning:"
-                        "Given image is not CTkImage*")
+from user import User
 
 
 class GUI:
-    """Class for the graphical user interface of the application"""
+    """
+    Class for the graphical user interface of the application
+    """
     def __init__(self, app) -> None:
         self.app = app
 
+        self.user = User()
         self.props = Props(self.app)
         self.app.title(self.props.APP_NAME)
         self.app.geometry(f'{self.props.WIDTH}x{self.props.HEIGHT}')
@@ -43,16 +42,26 @@ class GUI:
         self.play()
 
     def create_frames(self) -> None:
+<<<<<<< HEAD
         """Creates all the frames for the application"""
         self.home_page = HomePage(self.app, self.firebase, self.props, self.return_to_gui)
         self.profile_page = ProfilePage(self.app, self.props, self.return_to_gui)
         self.settings = Settings(self.app, self.props, self.return_to_gui)
         
+=======
+        """
+        Creates all the frames for the application
+        """
+        self.home_page = HomePage(self.app, self.firebase, self.props, self.user, self.return_to_gui)
+        self.profile_page = ProfilePage(self.app, self.props, self.user, self.return_to_gui)
+>>>>>>> 30bb8246d5b24323409ccd233741c28315c53b2e
 
         self.frames = [self.home_page, self.profile_page]
 
     def switch_frame(self, frame):
-        """Switches the frame to the given frame"""
+        """
+        Switches the frame to the given frame
+        """
         if frame == 'profile':
             self.clear_frames()
             self.profile_page.profile_menu()
@@ -63,20 +72,31 @@ class GUI:
             self.settings.open_settings()
 
     def clear_frames(self) -> None:
-        """Clears all the frames"""
+        """
+        Clears all the frames
+        """
         for frame in self.frames:
             frame.clear_frame()
 
     def play(self):
+        """
+        Plays the menu music
+        """
         pygame.mixer.music.load("assests/Menu music1.mp3")
         pygame.mixer.music.play(loops=1)
 
         pygame.mixer.music.set_volume(0.009)
 
     def stop(self):
+        """
+        Stops the menu music
+        """
         pygame.mixer.music.stop()
 
     def return_to_gui(self, frame):
+        """
+        Returns to the gui
+        """
         self.switch_frame(frame)
 
 

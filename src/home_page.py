@@ -1,4 +1,6 @@
-"""The first page of the application, where the user can login or register."""
+"""
+The first page of the application, where the user can login or register.
+"""
 
 import customtkinter as ctk
 import tkinter as tk
@@ -10,26 +12,28 @@ class HomePage:
     The first page of the application, where the user can login or register.
     """
 
-    def __init__(self, app, firebase, props, return_to_gui):
-        """Initialize the first page of the application."""
+    def __init__(self, app, firebase, props, user, return_to_gui):
+        """
+        Initialize the first page of the application.
+        """
         self.props = props
         self.firebase = firebase
         self.return_to_gui = return_to_gui
 
         self.app = app
+        self.user = user
 
         self.password_visible = False
         self.option_visible = False
         self.remember_var = tk.IntVar()
-        self.remember_email = None
-        self.remember_password = None
-        self.remember_token = None
-        self.logged_in = False
 
         self.create_frames()
         self.open_images()
 
     def create_frames(self):
+        """
+        Create all the frames for the home page.
+        """
         self.start_frame = ctk.CTkFrame(
             master=self.app,
             fg_color=self.props.BACKGROUND_DARK,
@@ -61,6 +65,9 @@ class HomePage:
                        self.login_frame]
 
     def open_images(self):
+        """
+        Open images
+        """
         self.logo_icon_img = Image.open('assests/menu logo.png')
         self.logo_icon_img.thumbnail((int(self.props.WIDTH * 0.08),
                                       int(self.props.HEIGHT * 0.08)))
@@ -104,15 +111,23 @@ class HomePage:
                                        int(self.props.HEIGHT * 0.08)))
 
     def clear_frame(self):
-        """Clear all the frames in the application."""
+        """
+        Clear all the frames in the application.
+        """
         for frame in self.frames:
             frame.pack_forget()
 
     def first_menu(self):
-        """Create the first menu of the application."""
+        """
+        Create the first menu of the application.
+        """
+        if not self.user.remember_login_var:
+            # Resets the user values if not remember me was checked
+            self.user.logout()
+            self.show_login_frame()
+        # Makes sure the option window is closed
         self.option_visible = True
         self.option_toggle()
-        # Clear old frames
 
         # Opens the new first_menu
         self.start_frame.pack(fill=tk.BOTH,
@@ -146,10 +161,9 @@ class HomePage:
         self.line_img.place(relx=0.497,
                             rely=0.8,
                             anchor="center")
-        # Icon logo as home button
+        # Icon logo as option button
         self.logo_icon_label1 = ctk.CTkLabel(master=self.start_frame,
                                              image=self.logo_icon, text='')
-        # Icon logo as mini-menu
         self.logo_icon_label1.bind("<Button-1>",
                                    command=lambda e: self.option_toggle())
 
@@ -157,7 +171,7 @@ class HomePage:
                                     rely=0.05,
                                     anchor='center')
 
-        # Creates alla the elements for the first frame
+        # Creates alla the elements for the login frame
         self.email_label = ctk.CTkLabel(
             master=self.login_frame,
             text='Email',
@@ -328,11 +342,20 @@ class HomePage:
         self.profile_option.bind('<Button-1>',
                                  command=lambda e: self.return_to_gui('profile'))
         self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
+
+        self.logout_option = ctk.CTkLabel(master=self.option_frame,
+                                          text='Logout',
+                                          font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+                                          height=int(self.props.HEIGHT * 0.02),
+                                          text_color=self.props.BACKGROUND_LIGHT)
+        self.logout_option.bind('<Button-1>', lambda e: self.logout_handler())
+        self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
         self.logged_in_toggle()
 
-
     def option_toggle(self):
-        """Toggle the option menu on and off."""
+        """
+        Toggle the option menu on and off.
+        """
         if self.option_visible:
             self.option_frame.lower()
             self.option_frame.place_forget()
@@ -343,7 +366,9 @@ class HomePage:
             self.option_visible = True
 
     def toggle_show_password(self):
-        """Toggle the visibility of the password entry."""
+        """
+        Toggle the visibility of the password entry.
+        """
         if self.password_visible:
             self.password_entry.configure(show='*')
             self.show_password_button.configure(image=self.hide_image)
@@ -354,30 +379,85 @@ class HomePage:
             self.password_visible = True
 
     def login_handler(self, email, password) -> None:
-        """Handle the login of the user."""
-        self.token = self.firebase.login_user(email, password)
-        if self.token is not None:
-            self.logged_in = True
+        """
+        Handle the login of the user.
+        """
+        token = self.firebase.login_user(email, password)
+        if token is not None:
             self.logged_in_toggle()
             self.remember_login()
             self.clear_frame()
+            self.user.login(email, password, token)
             self.return_to_gui('profile')
+        else:
+            self.show_sign_in_sign_up_error()
+
+    def logout_handler(self) -> None:
+        """
+        Handle the logout of the user.
+        """
+        self.user.logged_in = False
+        self.user.remember_login_var = False
+        self.logged_in_toggle()
+        self.return_to_gui('home')
 
     def remember_login(self) -> None:
-        """Remember the login of the user."""
+        """
+        Remember the login of the user.
+        """
         if self.remember_var.get() == 1:
-            self.remember_email = self.email_entry.get()
-            self.remember_password = self.password_entry.get()
-            self.remember_token = self.token
+            self.user.remember_login_var = True
+            self.hide_login_frame()
             print("Remembering login")
 
     def register_handler(self, email, password):
-        """Handle the registration of the user."""
+        """
+        Handle the registration of the user.
+        """
         if self.firebase.register_user(email, password):
-            self.logged_in = True
-            self.logged_in_toggle()
-            self.return_to_gui('profile')
+            self.login_handler(email, password)
+        else:
+            self.show_sign_in_sign_up_error()
 
     def logged_in_toggle(self):
-        if not self.logged_in:
+        if not self.user.remember_login_var:
             self.profile_option.unbind('<Button-1>')
+        if not self.user.logged_in:
+            self.logout_option.unbind('<Button-1>')
+
+    def hide_login_frame(self):
+        """
+        Hide the login frame.
+        """
+        self.login_frame.lower()
+        self.login_frame.place_forget()
+
+    def show_login_frame(self):
+        """
+        Show the login frame.
+        """
+        self.login_frame.lift()
+        self.login_frame.place(relx=0.5, rely=0.5, anchor='center')
+
+    def show_sign_in_sign_up_error(self):
+        """
+        Show the sign in sign up error.
+        """
+        popup = ctk.CTkFrame(
+            master=self.start_frame,
+            fg_color='#1D1D1D',
+            border_color='red',
+            border_width=2,
+            width=int(self.props.WIDTH * 0.8),
+            height=int(self.props.HEIGHT * 0.15))
+
+        label = ctk.CTkLabel(master=popup,
+                             text='Error:\nEmail or password is incorrect.',
+                             font=('Arial', (self.props.HEIGHT * 0.02), 'bold'),
+                             height=2)
+        label.place(relx=0.5, rely=0.5, anchor='center')
+
+        popup.lift()
+        popup.place(relx=0.5, rely=0.5, anchor='center')
+
+        popup.after(3000, popup.destroy)

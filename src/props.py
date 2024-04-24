@@ -13,6 +13,9 @@ class Props:
         self.default_values()
 
     def default_values(self):
+        """
+        Initialize the default values.
+        """
         screen_width = self.app.winfo_screenwidth()
         screen_height = self.app.winfo_screenheight()
         self.WIDTH = int(screen_width * 0.21)
@@ -23,6 +26,3 @@ class Props:
         self.APP_NAME = 'Solace'
         self.GRADIENT = "NightTrain.json"
         self.THEME = 'dark'
-
-        print(screen_width, screen_height)
-        print(self.WIDTH, self.HEIGHT)
