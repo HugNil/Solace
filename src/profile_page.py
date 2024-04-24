@@ -13,12 +13,13 @@ class ProfilePage():
     Profile page of the application
     """
 
-    def __init__(self, app, props, return_to_gui):
+    def __init__(self, app, props, user, return_to_gui):
         """
         Initialize the first page of the application.
         """
         self.props = props
         self.return_to_gui = return_to_gui
+        self.user = user
 
         self.app = app
 
@@ -183,6 +184,14 @@ class ProfilePage():
         self.profile_option.bind('<Button-1>', lambda e: self.return_to_gui('profile'))
         self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
 
+        self.logout_option = ctk.CTkLabel(master=self.option_frame,
+                                          text='Logout',
+                                          font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+                                          height=int(self.props.HEIGHT * 0.02),
+                                          text_color=self.props.BACKGROUND_LIGHT)
+        self.logout_option.bind('<Button-1>', lambda e: self.logout_handler())
+        self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
+
     def option_toggle(self):
         """
         toggle option menu.
@@ -210,3 +219,10 @@ class ProfilePage():
         time_string = strftime("%H:%M")
         self.time_widget.configure(text=time_string)
         self.time_widget.after(1000, self.time)
+
+    def logout_handler(self):
+        """
+        Logout handler.
+        """
+        self.user.logout()
+        self.return_to_gui('home')

@@ -11,11 +11,7 @@ from profile_page import ProfilePage
 from props import Props
 import pygame
 from customtkinter import set_appearance_mode
-
-
-warnings.filterwarnings("ignore",
-                        message="CTkLabel Warning:"
-                        "Given image is not CTkImage*")
+from user import User
 
 
 class GUI:
@@ -25,6 +21,7 @@ class GUI:
     def __init__(self, app) -> None:
         self.app = app
 
+        self.user = User()
         self.props = Props(self.app)
         self.app.title(self.props.APP_NAME)
         self.app.geometry(f'{self.props.WIDTH}x{self.props.HEIGHT}')
@@ -47,8 +44,8 @@ class GUI:
         """
         Creates all the frames for the application
         """
-        self.home_page = HomePage(self.app, self.firebase, self.props, self.return_to_gui)
-        self.profile_page = ProfilePage(self.app, self.props, self.return_to_gui)
+        self.home_page = HomePage(self.app, self.firebase, self.props, self.user, self.return_to_gui)
+        self.profile_page = ProfilePage(self.app, self.props, self.user, self.return_to_gui)
 
         self.frames = [self.home_page, self.profile_page]
 

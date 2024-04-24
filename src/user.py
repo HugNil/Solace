@@ -14,6 +14,8 @@ class User:
         self.email = 'N/A'
         self.password = 'N/A'
         self.token = 'N/A'
+        self.logged_in = False
+        self.remember_login_var = False
 
     def reset(self):
         """
@@ -22,3 +24,11 @@ class User:
         self.email = 'N/A'
         self.password = 'N/A'
         self.token = 'N/A'
+        self.logged_in = False
+        self.remember_login_var = False
+
+    def logout(self):
+        """
+        Logs out the user.
+        """
+        self.reset()

@@ -5,7 +5,6 @@ The first page of the application, where the user can login or register.
 import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
-from user import User
 
 
 class HomePage:
@@ -13,7 +12,7 @@ class HomePage:
     The first page of the application, where the user can login or register.
     """
 
-    def __init__(self, app, firebase, props, return_to_gui):
+    def __init__(self, app, firebase, props, user, return_to_gui):
         """
         Initialize the first page of the application.
         """
@@ -22,16 +21,11 @@ class HomePage:
         self.return_to_gui = return_to_gui
 
         self.app = app
-        self.user = User()
+        self.user = user
 
         self.password_visible = False
         self.option_visible = False
         self.remember_var = tk.IntVar()
-        self.remember_email = None
-        self.remember_password = None
-        self.remember_token = None
-        self.logged_in = False
-        self.remember_login_var = False
 
         self.create_frames()
         self.open_images()
@@ -127,9 +121,10 @@ class HomePage:
         """
         Create the first menu of the application.
         """
-        if not self.remember_login_var:
+        if not self.user.remember_login_var:
             # Resets the user values if not remember me was checked
-            self.user.reset()
+            self.user.logout()
+            self.show_login_frame()
         # Makes sure the option window is closed
         self.option_visible = True
         self.option_toggle()
@@ -349,6 +344,14 @@ class HomePage:
         self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
         self.logged_in_toggle()
 
+        self.logout_option = ctk.CTkLabel(master=self.option_frame,
+                                          text='Logout',
+                                          font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
+                                          height=int(self.props.HEIGHT * 0.02),
+                                          text_color=self.props.BACKGROUND_LIGHT)
+        self.logout_option.bind('<Button-1>', lambda e: self.logout_handler())
+        self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
+
     def option_toggle(self):
         """
         Toggle the option menu on and off.
@@ -381,23 +384,29 @@ class HomePage:
         """
         token = self.firebase.login_user(email, password)
         if token is not None:
-            self.logged_in = True
+            self.user.logged_in = True
             self.logged_in_toggle()
             self.remember_login()
             self.clear_frame()
-            self.user.email = email
-            self.user.password = password
-            self.user.token = token
             self.return_to_gui('profile')
         else:
             self.show_sign_in_sign_up_error()
+
+    def logout_handler(self) -> None:
+        """
+        Handle the logout of the user.
+        """
+        self.user.logged_in = False
+        self.user.remember_login_var = False
+        self.logged_in_toggle()
+        self.return_to_gui('home')
 
     def remember_login(self) -> None:
         """
         Remember the login of the user.
         """
         if self.remember_var.get() == 1:
-            self.remember_login_var = True
+            self.user.remember_login_var = True
             self.hide_login_frame()
             print("Remembering login")
 
@@ -406,14 +415,14 @@ class HomePage:
         Handle the registration of the user.
         """
         if self.firebase.register_user(email, password):
-            self.logged_in = True
+            self.user.logged_in = True
             self.logged_in_toggle()
             self.return_to_gui('profile')
         else:
             self.show_sign_in_sign_up_error()
 
     def logged_in_toggle(self):
-        if not self.remember_login_var:
+        if not self.user.remember_login_var:
             self.profile_option.unbind('<Button-1>')
 
     def hide_login_frame(self):
@@ -422,6 +431,13 @@ class HomePage:
         """
         self.login_frame.lower()
         self.login_frame.place_forget()
+
+    def show_login_frame(self):
+        """
+        Show the login frame.
+        """
+        self.login_frame.lift()
+        self.login_frame.place(relx=0.5, rely=0.5, anchor='center')
 
     def show_sign_in_sign_up_error(self):
         """
