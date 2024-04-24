@@ -398,9 +398,6 @@ class HomePage:
         """
         if self.remember_var.get() == 1:
             self.remember_login_var = True
-            self.remember_email = self.email_entry.get()
-            self.remember_password = self.password_entry.get()
-            self.remember_token = self.token
             self.hide_login_frame()
             print("Remembering login")
 
