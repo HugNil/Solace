@@ -42,11 +42,13 @@ class GUI:
         self.play()
 
     def create_frames(self) -> None:
-        """Creates all the frames for the application"""
-        self.home_page = HomePage(self.app, self.firebase, self.props, self.return_to_gui)
-        self.profile_page = ProfilePage(self.app, self.props, self.return_to_gui)
+        """
+        Creates all the frames for the application
+        """
+        self.home_page = HomePage(self.app, self.firebase, self.props, self.user, self.return_to_gui)
+        self.profile_page = ProfilePage(self.app, self.props, self.user, self.return_to_gui)
         self.settings = Settings(self.app, self.props, self.return_to_gui)
-        
+
         self.frames = [self.home_page, self.profile_page]
 
     def switch_frame(self, frame):
