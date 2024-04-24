@@ -8,6 +8,7 @@ from firebase_connection import FirebaseConnection
 import warnings
 from home_page import HomePage
 from profile_page import ProfilePage
+from settings import Settings
 from props import Props
 import pygame
 from customtkinter import set_appearance_mode
@@ -45,6 +46,8 @@ class GUI:
         """Creates all the frames for the application"""
         self.home_page = HomePage(self.app, self.firebase, self.props, self.return_to_gui)
         self.profile_page = ProfilePage(self.app, self.props, self.return_to_gui)
+        self.settings = Settings(self.app, self.props, self.return_to_gui)
+        
 
         self.frames = [self.home_page, self.profile_page]
 
@@ -56,6 +59,8 @@ class GUI:
         if frame == 'home':
             self.clear_frames()
             self.home_page.first_menu()
+        if frame == 'settings':
+            self.settings.open_settings()
 
     def clear_frames(self) -> None:
         """Clears all the frames"""
