@@ -8,7 +8,7 @@ from PIL import Image
 import log_writer
 
 
-class HomePage:
+class LoginPage:
     """
     The first page of the application, where the user can login or register.
     """
@@ -34,7 +34,7 @@ class HomePage:
 
     def create_frames(self):
         """
-        Create all the frames for the home page.
+        Create all the frames for the login page.
         """
         self.start_frame = ctk.CTkFrame(
             master=self.app,
@@ -52,7 +52,6 @@ class HomePage:
             height=int(self.props.HEIGHT * 0.95),
             corner_radius=50
         )
-        self.image_frame.place(relx=0.5, rely=0.5, anchor='center')
 
         self.option_frame = ctk.CTkFrame(
             master=self.start_frame,
@@ -106,9 +105,9 @@ class HomePage:
                                             int(self.props.HEIGHT * 0.14)))
 
         self.line_img = Image.open('assests/line-without-sides.png')
-        self.line = ctk.CTkImage(self.line_img,
-                                 size=(int(self.props.WIDTH * 1.05),
-                                       int(self.props.HEIGHT * 0.08)))
+        self.line_img = ctk.CTkImage(self.line_img,
+                                     size=(int(self.props.WIDTH * 1.05),
+                                           int(self.props.HEIGHT * 0.08)))
 
     def clear_frame(self):
         """
@@ -141,6 +140,10 @@ class HomePage:
                                rely=0.5,
                                anchor='center')
 
+        self.image_frame.place(relx=0.5,
+                               rely=0.5,
+                               anchor='center')
+
         # Full logo
         self.logo_full_img_label = ctk.CTkLabel(master=self.start_frame,
                                                 image=self.logo_full,
@@ -165,7 +168,7 @@ class HomePage:
         #                     anchor="center")
 
         self.line = ctk.CTkLabel(master=self.image_frame,
-                                 image=self.line,
+                                 image=self.line_img,
                                  text="")
         self.line.place(relx=0.5,
                         rely=0.8,

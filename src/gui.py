@@ -6,7 +6,7 @@ graphical user interface of the application.
 import customtkinter as ctk
 from firebase_connection import FirebaseConnection
 # import warnings
-from home_page import HomePage
+from login_page import LoginPage
 from profile_page import ProfilePage
 from settings import Settings
 from props import Props
@@ -42,7 +42,7 @@ class GUI:
 
         self.create_frames()
         self.clear_frames()
-        self.home_page.first_menu()
+        self.login_page.first_menu()
 
         pygame.mixer.init()
         self.play()
@@ -51,7 +51,7 @@ class GUI:
         """
         Creates all the frames for the application
         """
-        self.home_page = HomePage(
+        self.login_page = LoginPage(
             self.app,
             self.firebase,
             self.props,
@@ -70,7 +70,7 @@ class GUI:
             self.return_to_gui
             )
 
-        self.frames = [self.home_page, self.profile_page]
+        self.frames = [self.login_page, self.profile_page]
 
     def switch_frame(self, frame):
         """
@@ -81,7 +81,7 @@ class GUI:
             self.profile_page.profile_menu()
         if frame == 'home':
             self.clear_frames()
-            self.home_page.first_menu()
+            self.login_page.first_menu()
         if frame == 'settings':
             self.settings.open_settings()
 
