@@ -35,7 +35,7 @@ class GUI:
         self.app.maxsize(self.props.WIDTH, self.props.HEIGHT)
         self.app.configure(bg=self.props.BACKGROUND_DARK)
         set_appearance_mode(self.props.THEME)
-        self.app.iconbitmap("assests/Solace logo1_klippt.ico")
+        self.app.iconbitmap("assests/solace-window-icon.ico")
 
         self.firebase = FirebaseConnection()
 
@@ -95,7 +95,7 @@ class GUI:
         """
         Plays the menu music
         """
-        pygame.mixer.music.load("assests/Menu music1.mp3")
+        pygame.mixer.music.load("assests/music-menu.mp3")
         pygame.mixer.music.play(loops=1)
         pygame.mixer.music.set_volume(0.009)
         self.logger.log('Menu music started.')

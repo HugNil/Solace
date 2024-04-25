@@ -59,7 +59,7 @@ class ProfilePage():
         """
         Opens all the images for the page.
         """
-        self.logo_icon_img = Image.open('assests/menu logo.png')
+        self.logo_icon_img = Image.open('assests/menu-icon.png')
         self.logo_icon_img.thumbnail((
             int(self.props.WIDTH * 0.08),
             int(self.props.HEIGHT * 0.08)

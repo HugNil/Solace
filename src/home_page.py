@@ -70,23 +70,23 @@ class HomePage:
         """
         Open images
         """
-        self.logo_icon_img = Image.open('assests/menu logo.png')
+        self.logo_icon_img = Image.open('assests/menu-icon.png')
         self.logo_icon = ctk.CTkImage(self.logo_icon_img,
                                       size=(int(self.props.WIDTH * 0.08),
                                             int(self.props.HEIGHT * 0.05)))
 
-        self.logo_full_img = Image.open('assests/Solace logo2 trans.png')
+        self.logo_full_img = Image.open('assests/solace-logo-transparent.png')
         self.logo_full = ctk.CTkImage(self.logo_full_img,
                                       size=(int(self.props.WIDTH * 0.77),
                                             int(self.props.HEIGHT * 0.19)))
 
-        self.password_icon_img = Image.open('assests/PasswordIcon.png')
+        self.password_icon_img = Image.open('assests/password-icon.png')
         self.password_icon = ctk.CTkImage(
             self.password_icon_img,
             size=(int(self.props.WIDTH * 0.06),
                   int(self.props.HEIGHT * 0.042)))
 
-        self.email_icon_img = Image.open('assests/UserNameIcon.png')
+        self.email_icon_img = Image.open('assests/username-icon.png')
         self.email_icon = ctk.CTkImage(self.email_icon_img,
                                        size=(int(self.props.WIDTH * 0.06),
                                              int(self.props.HEIGHT * 0.042)))
@@ -96,7 +96,7 @@ class HomePage:
                                       size=(int(self.props.WIDTH * 0.83),
                                             int(self.props.HEIGHT * 0.14)))
 
-        self.line_img = Image.open('assests/line_without_sides.png')
+        self.line_img = Image.open('assests/line-without-sides.png')
         self.line = ctk.CTkImage(self.line_img,
                                  size=(int(self.props.WIDTH * 0.997),
                                        int(self.props.HEIGHT * 0.08)))
@@ -239,14 +239,14 @@ class HomePage:
                                   anchor='center')
 
         self.show_image = ctk.CTkImage(
-            Image.open('assests/show.png').resize(
+            Image.open('assests/show-password.png').resize(
                 (int(self.props.HEIGHT * 0.03),
                  int(self.props.HEIGHT * 0.045))),
             size=(int(self.props.HEIGHT * 0.03),
                   int(self.props.HEIGHT * 0.035))
         )
         self.hide_image = ctk.CTkImage(
-            Image.open('assests/hide.png').resize(
+            Image.open('assests/hide-password.png').resize(
                 (int(self.props.HEIGHT * 0.03),
                  int(self.props.HEIGHT * 0.045))),
             size=(int(self.props.HEIGHT * 0.03),
