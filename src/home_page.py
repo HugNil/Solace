@@ -44,6 +44,14 @@ class HomePage:
             )
         self.start_frame.configure(width=self.props.WIDTH,
                                    height=self.props.HEIGHT)
+        
+        self.image_frame = ctk.CTkFrame(
+            master=self.start_frame,
+            fg_color=self.props.BACKGROUND_DARK,
+            width=int(self.props.WIDTH * 0.993),
+            height=int(self.props.HEIGHT * 0.991)
+        )
+        self.image_frame.place(relx=0.5, rely=0.5, anchor='center')
 
         self.option_frame = ctk.CTkFrame(
             master=self.start_frame,
@@ -98,7 +106,7 @@ class HomePage:
 
         self.line_img = Image.open('assests/line-without-sides.png')
         self.line = ctk.CTkImage(self.line_img,
-                                 size=(int(self.props.WIDTH * 0.997),
+                                 size=(int(self.props.WIDTH * 1.05),
                                        int(self.props.HEIGHT * 0.08)))
 
     def clear_frame(self):
@@ -144,18 +152,24 @@ class HomePage:
         self.copyright_img = ctk.CTkLabel(master=self.start_frame,
                                           image=self.copyright,
                                           text="")
-
         self.copyright_img.place(relx=0.43,
                                  rely=0.92,
                                  anchor="center")
 
-        self.line_img = ctk.CTkLabel(master=self.start_frame,
-                                     image=self.line,
-                                     text="")
-
-        self.line_img.place(relx=0.497,
-                            rely=0.8,
-                            anchor="center")
+        # self.line_img = ctk.CTkLabel(master=self.start_frame,
+        #                              image=self.line,
+        #                              text="")
+        # self.line_img.place(relx=0.4995,
+        #                     rely=0.8,
+        #                     anchor="center")
+        
+        self.line = ctk.CTkLabel(master=self.image_frame,
+                                 image=self.line,
+                                 text="")
+        self.line.place(relx=0.5,
+                        rely=0.8,
+                        anchor="center")
+        
         # Icon logo as option button
         self.logo_icon_label1 = ctk.CTkLabel(master=self.start_frame,
                                              image=self.logo_icon, text='')
