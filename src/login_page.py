@@ -288,7 +288,7 @@ class LoginPage:
             border_color=self.props.BACKGROUND_LIGHT,
             border_width=2,
             hover_color='white',
-            command=lambda: self.register_handler(
+            command=lambda: self.register_user(
                 self.email_entry.get(),
                 self.password_entry.get()
                 ))
@@ -444,16 +444,31 @@ class LoginPage:
             self.hide_login_frame()
             print("Remembering login")
 
-    def register_handler(self, email, password):
+    # def register_handler(self, email, password):
+    #     """
+    #     Handle the registration of the user.
+    #     """
+    #     if self.firebase.register_user(email, password):
+    #         self.logger.log(f"User {email} registered.")
+    #         self.login_handler(email, password)
+    #     else:
+    #         self.logger.log(f"Failed registration attempt for {email}.")
+    #         self.show_sign_in_sign_up_error('reg')
+
+    def register_user(self, email, password):
         """
-        Handle the registration of the user.
+        Register the user.
         """
-        if self.firebase.register_user(email, password):
-            self.logger.log(f"User {email} registered.")
-            self.login_handler(email, password)
+        if email == '':
+            self.show_sign_in_sign_up_error('empty_email')
+        elif password == '':
+            self.show_sign_in_sign_up_error('empty_password')
         else:
-            self.logger.log(f"Failed registration attempt for {email}.")
-            self.show_sign_in_sign_up_error('reg')
+            status = self.firebase.register_user(email, password)
+            if status == 'password_length':
+                self.show_sign_in_sign_up_error('password_length')
+            elif status == 'success':
+                self.login_handler(email, password)
 
     def logged_in_toggle(self):
         if not self.user.remember_login_var:
@@ -493,8 +508,13 @@ class LoginPage:
             font=('Arial', (self.props.HEIGHT * 0.02), 'bold'),
             height=2
             )
-        if type == 'reg':
-            label.configure(text='Error:\nEmail is already in use.')
+        if type == 'empty_email':
+            label.configure(text='Error:\nPlese enter an email.')
+        elif type == 'empty_password':
+            label.configure(text='Error:\nPlese enter a password.')
+        elif type == 'password_length':
+            label.configure(
+                text='Error:\nPassword must be at least 6 characters.')
         label.place(relx=0.5, rely=0.5, anchor='center')
 
         popup.lift()

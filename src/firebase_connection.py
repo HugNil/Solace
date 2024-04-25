@@ -35,17 +35,21 @@ class FirebaseConnection:
             self.logger.log(
                 f"Successfully created user: {self.new_user.uid}"
                 f"with email: {email}")
-            return True
+            return 'success'
 
         except firebase_admin.auth.EmailAlreadyExistsError:
             print("Error: The user with the provided email already exists.")
             self.logger.log(
                 "Error: The user with the provided email already exists.")
-            return False
+            return 'email_exists'
 
         except Exception as e:
-            self.logger.log(f"Error creating user: {e}")
-            print("Error creating user:", e)
+            error_msg = e.args[0]
+            if 'at least 6 characters' in error_msg:
+                self.logger.log(
+                    f"Error creating user: {e}")
+                print("Error creating user:", e)
+                return 'password_length'
 
     def login_user(self, email, password):
         """
