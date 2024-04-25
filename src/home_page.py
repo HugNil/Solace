@@ -71,44 +71,32 @@ class HomePage:
         Open images
         """
         self.logo_icon_img = Image.open('assests/menu logo.png')
-        self.logo_icon_img.thumbnail((int(self.props.WIDTH * 0.08),
-                                      int(self.props.HEIGHT * 0.08)))
         self.logo_icon = ctk.CTkImage(self.logo_icon_img,
                                       size=(int(self.props.WIDTH * 0.08),
                                             int(self.props.HEIGHT * 0.05)))
 
         self.logo_full_img = Image.open('assests/Solace logo2 trans.png')
-        self.logo_full_img.thumbnail((int(self.props.WIDTH * 0.95),
-                                      int(self.props.HEIGHT * 0.95)))
         self.logo_full = ctk.CTkImage(self.logo_full_img,
                                       size=(int(self.props.WIDTH * 0.77),
                                             int(self.props.HEIGHT * 0.19)))
 
         self.password_icon_img = Image.open('assests/PasswordIcon.png')
-        self.password_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
-                                          int(self.props.HEIGHT * 0.1)))
         self.password_icon = ctk.CTkImage(
             self.password_icon_img,
             size=(int(self.props.WIDTH * 0.06),
                   int(self.props.HEIGHT * 0.042)))
 
         self.email_icon_img = Image.open('assests/UserNameIcon.png')
-        self.email_icon_img.thumbnail((int(self.props.WIDTH * 0.07),
-                                       int(self.props.HEIGHT * 0.08)))
         self.email_icon = ctk.CTkImage(self.email_icon_img,
                                        size=(int(self.props.WIDTH * 0.06),
                                              int(self.props.HEIGHT * 0.042)))
 
         self.copyright_img = Image.open('assests/Copyright.png')
-        self.copyright_img.thumbnail((int(self.props.WIDTH * 0.85),
-                                      int(self.props.HEIGHT * 0.8)))
         self.copyright = ctk.CTkImage(self.copyright_img,
                                       size=(int(self.props.WIDTH * 0.83),
                                             int(self.props.HEIGHT * 0.14)))
 
         self.line_img = Image.open('assests/line_without_sides.png')
-        self.line_img.resize((int(self.props.WIDTH),
-                             int(self.props.HEIGHT)))
         self.line = ctk.CTkImage(self.line_img,
                                  size=(int(self.props.WIDTH * 0.997),
                                        int(self.props.HEIGHT * 0.08)))
