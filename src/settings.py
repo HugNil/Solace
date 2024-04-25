@@ -4,7 +4,9 @@ import customtkinter as ctk
 
 
 class Settings():
-
+    """
+    Settings page of the application.
+    """
     def __init__(self, app, props, return_to_gui):
         self.props = props
         self.return_to_gui = return_to_gui
