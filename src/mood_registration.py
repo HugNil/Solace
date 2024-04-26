@@ -40,7 +40,42 @@ class MoodRegistration:
 
         self.create_image_frame()
         self.add_collapsible_menu()
+        self.create_info_label()
+        self.create_sliders()
 
+    def create_info_label(self):
+        """
+        Creates a bolder title of the name of this feature. It also adds
+        a shorter description and guide of the feature.
+        """
+        self.feature_title = ctk.CTkLabel(
+            master=self.main_frame,
+            text='Mood Registration',
+            font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'),
+            text_color=self.props.BACKGROUND_LIGHT,
+            fg_color=self.props.BACKGROUND_DARK,
+            justify='left'
+        )
+        self.feature_title.place(relx=0.4, rely=0.15, anchor='center')
+
+        self.feature_description = ctk.CTkLabel(
+            master=self.main_frame,
+            text='''
+Please select your current mood and stress level.
+The mood slider ranges from 1-10, where 1 is the
+worst mood and 10 is the best mood.
+
+You can view a summary of your mood and stress in the
+summary page.
+            ''',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
+            text_color=self.props.BACKGROUND_LIGHT,
+            fg_color=self.props.BACKGROUND_DARK,
+            justify='left'
+        )
+        self.feature_description.place(relx=0.45, rely=0.3, anchor='center')
+
+    def create_sliders(self):
         self.slider_frame = ctk.CTkFrame(
             master=self.main_frame,
             fg_color=self.props.BACKGROUND_DARK,
@@ -50,7 +85,7 @@ class MoodRegistration:
             height=int(self.props.HEIGHT * 0.55)
         )
         self.slider_frame.place(relx=0.5, rely=0.6, anchor='center')
-        
+
         self.mood_label = ctk.CTkLabel(
             master=self.slider_frame,
             text='Mood',
@@ -59,7 +94,7 @@ class MoodRegistration:
             fg_color=self.props.BACKGROUND_DARK
         )
         self.mood_label.pack(pady=(10, 0))
-        
+
         self.mood_slider_frame = ctk.CTkFrame(
             master=self.slider_frame,
             fg_color=self.props.BACKGROUND_DARK,
