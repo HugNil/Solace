@@ -338,7 +338,7 @@ class LoginPage:
             text_color=self.props.BACKGROUND_LIGHT
             )
         self.home_option.bind(
-            '<Button-1>', lambda e: self.return_to_gui('home')
+            '<Button-1>', lambda e: self.return_to_gui('home', self.user)
             )
         self.home_option.place(relx=0.5, rely=0.15, anchor='center')
 
@@ -350,7 +350,7 @@ class LoginPage:
             text_color=self.props.BACKGROUND_LIGHT
             )
         self.settings_option.bind(
-            '<Button-1>', lambda e: self.return_to_gui('settings')
+            '<Button-1>', lambda e: self.return_to_gui('settings', self.user)
             )
         self.settings_option.place(relx=0.5, rely=0.85, anchor='center')
 
@@ -420,7 +420,7 @@ class LoginPage:
             self.clear_frame()
             self.user.login(email, password, token)
             self.logger.log(f"User {email} logged in.")
-            self.return_to_gui('profile')
+            self.return_to_gui('profile', self.user)
         else:
             self.logger.log(f"Failed login attempt for {email}.")
             self.show_sign_in_sign_up_error('login')
@@ -433,7 +433,7 @@ class LoginPage:
         self.user.remember_login_var = False
         self.logged_in_toggle()
         self.logger.log(f"User {self.user.email} logged out.")
-        self.return_to_gui('home')
+        self.return_to_gui('home', self.user)
 
     def remember_login(self) -> None:
         """

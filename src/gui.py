@@ -72,13 +72,17 @@ class GUI:
 
         self.frames = [self.login_page, self.profile_page]
 
-    def switch_frame(self, frame):
+    def switch_frame(self, frame, user):
         """
         Switches the frame to the given frame
         """
         if frame == 'profile':
-            self.clear_frames()
-            self.profile_page.profile_menu()
+            if user.logged_in:
+                self.clear_frames()
+                self.profile_page.dashboardPage()
+            else:
+                self.clear_frames()
+                self.login_page.first_menu()
         if frame == 'home':
             self.clear_frames()
             self.login_page.first_menu()
@@ -108,11 +112,11 @@ class GUI:
         pygame.mixer.music.stop()
         self.logger.log('Menu music stopped.')
 
-    def return_to_gui(self, frame):
+    def return_to_gui(self, frame, user):
         """
         Returns to the gui
         """
-        self.switch_frame(frame)
+        self.switch_frame(frame, user)
 
 
 app = ctk.CTk()
