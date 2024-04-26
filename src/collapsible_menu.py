@@ -1,7 +1,7 @@
 import customtkinter as ctk
-import tkinter as tk
-from PIL import Image
-from time import strftime
+# import tkinter as tk
+# from PIL import Image
+# from time import strftime
 import log_writer
 
 
@@ -25,7 +25,7 @@ class CollapsibleMenu:
             relx=0.19,
             rely=0.23,
             anchor='center')
-        
+
         self.add_buttons()
 
     def add_buttons(self):

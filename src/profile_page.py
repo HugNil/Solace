@@ -8,6 +8,7 @@ from PIL import Image
 from time import strftime
 import log_writer
 import collapsible_menu
+import mood_registration
 
 
 class ProfilePage():
@@ -216,7 +217,8 @@ class ProfilePage():
     #         height=int(self.props.HEIGHT * 0.02),
     #         text_color=self.props.BACKGROUND_LIGHT
     #         )
-    #     self.logout_option.bind('<Button-1>', lambda e: self.logout_handler())
+    #     self.logout_option.bind('<Button-1>',
+    # lambda e: self.logout_handler())
     #     self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
 
     def dashboardPage(self):
@@ -268,7 +270,7 @@ class ProfilePage():
             border_color=self.props.BACKGROUND_LIGHT,
             border_width=2,
             hover_color='white',
-            command=lambda: self.return_to_gui('mood'))
+            command=self.open_mood_form)
         self.mood_button.grid(row=0, column=0, padx=10, pady=10)
 
         self.exercises_button = ctk.CTkButton(
@@ -399,6 +401,21 @@ class ProfilePage():
     #         self.option_frame.place(relx=0.19, rely=0.23, anchor='center')
     #         self.option_visible = True
     #         self.logger.log('Option menu opened.')
+
+    def open_mood_form(self):
+        """
+        Open the mood form.
+        """
+        self.change_to_mood_registration()
+        self.mood_registration = mood_registration.MoodRegistration(
+            self.app,
+            self.props,
+            self.user,
+            self.return_to_gui
+        )
+
+    def change_to_mood_registration(self):
+        self.clear_frame()
 
     def clear_frame(self):
         """

@@ -26,3 +26,4 @@ class Props:
         self.APP_NAME = 'Solace'
         self.GRADIENT = "NightTrain.json"
         self.THEME = 'dark'
+        self.SLIDERBUTTON = '#012A4A'
