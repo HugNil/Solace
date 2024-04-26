@@ -1,0 +1,6 @@
+04-26 15:35:05: Application started.
+04-26 15:35:05: Profile page opened.
+04-26 15:35:06: Frames cleared in home page.
+04-26 15:35:06: Option menu closed.
+04-26 15:35:08: Menu music started.
+04-26 15:35:13: Failed login attempt for .
