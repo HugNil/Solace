@@ -242,15 +242,27 @@ class ProfilePage():
         self.date = ctk.CTkLabel(
             master=self.profile_frame,
             text=strftime("%d %b %Y"),
-            font=('Arial', int(self.props.HEIGHT * 0.05), 'bold')
+            font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'),
+            text_color=self.props.BACKGROUND_LIGHT
             )
         self.date.pack(pady=(50, 10))
 
         self.time_widget = ctk.CTkLabel(
             master=self.profile_frame,
             text=strftime("%H:%M"),
-            font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'))
+            font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'),
+            text_color=self.props.BACKGROUND_LIGHT)
         self.time_widget.pack()
+
+        name = self.user.email.split('@')[0].capitalize()
+        welcome_message = f'Welcome {name}!'
+        welcome_label = ctk.CTkLabel(
+            master=self.profile_frame,
+            text=welcome_message,
+            font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'),
+            text_color=self.props.BACKGROUND_LIGHT
+            )
+        welcome_label.pack(pady=(50, 0))
 
         self.create_buttons_grid()
         # self.collapsible_menu.add(self.profile_frame)
@@ -325,7 +337,7 @@ class ProfilePage():
             command=lambda: self.return_to_gui('summary'))
         self.summary_button.grid(row=1, column=1, padx=10, pady=10)
 
-        self.button_frame.pack(pady=(150, 0))
+        self.button_frame.pack(pady=(80, 0))
 
     def add_images(self):
         """
