@@ -84,8 +84,8 @@ class MoodRegistration:
             master=self.main_frame,
             text='''
 Please select your current mood and stress level.
-The mood slider ranges from 1-10, where 1 is the
-worst mood and 10 is the best mood.
+The sliders ranges from 1-10, where 1 is the
+worst and 10 is the best.
 
 You can view a summary of your mood and stress in the
 summary page.
@@ -106,7 +106,7 @@ summary page.
             width=int(self.props.WIDTH * 0.9),
             height=int(self.props.HEIGHT * 0.55)
         )
-        self.slider_frame.place(relx=0.5, rely=0.6, anchor='center')
+        self.slider_frame.place(relx=0.5, rely=0.55, anchor='center')
 
         self.mood_label = ctk.CTkLabel(
             master=self.slider_frame,
@@ -127,7 +127,7 @@ summary page.
         )
         self.mood_slider_frame.columnconfigure(0, weight=1)
         self.mood_slider_frame.columnconfigure(1, weight=1)
-        self.mood_slider_frame.pack(pady=(10, 10), padx=10)
+        self.mood_slider_frame.pack(pady=(0, 0), padx=10)
 
         self.mood_slider = ctk.CTkSlider(
             master=self.mood_slider_frame,
@@ -150,7 +150,7 @@ summary page.
 
         self.mood_value = ctk.CTkLabel(
             master=self.mood_slider_frame,
-            text='5',
+            text='2',
             font=('Arial', int(self.props.HEIGHT * 0.03), 'bold'),
             text_color=self.props.BACKGROUND_LIGHT,
             fg_color=self.props.BACKGROUND_DARK
@@ -164,7 +164,7 @@ summary page.
             text_color=self.props.BACKGROUND_LIGHT,
             fg_color=self.props.BACKGROUND_DARK
         )
-        self.stress_label.pack(pady=(10, 0))
+        self.stress_label.pack(pady=(5, 0))
 
         self.stress_slider_frame = ctk.CTkFrame(
             master=self.slider_frame,
@@ -176,7 +176,7 @@ summary page.
         )
         self.stress_slider_frame.columnconfigure(0, weight=1)
         self.stress_slider_frame.columnconfigure(1, weight=1)
-        self.stress_slider_frame.pack(pady=(10, 10), padx=10)
+        self.stress_slider_frame.pack(pady=(0, 10), padx=10)
 
         self.stress_slider = ctk.CTkSlider(
             master=self.stress_slider_frame,
@@ -199,12 +199,29 @@ summary page.
 
         self.stress_value = ctk.CTkLabel(
             master=self.stress_slider_frame,
-            text='5',
+            text='2',
             font=('Arial', int(self.props.HEIGHT * 0.03), 'bold'),
             text_color=self.props.BACKGROUND_LIGHT,
             fg_color=self.props.BACKGROUND_DARK
         )
         self.stress_value.grid(row=0, column=1, padx=(10, 0))
+
+        self.mood_slider.set(2)
+        self.stress_slider.set(2)
+
+        self.submit_button = ctk.CTkButton(
+            master=self.slider_frame,
+            text='Submit',
+            font=('Arial', int(self.props.HEIGHT * 0.03), 'bold'),
+            fg_color=self.props.BACKGROUND_LIGHT,
+            bg_color=self.props.BACKGROUND_DARK,
+            text_color=self.props.BACKGROUND_DARK,
+            command=self.submit,
+            width=int(self.props.WIDTH * 0.2),
+            height=int(self.props.HEIGHT * 0.05),
+            hover_color=self.props.BUTTON_COLOR
+        )
+        self.submit_button.pack(pady=(20, 0))
 
     def update_mood(self, value):
         """
@@ -212,6 +229,14 @@ summary page.
         """
         self.mood_value.configure(text=int(value))
         self.mood = int(value)
+
+    def submit(self):
+        """
+        Submits the mood and stress values to the database.
+        """
+        mood_value = int(self.mood_slider.get())
+        stress_value = int(self.stress_slider.get())
+        print(f'Mood: {mood_value}, Stress: {stress_value}')
 
     def update_stress(self, value):
         """
