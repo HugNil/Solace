@@ -12,11 +12,11 @@ class FirebaseConnection(self):
 
 
 
-def read_user_mood(self, email):
+def read_user_mood(self, user):
     """
     Read mood data for user
     """
-    doc_ref = self.db.collection(u'users').document(email)
+    doc_ref = self.db.collection(u'users').document(user.email)
     mood_collection = doc_ref.collection(u'mood-form')
     docs = mood_collection.stream()
 
