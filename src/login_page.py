@@ -6,6 +6,10 @@ import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
 import log_writer
+import json
+from cryptography.fernet import Fernet
+import os
+import configparser
 
 
 class LoginPage:
@@ -28,6 +32,8 @@ class LoginPage:
         self.option_visible = False
         self.remember_var = tk.IntVar()
         self.logger = log_writer.Log_writer()
+        self.config = configparser.ConfigParser()
+        self.config.read('properties.ini')
 
         self.create_frames()
         self.open_images()
@@ -375,7 +381,26 @@ class LoginPage:
             )
         self.logout_option.bind('<Button-1>', lambda e: self.logout_handler())
         self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
+
+        self.check_remember_login()
+
+        if os.path.exists('credentials.json'):
+            email, password = self.load_login()
+            self.email_entry.insert(0, email)
+            self.password_entry.insert(0, password)
+
         self.logged_in_toggle()
+
+    def check_remember_login(self):
+        """
+        Checks in the properties.ini file if the user checked
+        remember me last time they logged in. If they did, it
+        checks the checkbox.
+        """
+        if self.config['GeneralSettings']['remember_me'] == 'True':
+            self.remember_var.set(1)
+        else:
+            self.remember_var.set(0)
 
     def option_toggle(self):
         """
@@ -416,10 +441,10 @@ class LoginPage:
         token = self.firebase.login_user(email, password)
         if token is not None:
             self.logged_in_toggle()
-            self.remember_login()
             self.clear_frame()
             self.user.login(email, password, token)
             self.logger.log(f"User {email} logged in.")
+            self.remember_login()
             self.return_to_gui('profile', self.user)
         else:
             self.logger.log(f"Failed login attempt for {email}.")
@@ -440,9 +465,24 @@ class LoginPage:
         Remember the login of the user.
         """
         if self.remember_var.get() == 1:
-            self.user.remember_login_var = True
+            self.update_remember_me(True)
             self.hide_login_frame()
+            self.save_login(self.user.email, self.user.password)
+            self.props.remember_me = True
             print("Remembering login")
+        else:
+            self.update_remember_me(False)
+            self.props.remember_me = False
+            self.clear_credentials()
+            print("Not remembering login")
+
+    def update_remember_me(self, value) -> None:
+        """
+        Update the remember me value in the properties.ini file.
+        """
+        self.config['GeneralSettings']['remember_me'] = str(value)
+        with open('properties.ini', 'w') as configfile:
+            self.config.write(configfile)
 
     # def register_handler(self, email, password):
     #     """
@@ -521,3 +561,64 @@ class LoginPage:
         popup.place(relx=0.5, rely=0.5, anchor='center')
 
         popup.after(3000, popup.destroy)
+
+    def save_login(self, email, password):
+        """
+        Save the login of the user using encrypted password using
+        fernet. Loads the key if it exists, else it generates a new key.
+        """
+        self.generate_key()
+        key = self.load_key()
+        cipher_suite = Fernet(key)
+        encrypted_password = cipher_suite.encrypt(password.encode())
+        data = {
+            'email': email,
+            'password': encrypted_password.decode()
+        }
+        with open('credentials.json', 'w') as file:
+            json.dump(data, file)
+        self.logger.log('Login saved.')
+
+    def load_login(self):
+        """
+        Load the login of the user using encrypted password using
+        fernet. Loads the key if it exists, otherwise there shouldn't
+        be any saved login.
+        """
+        key = self.load_key()
+        cipher_suite = Fernet(key)
+        with open('credentials.json', 'r') as file:
+            data = json.load(file)
+            decrypted_password = cipher_suite.decrypt(
+                data['password'].encode()).decode()
+            return data['email'], decrypted_password
+
+    def generate_key(self):
+        """
+        Generate a key for the encryption.
+        """
+        if not os.path.exists('secret.key'):
+            key = Fernet.generate_key()
+            with open('secret.key', 'wb') as key_file:
+                key_file.write(key)
+            self.logger.log('Key generated.')
+        else:
+            self.logger.log('Key already exists.')
+
+    def load_key(self):
+        """
+        Load the key for the encryption.
+        """
+        with open('secret.key', 'rb') as key_file:
+            key = key_file.read()
+        return key
+
+    def clear_credentials(self):
+        """
+        Clear the credentials of the user.
+        """
+        try:
+            os.remove('credentials.json')
+            self.logger.log('Credentials removed.')
+        except FileNotFoundError:
+            self.logger.log('No credentials to remove.')

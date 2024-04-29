@@ -2,3 +2,5 @@
 Solace_key.json
 __pycache__/
 log.txt
+credentials.json
+secret.key
