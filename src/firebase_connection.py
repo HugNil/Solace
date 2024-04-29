@@ -79,13 +79,18 @@ class FirebaseConnection:
         """
         Write the data to the database.
         """
-        doc_ref = self.db.collection(u'users').document(email)
-        # place represents which collection to add data to,
-        # could be for example 'mood-form'
-        mood_collection = doc_ref.collection(place)
-        # The data should be in the form of a dictionary and
-        # date makes it easier to sort data by date
-        mood_collection.document(date).set(data)
+        try:
+            doc_ref = self.db.collection(u'users').document(email)
+            # place represents which collection to add data to,
+            # could be for example 'mood-form'
+            mood_collection = doc_ref.collection(place)
+            # The data should be in the form of a dictionary and
+            # date makes it easier to sort data by date
+            mood_collection.document(date).set(data)
+            self.logger.log(f'Data written to database: {data}'
+                            f'for user: {email}')
+        except Exception as e:
+            self.logger.log(f"Error writing to database: {e}")
 
     def read_from_db(self, email, place):
         """

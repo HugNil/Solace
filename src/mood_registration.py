@@ -3,6 +3,7 @@ import customtkinter as ctk
 from PIL import Image
 import collapsible_menu
 import log_writer
+import firebase_connection
 
 
 class MoodRegistration:
@@ -24,6 +25,7 @@ class MoodRegistration:
         self.logger = log_writer.Log_writer()
         self.date = datetime.now().strftime("%Y-%m-%d")
         self.time = datetime.now().strftime("%H:%M:%S")
+        self.firebase = firebase_connection.FirebaseConnection()
         self.create_widgets()
         self.frames = [self.main_frame]
 
@@ -237,6 +239,19 @@ summary page.
         mood_value = int(self.mood_slider.get())
         stress_value = int(self.stress_slider.get())
         print(f'Mood: {mood_value}, Stress: {stress_value}')
+        email = self.user.email
+        place = 'mood-form'
+        data = {
+            'mood': mood_value,
+            'stress': stress_value
+        }
+        date = datetime.now().isoformat()
+        self.firebase.write_to_db(
+            email,
+            place,
+            data,
+            date
+        )
 
     def update_stress(self, value):
         """
