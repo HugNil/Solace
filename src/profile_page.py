@@ -8,7 +8,6 @@ from PIL import Image
 from time import strftime
 import log_writer
 import collapsible_menu
-import mood_registration
 
 
 class ProfilePage():
@@ -28,7 +27,7 @@ class ProfilePage():
         self.collapsible_menu_visible = False
         self.option_visible = False
         self.app = app
-        
+
         self.dashboardPage()
 
         self.frames = [

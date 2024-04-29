@@ -5,7 +5,6 @@ import collapsible_menu
 import log_writer
 
 
-
 class MoodRegistration:
     """
     This class is responsible for the mood registration.
