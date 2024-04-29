@@ -40,8 +40,27 @@ class MoodRegistration:
 
         self.create_image_frame()
         self.add_collapsible_menu()
+        self.add_back_button()
         self.create_info_label()
         self.create_sliders()
+
+    def add_back_button(self):
+        self.back_button_img = Image.open('assests/back-button.png')
+        self.back_button_img = ctk.CTkImage(
+            self.back_button_img,
+            size=(int(self.props.WIDTH * 0.15),
+                  int(self.props.HEIGHT * 0.0375))
+        )
+        self.back_button = ctk.CTkButton(
+            master=self.main_frame,
+            image=self.back_button_img,
+            fg_color=self.props.BACKGROUND_DARK,
+            command=None,
+            text='',
+            width=int(self.props.WIDTH * 0.15),
+            height=int(self.props.HEIGHT * 0.0375)
+        )
+        self.back_button.place(relx=0.85, rely=0.05, anchor='center')
 
     def create_info_label(self):
         """
@@ -241,14 +260,14 @@ summary page.
             size=(int(self.props.WIDTH * 0.08),
                   int(self.props.HEIGHT * 0.05))
             )
-        self.collapsable_menu_img = ctk.CTkLabel(
+        self.collapsable_menu_img = ctk.CTkButton(
             master=self.main_frame,
             image=self.collapsable_menu_img,
-            text=''
-            )
-        self.collapsable_menu_img.bind(
-            '<Button-1>', lambda e:
-                self.collapsible_menu.toggle()
+            text='',
+            fg_color=self.props.BACKGROUND_DARK,
+            command=self.collapsible_menu.toggle,
+            width=int(self.props.WIDTH * 0.08),
+            height=int(self.props.HEIGHT * 0.05)
         )
         self.collapsable_menu_img.place(relx=0.075,
                                         rely=0.05,

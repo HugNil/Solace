@@ -351,14 +351,14 @@ class ProfilePage():
             size=(int(self.props.WIDTH * 0.08),
                   int(self.props.HEIGHT * 0.05))
             )
-        self.collapsable_menu_img = ctk.CTkLabel(
+        self.collapsable_menu_img = ctk.CTkButton(
             master=self.profile_frame,
             image=self.collapsable_menu_img,
-            text=''
-            )
-        self.collapsable_menu_img.bind(
-            '<Button-1>', lambda e:
-                self.collapsible_menu.toggle()
+            text='',
+            fg_color=self.props.BACKGROUND_DARK,
+            command=self.collapsible_menu.toggle,
+            width=int(self.props.WIDTH * 0.08),
+            height=int(self.props.HEIGHT * 0.05)
         )
         self.collapsable_menu_img.place(relx=0.075,
                                         rely=0.05,
