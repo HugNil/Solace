@@ -1,3 +1,5 @@
+![Banner](assests/github-banner.png)
+
 # Solace
 
 This desktop application is designed to help people deal with stress and anxiety by allowing them to track their mood and stress levels during a period of time.
