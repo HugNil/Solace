@@ -2,6 +2,8 @@ from datetime import datetime
 import customtkinter as ctk
 from PIL import Image
 import collapsible_menu
+import log_writer
+
 
 
 class MoodRegistration:
@@ -20,9 +22,11 @@ class MoodRegistration:
         self.return_to_gui = return_to_gui
         self.mood = 0
         self.stress = 0
+        self.logger = log_writer.Log_writer()
         self.date = datetime.now().strftime("%Y-%m-%d")
         self.time = datetime.now().strftime("%H:%M:%S")
         self.create_widgets()
+        self.frames = [self.main_frame]
 
     def create_widgets(self):
         """
@@ -55,7 +59,7 @@ class MoodRegistration:
             master=self.main_frame,
             image=self.back_button_img,
             fg_color=self.props.BACKGROUND_DARK,
-            command=None,
+            command=lambda: self.return_to_gui("profile", self.user),
             text='',
             width=int(self.props.WIDTH * 0.15),
             height=int(self.props.HEIGHT * 0.0375)
@@ -272,3 +276,17 @@ summary page.
         self.collapsable_menu_img.place(relx=0.075,
                                         rely=0.05,
                                         anchor='center')
+
+    def back(self):
+        self.main_frame.destroy()
+        self.return_to_gui("reinitialize_dashboard", self.user)
+
+    def clear_frame(self):
+        frames = [
+            self.main_frame,
+            self.image_frame,
+            self.slider_frame
+        ]
+        for frame in frames:
+            frame.pack_forget()
+        self.logger.log('Cleared mood registration frame')

@@ -26,9 +26,22 @@ class ProfilePage():
         self.logger = log_writer.Log_writer()
         self.logger.log('Profile page opened.')
         self.collapsible_menu_visible = False
-
+        self.option_visible = False
         self.app = app
+        
+        self.dashboardPage()
 
+        self.frames = [
+            self.profile_frame,
+            self.option_frame,
+            self.button_frame,
+            self.image_frame
+            ]
+
+    def initialize(self):
+        """
+        Initialize the profile page.
+        """
         self.create_frames()
         self.open_images()
 
@@ -38,8 +51,6 @@ class ProfilePage():
             self.user,
             self.profile_frame
         )
-
-        self.option_visible = False
 
     def create_frames(self):
         """
@@ -62,8 +73,6 @@ class ProfilePage():
             width=int(self.props.WIDTH * 0.3),
             height=int(self.props.HEIGHT * 0.3)
             )
-
-        self.frames = [self.option_frame, self.profile_frame]
 
     def open_images(self):
         """
@@ -225,6 +234,8 @@ class ProfilePage():
         """
         Dashboard page of the profile page.
         """
+        self.initialize()
+        self.logger.log('Initializing dashboard page.')
         self.add_images()
 
         self.profile_frame.pack(fill=tk.BOTH,
@@ -406,13 +417,15 @@ class ProfilePage():
         """
         Open the mood form.
         """
-        self.change_to_mood_registration()
-        self.mood_registration = mood_registration.MoodRegistration(
-            self.app,
-            self.props,
-            self.user,
-            self.return_to_gui
-        )
+        # self.change_to_mood_registration()
+        # self.mood_registration = mood_registration.MoodRegistration(
+        #     self.app,
+        #     self.props,
+        #     self.user,
+        #     self.return_to_gui
+        # )
+        self.logger.log('Button <Register Mood> clicked.')
+        self.return_to_gui('mood_registration', self.user)
 
     def change_to_mood_registration(self):
         self.clear_frame()
@@ -421,6 +434,12 @@ class ProfilePage():
         """
         Clear all the frames in the application.
         """
+        self.frames = [
+            self.profile_frame,
+            self.option_frame,
+            self.button_frame,
+            self.image_frame
+        ]
         for frame in self.frames:
             frame.pack_forget()
 

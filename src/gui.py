@@ -9,6 +9,7 @@ from firebase_connection import FirebaseConnection
 from login_page import LoginPage
 from profile_page import ProfilePage
 from settings import Settings
+from mood_registration import MoodRegistration
 from props import Props
 import pygame
 from customtkinter import set_appearance_mode
@@ -69,8 +70,18 @@ class GUI:
             self.props,
             self.return_to_gui
             )
+        self.mood_registration = MoodRegistration(
+            self.app,
+            self.props,
+            self.user,
+            self.return_to_gui
+            )
 
-        self.frames = [self.login_page, self.profile_page]
+        self.frames = [
+            self.login_page,
+            self.profile_page,
+            self.mood_registration
+            ]
 
     def switch_frame(self, frame, user):
         """
@@ -79,6 +90,8 @@ class GUI:
         if frame == 'profile':
             if user.logged_in:
                 self.clear_frames()
+                self.logger.log('Clearing frames')
+                self.logger.log('Opening profile page')
                 self.profile_page.dashboardPage()
             else:
                 self.clear_frames()
@@ -88,6 +101,12 @@ class GUI:
             self.login_page.first_menu()
         if frame == 'settings':
             self.settings.open_settings()
+            print('returned from mood registration')
+        if frame == 'mood_registration':
+            self.clear_frames()
+            self.logger.log('Clearing frames')
+            self.logger.log('Opening mood registration page')
+            self.mood_registration.create_widgets()
 
     def clear_frames(self) -> None:
         """
