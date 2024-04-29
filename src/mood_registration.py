@@ -236,6 +236,8 @@ summary page.
         """
         Submits the mood and stress values to the database.
         """
+        self.submit_button.configure(text='Submitting...',
+                                     state='disabled')
         mood_value = int(self.mood_slider.get())
         stress_value = int(self.stress_slider.get())
         print(f'Mood: {mood_value}, Stress: {stress_value}')
@@ -252,6 +254,24 @@ summary page.
             data,
             date
         )
+        self.display_confirmation()
+
+    def display_confirmation(self):
+        self.confirmation_label = ctk.CTkLabel(
+            master=self.main_frame,
+            text='Mood and stress submitted!',
+            font=('Arial', int(self.props.HEIGHT * 0.03), 'bold'),
+            fg_color=self.props.BACKGROUND_DARK,
+            text_color=self.props.BACKGROUND_LIGHT
+        )
+        self.confirmation_label.place(
+            relx=0.5,
+            rely=0.74,
+            anchor='center'
+            )
+        # self.submit_button.configure(state='disabled')
+        self.submit_button.configure(text='Submitted!',
+                                     state='disabled')
 
     def update_stress(self, value):
         """
