@@ -137,8 +137,15 @@ class GUI:
         """
         self.switch_frame(frame, user)
 
+    def run_app():
+        """
+        Runs the application
+        """
+        app = ctk.CTk()
+        GUI(app)
+        pygame.mixer.init()
+        app.mainloop()
 
-app = ctk.CTk()
-gui = GUI(app)
-pygame.mixer.init()
-app.mainloop()
+
+if __name__ == '__main__':
+    GUI.run_app()
