@@ -3,8 +3,8 @@ Unit test for Props class.
 """
 
 import unittest
+from unittest.mock import MagicMock
 from props import Props  # type: ignore
-import customtkinter as ctk
 
 
 class TestProps(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestProps(unittest.TestCase):
         """
         Initialize the Props class.
         """
-        self.app = ctk.CTk()
+        self.app = MagicMock()
         self.props = Props(self.app)
         self.assertIsInstance(self.props, Props)
 
