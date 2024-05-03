@@ -16,6 +16,9 @@ To run this application, you need to have Python installed on your machine. You 
 
 You also have to install **Make** on your machine, to access the make commands. You can download make from the official website: https://www.gnu.org/software/make/
 
+<span style="color: red;">IMPORTANT:</span> To be able to run the program, and access the database, you need to have the firebase credentials file. This file is not included in the repository, so you need to contact the developers to get the file.
+
+
 After installing Python, you can run the following command to clone this repository to your machine, install the required dependencies and run the application:
 
 1. Clone the repository:
@@ -64,7 +67,7 @@ To see the changes made to this application, check the [CHANGELOG.md](CHANGELOG)
 
 ## FAQ
 
-**Q:** I can't start the application from the command line. What should I do?
+**Q: I can't start the application from the command line. What should I do?**
 
 **A:** Make sure you are in the root directory of the application when you run the command. You can navigate to the root directory by using the following command:
 
@@ -77,13 +80,23 @@ and then run the application using the following command:
 python .\src\gui.py
 ```
 
-**Q:** I can't install the required dependencies. What should I do?
+---
+
+**Q: I can't install the required dependencies. What should I do?**
 
 **A:** Make sure you have Python installed on your machine. You can download Python from the official website: https://www.python.org/downloads/
 
 You also have to install **Make** on your machine, to access the make commands. You can download make from the official website: https://www.gnu.org/software/make/
 
-**Q:** I have a question that is not answered here. What should I do?
+---
+
+**Q: The application is telling me that I am missing the firebase credentials file. What should I do?**
+
+**A:** To be able to run the program, and access the database, you need to have the firebase credentials file. This file is not included in the repository, so you need to contact the developers to get the file.
+
+---
+
+**Q: I have a question that is not answered here. What should I do?**
 
 **A:** If you have any questions that are not answered here, feel free to open an issue on this repository. We will be happy to help you.
 
