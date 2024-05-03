@@ -7,21 +7,7 @@ This desktop application is designed to help people deal with stress and anxiety
 
 ## Screenshots
 
-<p float="left">
-  <div style="width: 30%; margin-right: 5px; float: left;">
-    <p><strong>Login</strong></p>
-    <img src="assests/readme/login.png" alt="Login" style="width: 100%;">
-  </div>
-  <div style="width: 30%; margin-right: 5px; float: left;">
-    <p><strong>Dashboard</strong></p>
-    <img src="assests/readme/dashboard.png" alt="Dashboard" style="width: 100%;">
-  </div>
-  <div style="width: 30%; float: left;">
-    <p><strong>Mood Registration</strong></p>
-    <img src="assests/readme/mood-registration.png" alt="Mood Registration" style="width: 100%;">
-  </div>
-</p>
-<div style="clear: both;"></div>
+<img src="assests/readme/login.png" width="30%" alt="Login" /> <img src="assests/readme/dashboard.png" width="30%" alt="Dashboard" /> <img src="assests/readme/mood-registration.png" width="30%" alt="Mood Registration" />
 
 
 ## Installation
