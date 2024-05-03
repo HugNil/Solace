@@ -7,3 +7,4 @@ secret.key
 htmlcov/
 .pytest_cache/
 .coverage
+.venv

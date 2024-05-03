@@ -22,6 +22,14 @@ endef
 # ------------------------------------
 
 #Commands:
+.PHONY: venv
+venv:
+	@$(call MESSAGE, Creating a virtual environment...)
+	@$(PYTHON) -m venv .venv
+	@$(call MESSAGE, Activating the virtual environment...)
+	@. venv/bin/activate
+
+
 .PHONY: install
 install:
 	@$(call MESSAGE, Installing dependencies...)
