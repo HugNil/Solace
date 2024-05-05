@@ -63,6 +63,7 @@ test:
 #How to use these commands with make
 help:
 	@echo "Usage: make <target>"
+	@echo "  venv     - Create virtual environment (not activated)"
 	@echo "  install  - Install dependencies"
 	@echo "  run      - Run the Solace application"
 	@echo "  clean    - Clean up generated files"
