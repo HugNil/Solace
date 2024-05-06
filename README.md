@@ -16,18 +16,34 @@ To run this application, you need to have Python installed on your machine. You 
 
 You also have to install **Make** on your machine, to access the make commands. You can download make from the official website: https://www.gnu.org/software/make/
 
-<span style="color: red;">IMPORTANT:</span> To be able to run the program, and access the database, you need to have the firebase credentials file. This file is not included in the repository, so you need to contact the developers to get the file.
+<span style="color: red;"><strong>NOTE:</strong></span> To be able to run the program, and access the database, you need to have the firebase credentials file. This file is not included in the repository, so you need to contact the developers to get the file.
 
 
 After installing Python, you can run the following command to clone this repository to your machine, install the required dependencies and run the application:
 
-1. Clone the repository:
+**1.** Clone the repository:
+
 
 ```bash
 git clone https://github.com/HugNil/Solace.git
 ```
 
-2. Install the required dependencies:
+---
+
+**2.** Enable the virtual environment. This command is for git. You might need a slightly different command if you're using powershell. (optional):
+
+```bash
+make venv
+```
+then..
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+**3.** Install the required dependencies:
 
 ```bash
 make install
@@ -37,17 +53,23 @@ make install
 pip install -r requirements.txt
 ```
 
-3. Navigate to the root directory which is the Solace folder. Use the following command if you are'nt already in the root directory:
+---
+
+**4.** Navigate to the root directory which is the Solace folder. Use the following command if you are'nt already in the root directory:
 
 ```bash
 cd Solace
 ```
 
-4. Run the application:
+---
+
+**5.** Run the application:
 
 ```bash
 python .\src\gui.py
 ```
+
+---
 
 ## Application structure
 
