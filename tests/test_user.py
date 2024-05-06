@@ -45,7 +45,3 @@ class TestUser(unittest.TestCase):
         self.assertEqual(self.user.password, 'test')
         self.assertEqual(self.user.token, 'test')
         self.assertTrue(self.user.logged_in)
-
-
-if __name__ == '__main__':
-    unittest.main()
