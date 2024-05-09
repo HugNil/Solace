@@ -1,0 +1,7 @@
+05-07 14:00:34: Application started.
+05-07 14:00:34: Profile page opened.
+05-07 14:00:34: Initializing dashboard page.
+05-07 14:00:35: Frames cleared in home page.
+05-07 14:00:35: Cleared mood registration frame
+05-07 14:00:35: Option menu closed.
+05-07 14:00:36: Menu music started.
