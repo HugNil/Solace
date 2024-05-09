@@ -82,153 +82,6 @@ class ProfilePage():
                                       size=(int(self.props.WIDTH * 0.08),
                                             int(self.props.HEIGHT * 0.05)))
 
-    # def profile_menu(self):
-    #     """
-    #     Profile menu of the profile page.
-    #     """
-    #     self.profile_frame.pack(fill=tk.BOTH,
-    #                             expand=True)
-    #     self.option_visible = True
-    #     self.option_toggle()
-
-    #     self.logo_icon_label = ctk.CTkLabel(master=self.profile_frame,
-    #                                         image=self.logo_icon, text='')
-    #     self.logo_icon_label.bind('<Button-1>',
-    #                               lambda e: self.option_toggle())
-    #     self.logo_icon_label.place(relx=0.075,
-    #                                rely=0.05,
-    #                                anchor='center')
-
-    #     self.mood_button = ctk.CTkButton(
-    #         master=self.profile_frame,
-    #         text='Mood Form',
-    #         font=('Arial', int(self.props.HEIGHT * 0.02)),
-    #         width=int(self.props.WIDTH * 0.2),
-    #         corner_radius=32,
-    #         fg_color=self.props.BUTTON_COLOR,
-    #         text_color='black',
-    #         border_color=self.props.BACKGROUND_LIGHT,
-    #         border_width=2,
-    #         hover_color='white',
-    #         command=lambda: self.return_to_gui('mood'))
-    #     self.mood_button.place(relx=0.3,
-    #                            rely=0.75,
-    #                            anchor='center')
-
-    #     self.excercise_button = ctk.CTkButton(
-    #         master=self.profile_frame,
-    #         text='  Excercises ',
-    #         font=('Arial', int(self.props.HEIGHT * 0.02)),
-    #         width=int(self.props.WIDTH * 0.2),
-    #         corner_radius=32,
-    #         fg_color=self.props.BUTTON_COLOR,
-    #         text_color='black',
-    #         border_color=self.props.BACKGROUND_LIGHT,
-    #         border_width=2,
-    #         hover_color='white',
-    #         command=lambda: self.return_to_gui('excersice'))
-    #     self.excercise_button.place(relx=0.7,
-    #                                 rely=0.75,
-    #                                 anchor='center')
-
-    #     self.motivation_button = ctk.CTkButton(
-    #         master=self.profile_frame,
-    #         text=' Motivation  ',
-    #         font=('Arial', int(self.props.HEIGHT * 0.02)),
-    #         width=int(self.props.WIDTH * 0.2),
-    #         corner_radius=32,
-    #         fg_color=self.props.BUTTON_COLOR,
-    #         text_color='black',
-    #         border_color=self.props.BACKGROUND_LIGHT,
-    #         border_width=2,
-    #         hover_color='white',
-    #         command=lambda: self.return_to_gui('motivation'))
-    #     self.motivation_button.place(relx=0.3,
-    #                                  rely=0.85,
-    #                                  anchor='center')
-
-    #     self.random_button = ctk.CTkButton(
-    #         master=self.profile_frame,
-    #         text='   Random    ',
-    #         font=('Arial', int(self.props.HEIGHT * 0.02)),
-    #         width=int(self.props.WIDTH * 0.2),
-    #         corner_radius=32,
-    #         fg_color=self.props.BUTTON_COLOR,
-    #         text_color='black',
-    #         border_color=self.props.BACKGROUND_LIGHT,
-    #         border_width=2,
-    #         hover_color='white',
-    #         command=lambda: self.return_to_gui('random'))
-    #     self.random_button.place(relx=0.7,
-    #                              rely=0.85,
-    #                              anchor='center')
-
-    #     self.date = ctk.CTkLabel(
-    #         master=self.profile_frame,
-    #         text=strftime("%d %b %Y"),
-    #         font=('Arial', int(self.props.HEIGHT * 0.05), 'bold')
-    #         )
-    #     self.date.place(relx=0.5,
-    #                     rely=0.15,
-    #                     anchor='center')
-
-    #     self.time_widget = ctk.CTkLabel(
-    #         master=self.profile_frame,
-    #         text='',
-    #         font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'))
-    #     self.time_widget.place(relx=0.5,
-    #                            rely=0.23,
-    #                            anchor='center')
-    #     self.time()
-
-    #     # Option bar
-    #     self.home_option = ctk.CTkLabel(
-    #         master=self.option_frame,
-    #         text='Home',
-    #         font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-    #         height=int(self.props.HEIGHT * 0.02),
-    #         text_color=self.props.BACKGROUND_LIGHT
-    #         )
-    #     self.home_option.bind(
-    #         '<Button-1>', lambda e: self.return_to_gui('home')
-    #         )
-    #     self.home_option.place(relx=0.5, rely=0.15, anchor='center')
-
-    #     self.settings_option = ctk.CTkLabel(
-    #         master=self.option_frame,
-    #         text='Settings',
-    #         font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-    #         height=int(self.props.HEIGHT * 0.02),
-    #         text_color=self.props.BACKGROUND_LIGHT
-    #         )
-    #     self.settings_option.bind(
-    #         '<Button-1>', lambda e: self.return_to_gui('settings')
-    #         )
-    #     self.settings_option.place(relx=0.5, rely=0.85, anchor='center')
-
-    #     self.profile_option = ctk.CTkLabel(
-    #         master=self.option_frame,
-    #         text='Profile',
-    #         font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-    #         height=int(self.props.HEIGHT * 0.02),
-    #         text_color=self.props.BACKGROUND_LIGHT
-    #         )
-    #     self.profile_option.bind(
-    #         '<Button-1>', lambda e: self.return_to_gui('profile')
-    #         )
-    #     self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
-
-    #     self.logout_option = ctk.CTkLabel(
-    #         master=self.option_frame,
-    #         text='Logout',
-    #         font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-    #         height=int(self.props.HEIGHT * 0.02),
-    #         text_color=self.props.BACKGROUND_LIGHT
-    #         )
-    #     self.logout_option.bind('<Button-1>',
-    # lambda e: self.logout_handler())
-    #     self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
-
     def dashboardPage(self):
         """
         Dashboard page of the profile page.
@@ -265,8 +118,6 @@ class ProfilePage():
         welcome_label.pack(pady=(50, 0))
 
         self.create_buttons_grid()
-        # self.collapsible_menu.add(self.profile_frame)
-        # self.add_collapsible_menu()
 
     def create_buttons_grid(self):
         """
@@ -386,55 +237,10 @@ class ProfilePage():
                                         rely=0.05,
                                         anchor='center')
 
-    # def add_collapsible_menu(self):
-    #     self.collapsable_menu = ctk.CTkFrame(
-    #         master=self.profile_frame,
-    #         fg_color=self.props.BACKGROUND_DARK,
-    #         width=int(self.props.WIDTH * 0.3),
-    #         height=int(self.props.HEIGHT * 0.3),
-    #         border_width=2,
-    #         border_color=self.props.BACKGROUND_LIGHT
-    #     )
-    #     self.collapsable_menu.place(
-    #         relx=0.19,
-    #         rely=0.23,
-    #         anchor='center')
-    #     self.collapsable_menu.lower()
-
-    # def toggle_collapsible_menu(self):
-    #     if self.collapsible_menu_visible:
-    #         self.collapsable_menu.lower()
-    #         self.collapsible_menu_visible = False
-    #     else:
-    #         self.collapsable_menu.lift()
-    #         self.collapsible_menu_visible = True
-
-    # def option_toggle(self):
-    #     """
-    #     toggle option menu.
-    #     """
-    #     if self.option_visible:
-    #         self.option_frame.lower()
-    #         self.option_frame.place_forget()
-    #         self.option_visible = False
-    #         self.logger.log('Option menu closed.')
-    #     else:
-    #         self.option_frame.lift()
-    #         self.option_frame.place(relx=0.19, rely=0.23, anchor='center')
-    #         self.option_visible = True
-    #         self.logger.log('Option menu opened.')
-
     def open_mood_form(self):
         """
         Open the mood form.
         """
-        # self.change_to_mood_registration()
-        # self.mood_registration = mood_registration.MoodRegistration(
-        #     self.app,
-        #     self.props,
-        #     self.user,
-        #     self.return_to_gui
-        # )
         self.logger.log('Button <Register Mood> clicked.')
         self.return_to_gui('mood_registration', self.user)
 
