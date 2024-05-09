@@ -5,7 +5,6 @@ graphical user interface of the application.
 
 import customtkinter as ctk
 from firebase_connection import FirebaseConnection
-# import warnings
 from login_page import LoginPage
 from profile_page import ProfilePage
 from settings import Settings
@@ -32,8 +31,6 @@ class GUI:
         self.props = Props(self.app)
         self.app.title(self.props.APP_NAME)
         self.app.geometry(f'{self.props.WIDTH}x{self.props.HEIGHT}')
-        # self.app.minsize(self.props.WIDTH, self.props.HEIGHT)
-        # self.app.maxsize(self.props.WIDTH, self.props.HEIGHT)
         self.app.resizable(False, False)
         self.app.configure(bg=self.props.BACKGROUND_DARK)
         set_appearance_mode(self.props.THEME)
