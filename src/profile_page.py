@@ -108,7 +108,10 @@ class ProfilePage():
         self.time_widget.pack()
 
         name = self.user.email.split('@')[0].capitalize()
-        welcome_message = f'Welcome {name}!'
+        if len(name) < 10:
+            welcome_message = f'Welcome {name}!'
+        else:
+            welcome_message = f'Welcome\n{name}!'
         welcome_label = ctk.CTkLabel(
             master=self.profile_frame,
             text=welcome_message,
@@ -188,7 +191,11 @@ class ProfilePage():
             command=lambda: self.return_to_gui('summary'))
         self.summary_button.grid(row=1, column=1, padx=10, pady=10)
 
-        self.button_frame.pack(pady=(80, 0))
+        name = self.user.email.split('@')[0]
+        if len(name) < 10:
+            self.button_frame.pack(pady=(80, 0))
+        else:
+            self.button_frame.pack(pady=(50, 0))
 
     def add_images(self):
         """
