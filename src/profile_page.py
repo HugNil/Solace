@@ -188,7 +188,7 @@ class ProfilePage():
             border_color=self.props.BACKGROUND_LIGHT,
             border_width=2,
             hover_color='white',
-            command=lambda: self.return_to_gui('summary'))
+            command=self.open_summary)
         self.summary_button.grid(row=1, column=1, padx=10, pady=10)
 
         name = self.user.email.split('@')[0]
@@ -252,6 +252,13 @@ class ProfilePage():
         self.return_to_gui('mood_registration', self.user)
 
     def change_to_mood_registration(self):
+        self.clear_frame()
+
+    def open_summary(self):
+        self.logger.log('Button <Summary> clicked.')
+        self.return_to_gui('summary', self.user)
+
+    def change_to_summary(self):
         self.clear_frame()
 
     def clear_frame(self):
