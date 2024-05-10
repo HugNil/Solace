@@ -9,6 +9,7 @@ from login_page import LoginPage
 from profile_page import ProfilePage
 from settings import Settings
 from mood_registration import MoodRegistration
+from summary import Summary
 from props import Props
 import pygame
 from customtkinter import set_appearance_mode
@@ -73,11 +74,18 @@ class GUI:
             self.user,
             self.return_to_gui
             )
+        self.summary = Summary(
+            self.app,
+            self.props,
+            self.user,
+            self.return_to_gui
+        )
 
         self.frames = [
             self.login_page,
             self.profile_page,
-            self.mood_registration
+            self.mood_registration,
+            self.summary
             ]
 
     def switch_frame(self, frame, user):
@@ -104,6 +112,11 @@ class GUI:
             self.logger.log('Clearing frames')
             self.logger.log('Opening mood registration page')
             self.mood_registration.create_widgets()
+        if frame == 'summary':
+            self.clear_frames()
+            self.logger.log('Clearing frames')
+            self.logger.log('Opening summary page')
+            self.summary.create_f()
 
     def clear_frames(self) -> None:
         """
