@@ -5,11 +5,11 @@ graphical user interface of the application.
 
 import customtkinter as ctk
 from firebase_connection import FirebaseConnection
-# import warnings
 from login_page import LoginPage
 from profile_page import ProfilePage
 from settings import Settings
 from mood_registration import MoodRegistration
+from summary import Summary
 from props import Props
 import pygame
 from customtkinter import set_appearance_mode
@@ -32,8 +32,6 @@ class GUI:
         self.props = Props(self.app)
         self.app.title(self.props.APP_NAME)
         self.app.geometry(f'{self.props.WIDTH}x{self.props.HEIGHT}')
-        # self.app.minsize(self.props.WIDTH, self.props.HEIGHT)
-        # self.app.maxsize(self.props.WIDTH, self.props.HEIGHT)
         self.app.resizable(False, False)
         self.app.configure(bg=self.props.BACKGROUND_DARK)
         set_appearance_mode(self.props.THEME)
@@ -76,11 +74,18 @@ class GUI:
             self.user,
             self.return_to_gui
             )
+        self.summary = Summary(
+            self.app,
+            self.props,
+            self.user,
+            self.return_to_gui
+        )
 
         self.frames = [
             self.login_page,
             self.profile_page,
-            self.mood_registration
+            self.mood_registration,
+            self.summary
             ]
 
     def switch_frame(self, frame, user):
@@ -107,6 +112,11 @@ class GUI:
             self.logger.log('Clearing frames')
             self.logger.log('Opening mood registration page')
             self.mood_registration.create_widgets()
+        if frame == 'summary':
+            self.clear_frames()
+            self.logger.log('Clearing frames')
+            self.logger.log('Opening summary page')
+            self.summary.create_f()
 
     def clear_frames(self) -> None:
         """
@@ -137,8 +147,15 @@ class GUI:
         """
         self.switch_frame(frame, user)
 
+    def run_app():
+        """
+        Runs the application
+        """
+        app = ctk.CTk()
+        GUI(app)
+        pygame.mixer.init()
+        app.mainloop()
 
-app = ctk.CTk()
-gui = GUI(app)
-pygame.mixer.init()
-app.mainloop()
+
+if __name__ == '__main__':
+    GUI.run_app()

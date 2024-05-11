@@ -269,7 +269,6 @@ summary page.
             rely=0.74,
             anchor='center'
             )
-        # self.submit_button.configure(state='disabled')
         self.submit_button.configure(text='Submitted!',
                                      state='disabled')
 

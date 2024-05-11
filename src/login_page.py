@@ -166,13 +166,6 @@ class LoginPage:
                                  rely=0.92,
                                  anchor="center")
 
-        # self.line_img = ctk.CTkLabel(master=self.start_frame,
-        #                              image=self.line,
-        #                              text="")
-        # self.line_img.place(relx=0.4995,
-        #                     rely=0.8,
-        #                     anchor="center")
-
         self.line = ctk.CTkLabel(master=self.image_frame,
                                  image=self.line_img,
                                  text="")
@@ -190,7 +183,7 @@ class LoginPage:
                                     rely=0.05,
                                     anchor='center')
 
-        # Creates alla the elements for the login frame
+        # Creates all the elements for the login frame
         self.email_label = ctk.CTkLabel(
             master=self.login_frame,
             text='Email',
@@ -483,17 +476,6 @@ class LoginPage:
         self.config['GeneralSettings']['remember_me'] = str(value)
         with open('properties.ini', 'w') as configfile:
             self.config.write(configfile)
-
-    # def register_handler(self, email, password):
-    #     """
-    #     Handle the registration of the user.
-    #     """
-    #     if self.firebase.register_user(email, password):
-    #         self.logger.log(f"User {email} registered.")
-    #         self.login_handler(email, password)
-    #     else:
-    #         self.logger.log(f"Failed registration attempt for {email}.")
-    #         self.show_sign_in_sign_up_error('reg')
 
     def register_user(self, email, password):
         """
