@@ -39,12 +39,12 @@ then..
 
 MacOS or Linux
 ```bash
-. .venv/bin/activate
+source .venv/bin/activate
 ```
 
 Windows
 ```bash
-source .venv/Scripts/activate
+. .venv/Scripts/activate
 ```
 
 ---
