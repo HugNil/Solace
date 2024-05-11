@@ -37,8 +37,14 @@ make venv
 ```
 then..
 
+MacOS or Linux
 ```bash
-source venv/bin/activate
+. .venv/bin/activate
+```
+
+Windows
+```bash
+source .venv/Scripts/activate
 ```
 
 ---
