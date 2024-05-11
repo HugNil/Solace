@@ -15,6 +15,7 @@ import pygame
 from customtkinter import set_appearance_mode
 from user import User
 import log_writer
+from Exercise import Exercise
 
 
 class GUI:
@@ -80,12 +81,18 @@ class GUI:
             self.user,
             self.return_to_gui
         )
-
+        self.exercise_page = Exercise(
+            self.app,
+            self.return_to_gui,
+            self.user,
+            self.props
+            )
         self.frames = [
             self.login_page,
             self.profile_page,
             self.mood_registration,
-            self.summary
+            self.summary,
+            self.exercise_page
             ]
 
     def switch_frame(self, frame, user):
@@ -117,6 +124,11 @@ class GUI:
             self.logger.log('Clearing frames')
             self.logger.log('Opening summary page')
             self.summary.create_f()
+        if frame == 'exercise':
+            self.clear_frames()
+            self.logger.log('Clearing frames')
+            self.logger.log('Opening exercise page')
+            self.exercise_page.create_widgets()
 
     def clear_frames(self) -> None:
         """

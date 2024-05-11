@@ -160,7 +160,7 @@ class ProfilePage():
             border_color=self.props.BACKGROUND_LIGHT,
             border_width=2,
             hover_color='white',
-            command=lambda: self.return_to_gui('exercise'))
+            command=lambda: self.return_to_gui('exercise', self.user))
         self.exercises_button.grid(row=0, column=1, padx=10, pady=10)
 
         self.motivation_button = ctk.CTkButton(
