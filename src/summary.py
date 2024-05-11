@@ -3,6 +3,7 @@ from PIL import Image
 import collapsible_menu
 import log_writer
 import firebase_connection
+from graph import Graph
 
 
 class Summary:
@@ -37,6 +38,7 @@ class Summary:
         self.add_collapsible_menu()
         self.add_back_button()
         self.create_info_label()
+        self.add_graph()
 
     def add_back_button(self):
         self.back_button_img = Image.open('assests/back-button.png')
@@ -139,6 +141,15 @@ the past 7 days.
         self.collapsable_menu_img.place(relx=0.075,
                                         rely=0.05,
                                         anchor='center')
+
+    def add_graph(self):
+        self.graph = Graph(self.image_frame, self.props)
+        self.graph.display()
+
+        x_data = [1, 2, 3, 4, 5, 6, 7]
+        y_data = [1, 3, 2, 4, 7, 5, 3]
+
+        self.graph.plot_data(x_data, y_data)
 
     def back(self):
         self.main_frame.destroy()
