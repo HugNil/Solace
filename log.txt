@@ -1,6 +1,26 @@
-04-26 15:35:05: Application started.
-04-26 15:35:05: Profile page opened.
-04-26 15:35:06: Frames cleared in home page.
-04-26 15:35:06: Option menu closed.
-04-26 15:35:08: Menu music started.
-04-26 15:35:13: Failed login attempt for .
+05-11 12:51:32: Application started.
+05-11 12:51:32: Profile page opened.
+05-11 12:51:32: Initializing dashboard page.
+05-11 12:51:35: Frames cleared in home page.
+05-11 12:51:35: Cleared mood registration frame
+05-11 12:51:35: Option menu closed.
+05-11 12:51:37: Menu music started.
+05-11 12:52:13: Frames cleared in home page.
+05-11 12:52:13: User pontushavmyr@hotmail.com logged in.
+05-11 12:52:13: Key already exists.
+05-11 12:52:13: Login saved.
+05-11 12:52:13: Frames cleared in home page.
+05-11 12:52:13: Cleared mood registration frame
+05-11 12:52:13: Clearing frames
+05-11 12:52:13: Opening profile page
+05-11 12:52:13: Initializing dashboard page.
+05-11 12:52:14: Button <Register Mood> clicked.
+05-11 12:52:14: Frames cleared in home page.
+05-11 12:52:14: Cleared mood registration frame
+05-11 12:52:14: Clearing frames
+05-11 12:52:14: Opening mood registration page
+05-11 12:52:19: Frames cleared in home page.
+05-11 12:52:19: Cleared mood registration frame
+05-11 12:52:19: Clearing frames
+05-11 12:52:19: Opening profile page
+05-11 12:52:19: Initializing dashboard page.

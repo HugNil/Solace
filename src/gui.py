@@ -5,70 +5,161 @@ graphical user interface of the application.
 
 import customtkinter as ctk
 from firebase_connection import FirebaseConnection
-import warnings
-from home_page import HomePage
+# import warnings
+from login_page import LoginPage
 from profile_page import ProfilePage
+from settings import Settings
+from mood_registration import MoodRegistration
 from props import Props
 import pygame
 from customtkinter import set_appearance_mode
-
-
-warnings.filterwarnings("ignore",
-                        message="CTkLabel Warning:"
-                        "Given image is not CTkImage*")
+from user import User
+import log_writer
+from Exercise import Exercise
 
 
 class GUI:
+    """
+    Class for the graphical user interface of the application
+    """
     def __init__(self, app) -> None:
         self.app = app
 
+        self.logger = log_writer.Log_writer()
+        self.logger.clear_log()
+        self.logger.log('Application started.')
+
+        self.user = User()
         self.props = Props(self.app)
         self.app.title(self.props.APP_NAME)
         self.app.geometry(f'{self.props.WIDTH}x{self.props.HEIGHT}')
-        self.app.minsize(self.props.WIDTH, self.props.HEIGHT)
-        self.app.maxsize(self.props.WIDTH, self.props.HEIGHT)
+        # self.app.minsize(self.props.WIDTH, self.props.HEIGHT)
+        # self.app.maxsize(self.props.WIDTH, self.props.HEIGHT)
+        self.app.resizable(False, False)
         self.app.configure(bg=self.props.BACKGROUND_DARK)
         set_appearance_mode(self.props.THEME)
-        self.app.iconbitmap("assests/Solace logo1_klippt.ico")
+        self.app.iconbitmap("assests/solace-window-icon.ico")
 
         self.firebase = FirebaseConnection()
 
         self.create_frames()
         self.clear_frames()
-        self.home_page.first_menu()
+        self.login_page.first_menu()
 
         pygame.mixer.init()
         self.play()
 
     def create_frames(self) -> None:
-        """Creates all the frames for the application"""
-        self.home_page = HomePage(self.app, self.firebase, self.return_to_gui)
-        self.profile_page = ProfilePage(self.app, self.return_to_gui)
+        """
+        Creates all the frames for the application
+        """
+        self.login_page = LoginPage(
+            self.app,
+            self.firebase,
+            self.props,
+            self.user,
+            self.return_to_gui
+            )
+        self.profile_page = ProfilePage(
+            self.app,
+            self.props,
+            self.user,
+            self.return_to_gui
+            )
+        self.settings = Settings(
+            self.app,
+            self.props,
+            self.return_to_gui
+            )
+        self.mood_registration = MoodRegistration(
+            self.app,
+            self.props,
+            self.user,
+            self.return_to_gui
+            )
 
-        self.frames = [self.home_page, self.profile_page]
+        self.frames = [
+            self.login_page,
+            self.profile_page,
+            self.mood_registration
+            ]
 
-    def switch_frame(self, frame):
-        """Switches the frame to the given frame"""
+    def switch_frame(self, frame, user):
+        """
+        Switches the frame to the given frame
+        """
         if frame == 'profile':
+            if user.logged_in:
+                self.clear_frames()
+                self.logger.log('Clearing frames')
+                self.logger.log('Opening profile page')
+                self.profile_page.dashboardPage()
+            else:
+                self.clear_frames()
+                self.login_page.first_menu()
+        if frame == 'home':
             self.clear_frames()
-            self.profile_page.profile_menu()
+            self.login_page.first_menu()
+        if frame == 'settings':
+            self.settings.open_settings()
+            print('returned from mood registration')
+        if frame == 'mood_registration':
+            self.clear_frames()
+            self.logger.log('Clearing frames')
+            self.logger.log('Opening mood registration page')
+            self.mood_registration.create_widgets()
+        if frame == 'Exercise':
+            self.clear_frames('Clearing frames')
+            self.show_exercise()
 
     def clear_frames(self) -> None:
-        """Clears all the frames"""
+        """
+        Clears all the frames
+        """
         for frame in self.frames:
             frame.clear_frame()
 
     def play(self):
-        pygame.mixer.music.load("assests/Menu music1.mp3")
+        """
+        Plays the menu music
+        """
+        pygame.mixer.music.load("assests/music-menu.mp3")
         pygame.mixer.music.play(loops=1)
-
         pygame.mixer.music.set_volume(0.009)
+        self.logger.log('Menu music started.')
 
     def stop(self):
+        """
+        Stops the menu music
+        """
         pygame.mixer.music.stop()
+        self.logger.log('Menu music stopped.')
 
-    def return_to_gui(self, frame):
-        self.switch_frame(frame)
+    def return_to_gui(self, frame, user):
+        """
+        Returns to the gui
+        """
+        self.switch_frame(frame, user)
+
+    def exercise(self):
+        """"
+        Show Exercise
+        """
+        self.clear_frames()
+
+        breathing_exercise_button = ctk.CTkButton(
+            master=self.app,
+            text='Start Breathing Exercise',
+            command=self.start_breathing_exercise
+        )
+        breathing_exercise_button.pack()
+
+    def start_breathing_exercise(self):
+        """
+        Starts breathing exercise
+        """
+        exercise = Exercise(self.app, self.props, self.user)
+        exercise.start_breathing_exercise()
 
 
 app = ctk.CTk()

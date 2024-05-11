@@ -4,3 +4,4 @@ pillow
 firebase_admin
 requests
 pygame
+cryptography
