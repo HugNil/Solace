@@ -32,6 +32,7 @@ class Exercise:
 
         self.add_back_button()
         self.add_collapsible_menu()
+        self.start_breathing_exercise()
 
     def add_back_button(self):
         self.back_button_img = Image.open('assests/back-button.png')
@@ -52,11 +53,6 @@ class Exercise:
         self.back_button.place(relx=0.85, rely=0.05, anchor='center')
 
     def start_breathing_exercise(self):
-        self.breathing_window = ctk.CTk()
-        self.breathing_window.title('Breathing Exercise')
-        self.breathing_window.geometry('600x300')
-        self.breathing_label = ctk.CTkLabel(self.breathing_window, text='')
-        self.breathing_label.pack()
         if self.count % 4 == 0:
             self.breathing_label.configure(text='Inhale...')
         elif self.count % 4 == 1:
@@ -71,14 +67,14 @@ class Exercise:
             self.breathing_window.after(4000)
 
         start_button = ctk.CTkButton(
-            self.breathing_window,
+            self.main_frame1,
             text='Start breathing Exercise',
-            command=self.breathing_sequence
+            command=lambda: self.breathing_sequence()
         )
         start_button.pack()
 
     def update_progress_bar(self):
-        self.progress_bar = ctk.CTkProgressBar(self.breathing_window,
+        self.progress_bar = ctk.CTkProgressBar(self.main_frame1,
                                                width=300,
                                                orientation='horizontal')
         self.progress_bar.pack()
@@ -93,7 +89,7 @@ class Exercise:
 
         self.count += 1
         if self.count < 16:
-            self.breathing_window.after(4000)
+            self.main_frame1.after(4000)
 
     def breathing_sequence(self):
         self.count = 0
