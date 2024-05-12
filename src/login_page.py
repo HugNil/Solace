@@ -60,15 +60,6 @@ class LoginPage:
             corner_radius=50
         )
 
-        # self.option_frame = ctk.CTkFrame(
-        #     master=self.start_frame,
-        #     fg_color=self.props.BACKGROUND_DARK,
-        #     border_color=self.props.BACKGROUND_LIGHT,
-        #     border_width=2,
-        #     width=int(self.props.WIDTH * 0.3),
-        #     height=int(self.props.HEIGHT * 0.3)
-        #     )
-
         self.login_frame = ctk.CTkFrame(
             master=self.start_frame,
             fg_color=self.props.BACKGROUND_DARK,
@@ -124,6 +115,17 @@ class LoginPage:
                                      size=(int(self.props.WIDTH * 1.05),
                                            int(self.props.HEIGHT * 0.08)))
 
+        self.show_image = ctk.CTkImage(
+            Image.open('assests/show-password.png'),
+            size=(int(self.props.HEIGHT * 0.03),
+                  int(self.props.HEIGHT * 0.035))
+        )
+        self.hide_image = ctk.CTkImage(
+            Image.open('assests/hide-password.png'),
+            size=(int(self.props.HEIGHT * 0.03),
+                  int(self.props.HEIGHT * 0.035))
+        )
+
     def clear_frame(self):
         """
         Clear all the frames in the application.
@@ -166,7 +168,16 @@ class LoginPage:
         self.logo_full_img_label.place(relx=0.5,
                                        rely=0.175,
                                        anchor='center')
+        self.create_copyright_text()
+        self.create_login_form()
+        self.check_remember_login()
 
+        if os.path.exists('credentials.json'):
+            email, password = self.load_login()
+            self.email_entry.insert(0, email)
+            self.password_entry.insert(0, password)
+
+    def create_copyright_text(self):
         # Copyright text
         self.copyright_img = ctk.CTkLabel(master=self.start_frame,
                                           image=self.copyright,
@@ -182,6 +193,7 @@ class LoginPage:
                         rely=0.8,
                         anchor="center")
 
+    def create_login_form(self):
         self.email_label = ctk.CTkLabel(
             master=self.login_frame,
             text='Email',
@@ -253,17 +265,6 @@ class LoginPage:
                                   rely=0.4,
                                   anchor='center')
 
-        self.show_image = ctk.CTkImage(
-            Image.open('assests/show-password.png'),
-            size=(int(self.props.HEIGHT * 0.03),
-                  int(self.props.HEIGHT * 0.035))
-        )
-        self.hide_image = ctk.CTkImage(
-            Image.open('assests/hide-password.png'),
-            size=(int(self.props.HEIGHT * 0.03),
-                  int(self.props.HEIGHT * 0.035))
-        )
-
         self.show_password_button = ctk.CTkLabel(
             master=self.login_frame,
             image=self.hide_image,
@@ -325,13 +326,6 @@ class LoginPage:
                                     anchor='center')
 
         self.remember_checkbox.place(relx=0.5, rely=0.6, anchor='center')
-
-        self.check_remember_login()
-
-        if os.path.exists('credentials.json'):
-            email, password = self.load_login()
-            self.email_entry.insert(0, email)
-            self.password_entry.insert(0, password)
 
     def check_remember_login(self):
         """
