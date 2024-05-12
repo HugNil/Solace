@@ -144,7 +144,6 @@ class LoginPage:
         if not self.user.remember_login_var:
             # Resets the user values if not remember me was checked
             self.user.logout()
-            self.show_login_frame()
         # Makes sure the option window is closed
         self.option_visible = True
 
@@ -414,7 +413,6 @@ class LoginPage:
         """
         if self.remember_var.get() == 1:
             self.update_remember_me(True)
-            self.hide_login_frame()
             self.save_login(self.user.email, self.user.password)
             self.props.remember_me = True
             print("Remembering login")
@@ -446,20 +444,6 @@ class LoginPage:
                 self.show_sign_in_sign_up_error('password_length')
             elif status == 'success':
                 self.login_handler(email, password)
-
-    def hide_login_frame(self):
-        """
-        Hide the login frame.
-        """
-        self.login_frame.lower()
-        self.login_frame.place_forget()
-
-    def show_login_frame(self):
-        """
-        Show the login frame.
-        """
-        self.login_frame.lift()
-        self.login_frame.place(relx=0.5, rely=0.5, anchor='center')
 
     def show_sign_in_sign_up_error(self, type):
         """
