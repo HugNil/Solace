@@ -81,18 +81,18 @@ class GUI:
             self.user,
             self.return_to_gui
         )
-        self.exercise_page = Exercise(  # Comment out
-            self.app,                   # if error -------
-            self.return_to_gui,         # ----------------
-            self.user,                  # ----------------
-            self.props                  # ----------------
+        self.exercise_page = Exercise(
+            self.app,
+            self.return_to_gui,
+            self.user,
+            self.props,
             )
         self.frames = [
             self.login_page,
             self.profile_page,
             self.mood_registration,
             self.summary,
-            self.exercise_page        # Comment out if error
+            self.exercise_page
             ]
 
     def switch_frame(self, frame, user):
@@ -124,11 +124,11 @@ class GUI:
             self.logger.log('Clearing frames')
             self.logger.log('Opening summary page')
             self.summary.create_f()
-        if frame == 'exercise':                       # Comment out
-            self.clear_frames()                       # if error --
-            self.logger.log('Clearing frames')        # -----------
-            self.logger.log('Opening exercise page')  # -----------
-            self.exercise_page.create_widgets()       # -----------
+        if frame == 'exercise':
+            self.clear_frames()
+            self.logger.log('Clearing frames')
+            self.logger.log('Opening exercise page')
+            self.exercise_page.create_widgets()
 
     def clear_frames(self) -> None:
         """

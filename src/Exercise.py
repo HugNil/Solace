@@ -11,8 +11,8 @@ class Exercise:
         self.user = user
         self.props = props
         self.logger = log_writer.Log_writer()
+        self.count = 0
         self.create_widgets()
-        self.frames = [self.main_frame1]
 
     def create_widgets(self):
         """
@@ -28,11 +28,22 @@ class Exercise:
         )
         self.main_frame1.pack(fill='both', expand=True)
 
-        self.frames = [self.main_frame1]
+        self.start_breathing_exercise_button = ctk.CTkButton(
+         self.main_frame1,
+         text="Start breathing exercise",
+         command=self.start_breathing_exercise
+        )
 
+        self.frames = [self.main_frame1]
         self.add_back_button()
         self.add_collapsible_menu()
-        self.start_breathing_exercise()
+        self.frames = [self.main_frame1]
+        self.start_breathing_exercise_button.place(relx=0.5, rely=0.5,
+                                                   anchor='center')
+
+    def create_breathing_label(self):
+        self.breathing_label = ctk.CTkLabel(master=self.main_frame1, text='')
+        self.breathing_label.pack()
 
     def add_back_button(self):
         self.back_button_img = Image.open('assests/back-button.png')
@@ -53,31 +64,15 @@ class Exercise:
         self.back_button.place(relx=0.85, rely=0.05, anchor='center')
 
     def start_breathing_exercise(self):
-        if self.count % 4 == 0:
-            self.breathing_label.configure(text='Inhale...')
-        elif self.count % 4 == 1:
-            self.breathing_label.configure(text='Hold...')
-        elif self.count % 4 == 2:
-            self.breathing_label.configure(text='Blow out...')
-        elif self.count % 4 == 3:
-            self.breathing_label.configure(text='Hold...')
-
-        self.count += 1
-        if self.count < 16:
-            self.breathing_window.after(4000)
-
+        self.update_progress_bar()
         start_button = ctk.CTkButton(
             self.main_frame1,
             text='Start breathing Exercise',
-            command=lambda: self.breathing_sequence()
         )
         start_button.pack()
 
     def update_progress_bar(self):
-        self.progress_bar = ctk.CTkProgressBar(self.main_frame1,
-                                               width=300,
-                                               orientation='horizontal')
-        self.progress_bar.pack()
+
         if self.count % 4 == 0:
             self.breathing_label.configure(text='Inhale...')
         elif self.count % 4 == 1:
@@ -125,6 +120,7 @@ class Exercise:
 
     def clear_frame(self):
         """
+
         Clears the frame
         """
 
