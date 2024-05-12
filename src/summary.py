@@ -4,6 +4,8 @@ import collapsible_menu
 import log_writer
 import firebase_connection
 from graph import Graph
+from datetime import timedelta, datetime
+import numpy as np
 
 
 class Summary:
@@ -39,6 +41,7 @@ class Summary:
         self.add_back_button()
         self.create_info_label()
         self.add_graph()
+        self.add_update_button()
 
     def add_back_button(self):
         self.back_button_img = Image.open('assests/back-button.png')
@@ -84,7 +87,7 @@ the past 7 days.
             fg_color=self.props.BACKGROUND_DARK,
             justify='left'
         )
-        self.feature_description.place(relx=0.355, rely=0.245, anchor='center')
+        self.feature_description.place(relx=0.350, rely=0.235, anchor='center')
 
     def create_image_frame(self):
         """
@@ -142,14 +145,74 @@ the past 7 days.
                                         rely=0.05,
                                         anchor='center')
 
+    def add_update_button(self):
+        self.update_button = ctk.CTkButton(
+            master=self.image_frame,
+            text='  Show past 7 days  ',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
+            width=int(self.props.WIDTH * 0.2),
+            corner_radius=32,
+            fg_color=self.props.BUTTON_COLOR,
+            text_color='black',
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            hover_color='white',
+            command=self.show_past_seven)
+        self.update_button.place(relx=0.5, rely=0.76, anchor='center')
+
     def add_graph(self):
         self.graph = Graph(self.image_frame, self.props)
         self.graph.display()
 
-        x_data = [1, 2, 3, 4, 5, 6, 7]
-        y_data = [1, 3, 2, 4, 7, 5, 3]
+    def show_past_seven(self):
+        """
+        Get the user data from the database.
+        """
+        recent_docs = self.firebase.read_past_seven(
+            self.user.email, 'mood-form')
+        print(recent_docs)
+        mood_value, stress_values = self.extract_data(recent_docs)
+        self.graph.plot_data(mood_value, stress_values)
 
-        self.graph.plot_data(x_data, y_data)
+    def extract_data(self, data):
+        """
+        Extract the data from the recent_docs.
+
+        """
+        dates = sorted(data.keys())
+        mood_values = []
+        stress_values = []
+
+        start_date = datetime.strptime(dates[0], '%Y-%m-%d')
+        end_date = datetime.strptime(dates[-1], '%Y-%m-%d')
+
+        current_date = start_date
+        while current_date <= end_date:
+            date_str = current_date.strftime('%Y-%m-%d')
+
+            if date_str in data and data[date_str]:
+                moods = [
+                    entry['mood']
+                    for entry in data[date_str]
+                    if 'mood' in entry]
+                stresses = [
+                    entry['stress']
+                    for entry in data[date_str]
+                    if 'stress' in entry]
+
+                mood_avg = int(np.mean(moods)) if moods else None
+                stress_avg = int(np.mean(stresses)) if stresses else None
+            else:
+                mood_avg = None
+                stress_avg = None
+
+            mood_values.append(mood_avg)
+            stress_values.append(stress_avg)
+
+            current_date += timedelta(days=1)
+        print(mood_values, stress_values)
+
+        return mood_values[-7:], stress_values[-7:]
 
     def back(self):
         self.main_frame.destroy()

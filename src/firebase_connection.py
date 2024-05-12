@@ -5,8 +5,9 @@ Handles the firebase connection.
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
 import requests
-import datetime
+from datetime import datetime, timedelta
 import log_writer
+from zoneinfo import ZoneInfo
 
 cred = credentials.Certificate(r"Solace_key.json")
 firebase_admin.initialize_app(cred)
@@ -92,21 +93,57 @@ class FirebaseConnection:
         except Exception as e:
             self.logger.log(f"Error writing to database: {e}")
 
-    def read_from_db(self, email, place):
+    # def read_from_db(self, email, place):
+    #     """
+    #     Read the data from the database.
+    #     """
+    #     doc_ref = self.db.collection(u'users').document(email)
+    #     mood_collection = doc_ref.collection(place)
+    #     docs = mood_collection.stream()
+
+    #     for doc in docs:
+    #         # This will print the document ID and the
+    #         # data in the form of a dictionary.
+    #         #
+    #         # This could be changed to return specific
+    #         # data or all data instead of printing it.
+    #         print(f'{doc.id} => {doc.to_dict()}')
+
+    def read_past_seven(self, email, place):
         """
-        Read the data from the database.
+        Read the data from the last 7 days from the database,
+        grouping by day and handling multiple entries per day.
         """
+        timezone = ZoneInfo('Europe/Stockholm')
+        now = datetime.now(timezone)
+        seven_days_ago = now - timedelta(days=6)
+
         doc_ref = self.db.collection(u'users').document(email)
         mood_collection = doc_ref.collection(place)
         docs = mood_collection.stream()
 
+        # Organizing documents by date
+        daily_docs = {}
         for doc in docs:
-            # This will print the document ID and the
-            # data in the form of a dictionary.
-            #
-            # This could be changed to return specific
-            # data or all data instead of printing it.
-            print(f'{doc.id} => {doc.to_dict()}')
+            doc_data = doc.to_dict()
+            doc_date = datetime.fromisoformat(
+                doc.id[:-1]).replace(tzinfo=timezone)
+
+            # Create a simple date string to use as a key
+            date_key = doc_date.strftime('%Y-%m-%d')
+            if doc_date >= seven_days_ago:
+                if date_key not in daily_docs:
+                    daily_docs[date_key] = [doc_data]
+                else:
+                    daily_docs[date_key].append(doc_data)
+
+        # Fill in missing days with empty lists
+        for i in range(7):
+            day = (seven_days_ago + timedelta(days=i)).strftime('%Y-%m-%d')
+            if day not in daily_docs:
+                daily_docs[day] = []
+
+        return daily_docs
 
     def test_write_read_to_db():
         """

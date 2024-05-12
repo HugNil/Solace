@@ -6,3 +6,4 @@ pygame
 cryptography
 pytest
 matplotlib
+tzdata
