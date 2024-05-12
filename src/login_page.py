@@ -10,6 +10,7 @@ import json
 from cryptography.fernet import Fernet
 import os
 import configparser
+import collapsible_menu
 
 
 class LoginPage:
@@ -59,14 +60,14 @@ class LoginPage:
             corner_radius=50
         )
 
-        self.option_frame = ctk.CTkFrame(
-            master=self.start_frame,
-            fg_color=self.props.BACKGROUND_DARK,
-            border_color=self.props.BACKGROUND_LIGHT,
-            border_width=2,
-            width=int(self.props.WIDTH * 0.3),
-            height=int(self.props.HEIGHT * 0.3)
-            )
+        # self.option_frame = ctk.CTkFrame(
+        #     master=self.start_frame,
+        #     fg_color=self.props.BACKGROUND_DARK,
+        #     border_color=self.props.BACKGROUND_LIGHT,
+        #     border_width=2,
+        #     width=int(self.props.WIDTH * 0.3),
+        #     height=int(self.props.HEIGHT * 0.3)
+        #     )
 
         self.login_frame = ctk.CTkFrame(
             master=self.start_frame,
@@ -76,9 +77,17 @@ class LoginPage:
             width=int(self.props.WIDTH * 0.7),
             height=int(self.props.HEIGHT * 0.4))
 
+        self.collapsible_menu = collapsible_menu.CollapsibleMenu(
+            self.props,
+            self.return_to_gui,
+            self.user,
+            self.start_frame
+        )
+
         self.frames = [self.start_frame,
-                       self.option_frame,
-                       self.login_frame]
+                       self.login_frame,
+                       self.image_frame
+                       ]
 
     def open_images(self):
         """
@@ -130,13 +139,14 @@ class LoginPage:
         This is the first thing the user sees when they open the application.
         It is the login screen. The user is prompted to login or register.
         """
+        self.add_collapsible_menu()
+        self.collapsible_menu.lower()
         if not self.user.remember_login_var:
             # Resets the user values if not remember me was checked
             self.user.logout()
             self.show_login_frame()
         # Makes sure the option window is closed
         self.option_visible = True
-        self.option_toggle()
 
         # Opens the new first_menu
         self.start_frame.pack(fill=tk.BOTH,
@@ -173,17 +183,6 @@ class LoginPage:
                         rely=0.8,
                         anchor="center")
 
-        # Icon logo as option button
-        self.logo_icon_label1 = ctk.CTkLabel(master=self.start_frame,
-                                             image=self.logo_icon, text='')
-        self.logo_icon_label1.bind("<Button-1>",
-                                   command=lambda e: self.option_toggle())
-
-        self.logo_icon_label1.place(relx=0.075,
-                                    rely=0.05,
-                                    anchor='center')
-
-        # Creates all the elements for the login frame
         self.email_label = ctk.CTkLabel(
             master=self.login_frame,
             text='Email',
@@ -328,61 +327,12 @@ class LoginPage:
 
         self.remember_checkbox.place(relx=0.5, rely=0.6, anchor='center')
 
-        # Option bar
-        self.home_option = ctk.CTkLabel(
-            master=self.option_frame,
-            text='Home',
-            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-            height=int(self.props.HEIGHT * 0.02),
-            text_color=self.props.BACKGROUND_LIGHT
-            )
-        self.home_option.bind(
-            '<Button-1>', lambda e: self.return_to_gui('home', self.user)
-            )
-        self.home_option.place(relx=0.5, rely=0.15, anchor='center')
-
-        self.settings_option = ctk.CTkLabel(
-            master=self.option_frame,
-            text='Settings',
-            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-            height=int(self.props.HEIGHT * 0.02),
-            text_color=self.props.BACKGROUND_LIGHT
-            )
-        self.settings_option.bind(
-            '<Button-1>', lambda e: self.return_to_gui('settings', self.user)
-            )
-        self.settings_option.place(relx=0.5, rely=0.85, anchor='center')
-
-        self.profile_option = ctk.CTkLabel(
-            master=self.option_frame,
-            text='Profile',
-            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-            height=int(self.props.HEIGHT * 0.02),
-            text_color=self.props.BACKGROUND_LIGHT
-            )
-        self.profile_option.bind(
-            '<Button-1>',
-            command=lambda e: self.return_to_gui('profile'))
-        self.profile_option.place(relx=0.5, rely=0.35, anchor='center')
-
-        self.logout_option = ctk.CTkLabel(
-            master=self.option_frame,
-            text='Logout',
-            font=('Arial', int(self.props.HEIGHT * 0.025), 'bold'),
-            height=int(self.props.HEIGHT * 0.02),
-            text_color=self.props.BACKGROUND_LIGHT
-            )
-        self.logout_option.bind('<Button-1>', lambda e: self.logout_handler())
-        self.logout_option.place(relx=0.5, rely=0.65, anchor='center')
-
         self.check_remember_login()
 
         if os.path.exists('credentials.json'):
             email, password = self.load_login()
             self.email_entry.insert(0, email)
             self.password_entry.insert(0, password)
-
-        self.logged_in_toggle()
 
     def check_remember_login(self):
         """
@@ -395,20 +345,27 @@ class LoginPage:
         else:
             self.remember_var.set(0)
 
-    def option_toggle(self):
-        """
-        Toggle the option menu on and off.
-        """
-        if self.option_visible:
-            self.option_frame.lower()
-            self.option_frame.place_forget()
-            self.option_visible = False
-            self.logger.log('Option menu closed.')
-        else:
-            self.option_frame.lift()
-            self.option_frame.place(relx=0.19, rely=0.23, anchor='center')
-            self.option_visible = True
-            self.logger.log('Option menu opened.')
+    def add_collapsible_menu(self):
+        self.collapsible_menu.lower()
+
+        self.collapsable_menu_img = Image.open('assests/menu-icon.png')
+        self.collapsable_menu_img = ctk.CTkImage(
+            self.collapsable_menu_img,
+            size=(int(self.props.WIDTH * 0.08),
+                  int(self.props.HEIGHT * 0.05))
+            )
+        self.collapsable_menu_img = ctk.CTkButton(
+            master=self.start_frame,
+            image=self.collapsable_menu_img,
+            text='',
+            fg_color=self.props.BACKGROUND_DARK,
+            command=lambda: self.collapsible_menu.toggle(),
+            width=int(self.props.WIDTH * 0.08),
+            height=int(self.props.HEIGHT * 0.05)
+        )
+        self.collapsable_menu_img.place(relx=0.075,
+                                        rely=0.05,
+                                        anchor='center')
 
     def toggle_show_password(self):
         """
@@ -433,7 +390,6 @@ class LoginPage:
         """
         token = self.firebase.login_user(email, password)
         if token is not None:
-            self.logged_in_toggle()
             self.clear_frame()
             self.user.login(email, password, token)
             self.logger.log(f"User {email} logged in.")
@@ -449,7 +405,6 @@ class LoginPage:
         """
         self.user.logged_in = False
         self.user.remember_login_var = False
-        self.logged_in_toggle()
         self.logger.log(f"User {self.user.email} logged out.")
         self.return_to_gui('home', self.user)
 
@@ -491,12 +446,6 @@ class LoginPage:
                 self.show_sign_in_sign_up_error('password_length')
             elif status == 'success':
                 self.login_handler(email, password)
-
-    def logged_in_toggle(self):
-        if not self.user.remember_login_var:
-            self.profile_option.unbind('<Button-1>')
-        if not self.user.logged_in:
-            self.logout_option.unbind('<Button-1>')
 
     def hide_login_frame(self):
         """

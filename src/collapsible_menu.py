@@ -39,7 +39,7 @@ class CollapsibleMenu:
             height=16,
             hover_color="#033253",
             corner_radius=8,
-            command=lambda: self.switch_frame('Home', self.user)
+            command=lambda: self.switch_frame('profile', self.user)
         )
         self.home_button.pack(pady=(10, 5), padx=10)
 
@@ -97,9 +97,9 @@ class CollapsibleMenu:
 
     def toggle(self):
         if self.is_visible:
-            self.menu.lower()
+            self.lower()
         else:
-            self.menu.lift()
+            self.lift()
         self.is_visible = not self.is_visible
 
     def lift(self):
