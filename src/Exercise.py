@@ -63,6 +63,7 @@ class Exercise:
         self.back_button.place(relx=0.85, rely=0.05, anchor='center')
 
     def start_breathing_exercise(self):
+        self.count = 0
         self.clear_frame()
         self.create_breathing_frame()
 
@@ -88,31 +89,37 @@ class Exercise:
 
     def create_progress_bar(self):
         self.progress_bar = ctk.CTkProgressBar(master=self.breathing_frame,
-                                               width=200, height=20)
+                                               width=200, height=20,
+                                               determinate_speed=0.33,
+                                               mode='determinate'
+                                               )
+        self.progress_bar.set(0)
         self.progress_bar.pack()
 
     def update_progress_bar(self):
-        phase_duration = 4000
-        phases = ['Inhale...', 'Hold...', 'Exhale...', 'Hold...']
-        for phase_index in range(5):
-            self.breathing_label.configure(text=phases[self.count % 4])
+        """
+        Four stages of breathing exercise.
+        Breathe in, hold, breathe out, hold.
+        The text should change to match the stage.
+        and the progress bar should update 25% each stage.
+        each stage lasts 4 seconds.
+        """
 
-        if phase_index == 0:
-            self.progress_bar['value'] = 0
-        elif phase_index == 1:
-            self.progress_bar['value'] = 25
-        elif phase_index == 2:
-            self.progress_bar['value'] = 50
-        elif phase_index == 3:
-            self.progress_bar['value'] = 75
+        self.progress_bar.stop()
+        phase_duration = 4000
+        phases = ['Breathe in', 'Hold', 'Breathe out', 'Hold']
+        # values = [0.25, 0.50, 0.75, 1]
+
+        # Uppdatera label och progress bar baserat på nuvarande count
+        self.breathing_label.configure(text=phases[self.count % 4])
+        self.progress_bar.start()
 
         self.count += 1
-
-        if self.count < 16:
+        if self.count < 16:  # Kör fyra rundor av fyra faser
             self.breathing_frame.after(phase_duration,
                                        self.update_progress_bar)
         else:
-            self.count = 0
+            self.count = 0  # Återställ räknaren efter alla faser är genomförda
 
     def clear_frame(self):
         """
@@ -121,6 +128,3 @@ class Exercise:
         for frame in self.frames:
             frame.pack_forget()
         self.logger.log('Cleared exercise frame')
-
-
-
