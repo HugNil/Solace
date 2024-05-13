@@ -83,11 +83,17 @@ This application is structured into several Python files, each serving a differe
 
 - `collapsible_menu.py`: This file contains the collapsible menu class which is responsible for the collapsible menu of the application.
 - `firebase_connection.py`: This file contains the connection to firebase, where user data is stored.
-- `home_page.py`: This file contains the first page of the application, where the user can login or register.
+- `login_page.py`: This file contains the first page of the application, where the user can login or register.
 - `profile_page.py`: This file contains the profile page of the application.
 - `gui.py`: This file contains the main class of the application, which is responsible for the main window of the application.
 - `props.py`: This file contains the props class which is responsible for theproperties of the application
 - `mood_registration.py`: This file contains the mood registration page of the application.
+- `graph.py`: This file contains the graph.
+- `log_writer.py`: This file handles all the logging.
+- `settings.py`: This file contains the settings page of the application.
+- `summary.py`: This file contains the summary page of the application.
+- `user.py`: This file is where user information is stored.
+- `exercise.py`: This file contains the exercise page of the application.
 
 ## Changelog
 
