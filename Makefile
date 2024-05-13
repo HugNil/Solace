@@ -54,6 +54,12 @@ test:
 	@coverage html
 
 
+.PHONY: exe
+exe:
+	@$(call MESSAGE, Creating an executable file...)
+	pyinstaller --onefile --windowed $(MAIN_FILE)
+
+
 .PHONY: help
 
 
