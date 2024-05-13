@@ -116,7 +116,8 @@ class FirebaseConnection:
         """
         timezone = ZoneInfo('Europe/Stockholm')
         now = datetime.now(timezone)
-        seven_days_ago = now - timedelta(days=6)
+        seven_days_ago = (now - timedelta(days=6)).replace(
+            hour=0, minute=0, second=0, microsecond=0)
 
         doc_ref = self.db.collection(u'users').document(email)
         mood_collection = doc_ref.collection(place)
