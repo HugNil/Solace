@@ -1,9 +1,10 @@
+import os
 import customtkinter as ctk
 from PIL import Image
-import collapsible_menu
-import log_writer
-import firebase_connection
-from graph import Graph
+from src.collapsible_menu import CollapsibleMenu
+from src.log_writer import Log_writer
+from src.firebase_connection import FirebaseConnection
+from src.graph import Graph
 from datetime import timedelta, datetime
 import numpy as np
 
@@ -17,10 +18,20 @@ class Summary:
         self.props = props
         self.user = user
         self.return_to_gui = return_to_gui
-        self.logger = log_writer.Log_writer()
-        self.firebase = firebase_connection.FirebaseConnection()
+        self.logger = Log_writer()
+        self.firebase = FirebaseConnection()
+        current_dir = os.getcwd()
+        self.parent_dir = os.path.abspath(os.path.join(current_dir,
+                                                       "../../Solace"))
         self.create_f()
         self.frames = [self.main_frame]
+    
+    def open_file_with_check(self, parent_dir, relative_path, fallback_path):
+        file_path = os.path.join(parent_dir, relative_path)
+        if os.path.exists(file_path):
+            return file_path
+        else:
+            return fallback_path
 
     def create_f(self):
         """
@@ -44,7 +55,10 @@ class Summary:
         self.add_update_button()
 
     def add_back_button(self):
-        self.back_button_img = Image.open('assests/back-button.png')
+        self.back_button_img = Image.open(self.open_file_with_check(
+            self.parent_dir,
+            'assests/back-button.png',
+            'assests/back-button.png'))
         self.back_button_img = ctk.CTkImage(
             self.back_button_img,
             size=(int(self.props.WIDTH * 0.15),
@@ -104,7 +118,10 @@ the past 7 days.
                                rely=0.5,
                                anchor='center')
 
-        self.line = Image.open("assests/line-without-sides.png")
+        self.line = Image.open(self.open_file_with_check(
+            self.parent_dir,
+            'assests/line-without-sides.png',
+            'assests/line-without-sides.png'))
         self.line = ctk.CTkImage(
             self.line,
             size=(int(self.props.WIDTH * 1),
@@ -118,7 +135,7 @@ the past 7 days.
         self.line.place(relx=0.5, rely=0.87, anchor='center')
 
     def add_collapsible_menu(self):
-        self.collapsible_menu = collapsible_menu.CollapsibleMenu(
+        self.collapsible_menu = CollapsibleMenu(
             self.props,
             self.return_to_gui,
             self.user,
@@ -126,7 +143,10 @@ the past 7 days.
         )
         self.collapsible_menu.lower()
 
-        self.collapsable_menu_img = Image.open('assests/menu-icon.png')
+        self.collapsable_menu_img = Image.open(self.open_file_with_check(
+            self.parent_dir,
+            'assests/menu-icon.png',
+            'assests/menu-icon.png'))
         self.collapsable_menu_img = ctk.CTkImage(
             self.collapsable_menu_img,
             size=(int(self.props.WIDTH * 0.08),

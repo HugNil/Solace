@@ -1,6 +1,7 @@
+import os
 import customtkinter as ctk
 from PIL import Image
-import log_writer
+from src.log_writer import Log_writer
 
 
 class Exercise:
@@ -9,9 +10,19 @@ class Exercise:
         self.return_to_gui = return_to_gui
         self.user = user
         self.props = props
-        self.logger = log_writer.Log_writer()
+        self.logger = Log_writer()
         self.count = 0
+        current_dir = os.getcwd()
+        self.parent_dir = os.path.abspath(os.path.join(current_dir,
+                                                       "../../Solace"))
         self.create_widgets()
+    
+    def open_file_with_check(self, parent_dir, relative_path, fallback_path):
+        file_path = os.path.join(parent_dir, relative_path)
+        if os.path.exists(file_path):
+            return file_path
+        else:
+            return fallback_path
 
     def create_widgets(self):
         """
@@ -45,7 +56,10 @@ class Exercise:
         self.breathing_label.pack()
 
     def add_back_button(self):
-        self.back_button_img = Image.open('assests/back-button.png')
+        self.back_button_img = Image.open(self.open_file_with_check(
+            self.parent_dir,
+            'assests/back-button.png',
+            'assests/back-button.png'))
         self.back_button_img = ctk.CTkImage(
             self.back_button_img,
             size=(int(self.props.WIDTH * 0.15),
@@ -121,6 +135,3 @@ class Exercise:
         for frame in self.frames:
             frame.pack_forget()
         self.logger.log('Cleared exercise frame')
-
-
-

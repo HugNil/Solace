@@ -2,15 +2,32 @@
 Handles the firebase connection.
 """
 
+import os
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
 import requests
 from datetime import datetime, timedelta
-import log_writer
+from src.log_writer import Log_writer
 from zoneinfo import ZoneInfo
+from sys import exit
 
-cred = credentials.Certificate(r"Solace_key.json")
-firebase_admin.initialize_app(cred)
+current_dir = os.getcwd()
+parent_dir = os.path.abspath(os.path.join(current_dir, "../../Solace"))
+filename = "Solace_key.json"
+file_path = os.path.join(parent_dir, filename)
+
+
+if os.path.exists(file_path):
+    print("File found at:", file_path)
+    cred = credentials.Certificate(file_path)
+    firebase_admin.initialize_app(cred)
+elif not os.path.exists(file_path):
+    cred = credentials.Certificate(r"Solace_key.json")
+    firebase_admin.initialize_app(cred)
+else:
+    print("File not found in the parent directory")
+    exit(1)
+
 
 
 class FirebaseConnection:
@@ -21,7 +38,7 @@ class FirebaseConnection:
         """
         Initialize the connection
         """
-        self.logger = log_writer.Log_writer()
+        self.logger = Log_writer()
         self.db = firestore.client()
         self.auth = auth
 

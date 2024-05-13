@@ -3,19 +3,20 @@ This module contains the GUI class which is responsible for the
 graphical user interface of the application.
 """
 
+import os
 import customtkinter as ctk
-from firebase_connection import FirebaseConnection
-from login_page import LoginPage
-from profile_page import ProfilePage
-from settings import Settings
-from mood_registration import MoodRegistration
-from summary import Summary
-from props import Props
+from src.firebase_connection import FirebaseConnection
+from src.login_page import LoginPage
+from src.profile_page import ProfilePage
+from src.settings import Settings
+from src.mood_registration import MoodRegistration
+from src.summary import Summary
+from src.props import Props
 import pygame
 from customtkinter import set_appearance_mode
-from user import User
-import log_writer
-from Exercise import Exercise
+from src.user import User
+from src.log_writer import Log_writer
+from src.Exercise import Exercise
 
 
 class GUI:
@@ -25,9 +26,13 @@ class GUI:
     def __init__(self, app) -> None:
         self.app = app
 
-        self.logger = log_writer.Log_writer()
+        self.logger = Log_writer()
         self.logger.clear_log()
         self.logger.log('Application started.')
+
+        current_dir = os.getcwd()
+        self.parent_dir = os.path.abspath(os.path.join(current_dir,
+                                                       "../../Solace"))
 
         self.user = User()
         self.props = Props(self.app)
@@ -36,7 +41,10 @@ class GUI:
         self.app.resizable(False, False)
         self.app.configure(bg=self.props.BACKGROUND_DARK)
         set_appearance_mode(self.props.THEME)
-        self.app.iconbitmap("assests/solace-window-icon.ico")
+        open = self.open_file_with_check(self.parent_dir,
+                                         "assests/solace-window-icon.ico",
+                                         "assests/solace-window-icon.ico")
+        self.app.iconbitmap(open)
 
         self.firebase = FirebaseConnection()
 
@@ -46,6 +54,13 @@ class GUI:
 
         pygame.mixer.init()
         self.play()
+    
+    def open_file_with_check(self, parent_dir, relative_path, fallback_path):
+        file_path = os.path.join(parent_dir, relative_path)
+        if os.path.exists(file_path):
+            return file_path
+        else:
+            return fallback_path
 
     def create_frames(self) -> None:
         """
@@ -141,7 +156,10 @@ class GUI:
         """
         Plays the menu music
         """
-        pygame.mixer.music.load("assests/music-menu.mp3")
+        open = self.open_file_with_check(self.parent_dir,
+                                         "assests/music-menu.mp3",
+                                         "assests/music-menu.mp3")
+        pygame.mixer.music.load(open)
         pygame.mixer.music.play(loops=1)
         pygame.mixer.music.set_volume(0.009)
         self.logger.log('Menu music started.')

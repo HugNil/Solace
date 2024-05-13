@@ -2,12 +2,13 @@
 Profile page of the application
 """
 
+import os
 import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
 from time import strftime
-import log_writer
-import collapsible_menu
+from src.log_writer import Log_writer
+from src.collapsible_menu import CollapsibleMenu
 
 
 class ProfilePage():
@@ -22,11 +23,15 @@ class ProfilePage():
         self.props = props
         self.return_to_gui = return_to_gui
         self.user = user
-        self.logger = log_writer.Log_writer()
+        self.logger = Log_writer()
         self.logger.log('Profile page opened.')
         self.collapsible_menu_visible = False
         self.option_visible = False
         self.app = app
+
+        current_dir = os.getcwd()
+        self.parent_dir = os.path.abspath(os.path.join(current_dir, 
+                                                       "../../Solace"))
 
         self.dashboardPage()
 
@@ -36,6 +41,13 @@ class ProfilePage():
             self.button_frame,
             self.image_frame
             ]
+    
+    def open_file_with_check(self, parent_dir, relative_path, fallback_path):
+        file_path = os.path.join(parent_dir, relative_path)
+        if os.path.exists(file_path):
+            return file_path
+        else:
+            return fallback_path
 
     def initialize(self):
         """
@@ -44,7 +56,7 @@ class ProfilePage():
         self.create_frames()
         self.open_images()
 
-        self.collapsible_menu = collapsible_menu.CollapsibleMenu(
+        self.collapsible_menu = CollapsibleMenu(
             self.props,
             self.return_to_gui,
             self.user,
@@ -77,7 +89,10 @@ class ProfilePage():
         """
         Opens all the images for the page.
         """
-        self.logo_icon_img = Image.open('assests/menu-icon.png')
+        self.logo_icon_img = Image.open(self.open_file_with_check(
+            self.parent_dir,
+            'assests/menu-icon.png',
+            'assests/menu-icon.png'))
         self.logo_icon = ctk.CTkImage(self.logo_icon_img,
                                       size=(int(self.props.WIDTH * 0.08),
                                             int(self.props.HEIGHT * 0.05)))
@@ -212,7 +227,10 @@ class ProfilePage():
                                rely=0.5,
                                anchor='center')
 
-        self.line = Image.open('assests/line-without-sides.png')
+        self.line = Image.open(self.open_file_with_check(
+            self.parent_dir,
+            'assests/line-without-sides.png',
+            'assests/line-without-sides.png'))
         self.line = ctk.CTkImage(
             self.line,
             size=(int(self.props.WIDTH * 1),
@@ -225,7 +243,10 @@ class ProfilePage():
             )
         self.line.place(relx=0.5, rely=0.87, anchor='center')
 
-        self.collapsable_menu_img = Image.open('assests/menu-icon.png')
+        self.collapsable_menu_img = Image.open(self.open_file_with_check(
+            self.parent_dir,
+            'assests/menu-icon.png', 
+            'assests/menu-icon.png'))
         self.collapsable_menu_img = ctk.CTkImage(
             self.collapsable_menu_img,
             size=(int(self.props.WIDTH * 0.08),

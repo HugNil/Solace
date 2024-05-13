@@ -2,7 +2,7 @@ import customtkinter as ctk
 # import tkinter as tk
 # from PIL import Image
 # from time import strftime
-import log_writer
+from src.log_writer import Log_writer
 
 
 class CollapsibleMenu:
@@ -10,7 +10,7 @@ class CollapsibleMenu:
         self.props = props
         self.return_to_gui = return_to_gui
         self.user = user
-        self.logger = log_writer.Log_writer()
+        self.logger = Log_writer()
         self.menu = ctk.CTkFrame(
             master=master_frame,
             fg_color=self.props.BACKGROUND_DARK,

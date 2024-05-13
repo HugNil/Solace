@@ -8,3 +8,4 @@ pytest
 matplotlib
 tzdata
 screeninfo
+pyinstaller

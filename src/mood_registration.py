@@ -1,9 +1,10 @@
 from datetime import datetime
+import os
 import customtkinter as ctk
 from PIL import Image
-import collapsible_menu
-import log_writer
-import firebase_connection
+from src.collapsible_menu import CollapsibleMenu
+from src.log_writer import Log_writer
+from src.firebase_connection import FirebaseConnection
 
 
 class MoodRegistration:
@@ -22,12 +23,22 @@ class MoodRegistration:
         self.return_to_gui = return_to_gui
         self.mood = 0
         self.stress = 0
-        self.logger = log_writer.Log_writer()
+        self.logger = Log_writer()
         self.date = datetime.now().strftime("%Y-%m-%d")
         self.time = datetime.now().strftime("%H:%M:%S")
-        self.firebase = firebase_connection.FirebaseConnection()
+        self.firebase = FirebaseConnection()
+        current_dir = os.getcwd()
+        self.parent_dir = os.path.abspath(os.path.join(current_dir,
+                                                       "../../Solace"))
         self.create_widgets()
         self.frames = [self.main_frame]
+    
+    def open_file_with_check(self, parent_dir, relative_path, fallback_path):
+        file_path = os.path.join(parent_dir, relative_path)
+        if os.path.exists(file_path):
+            return file_path
+        else:
+            return fallback_path
 
     def create_widgets(self):
         """
@@ -50,7 +61,10 @@ class MoodRegistration:
         self.create_sliders()
 
     def add_back_button(self):
-        self.back_button_img = Image.open('assests/back-button.png')
+        open = self.open_file_with_check(self.parent_dir,
+                                         "assests/back-button.png",
+                                         "assests/back-button.png")
+        self.back_button_img = Image.open(open)
         self.back_button_img = ctk.CTkImage(
             self.back_button_img,
             size=(int(self.props.WIDTH * 0.15),
@@ -294,7 +308,10 @@ summary page.
                                rely=0.5,
                                anchor='center')
 
-        self.line = Image.open("assests/line-without-sides.png")
+        self.line = Image.open(self.open_file_with_check(
+            self.parent_dir,
+            "assests/line-without-sides.png",
+            "assests/line-without-sides.png"))
         self.line = ctk.CTkImage(
             self.line,
             size=(int(self.props.WIDTH * 1),
@@ -308,7 +325,7 @@ summary page.
         self.line.place(relx=0.5, rely=0.87, anchor='center')
 
     def add_collapsible_menu(self):
-        self.collapsible_menu = collapsible_menu.CollapsibleMenu(
+        self.collapsible_menu = CollapsibleMenu(
             self.props,
             self.return_to_gui,
             self.user,
@@ -316,7 +333,10 @@ summary page.
         )
         self.collapsible_menu.lower()
 
-        self.collapsable_menu_img = Image.open('assests/menu-icon.png')
+        self.collapsable_menu_img = Image.open(self.open_file_with_check(
+            self.parent_dir,
+            'assests/menu-icon.png',
+            'assests/menu-icon.png'))
         self.collapsable_menu_img = ctk.CTkImage(
             self.collapsable_menu_img,
             size=(int(self.props.WIDTH * 0.08),

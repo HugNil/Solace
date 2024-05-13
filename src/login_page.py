@@ -5,12 +5,12 @@ The first page of the application, where the user can login or register.
 import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
-import log_writer
+from src.log_writer import Log_writer
 import json
 from cryptography.fernet import Fernet
 import os
 import configparser
-import collapsible_menu
+from src.collapsible_menu import CollapsibleMenu
 
 
 class LoginPage:
@@ -29,15 +29,28 @@ class LoginPage:
         self.app = app
         self.user = user
 
+        current_dir = os.getcwd()
+        self.parent_dir = os.path.abspath(os.path.join(current_dir,
+                                                       "../../Solace"))
+
         self.password_visible = False
         self.option_visible = False
         self.remember_var = tk.IntVar()
-        self.logger = log_writer.Log_writer()
+        self.logger = Log_writer()
         self.config = configparser.ConfigParser()
-        self.config.read('properties.ini')
+        self.config.read(self.open_file_with_check(self.parent_dir,
+                                                   'properties.ini',
+                                                   'properties.ini'))
 
         self.create_frames()
         self.open_images()
+
+    def open_file_with_check(self, parent_dir, relative_path, fallback_path):
+        file_path = os.path.join(parent_dir, relative_path)
+        if os.path.exists(file_path):
+            return file_path
+        else:
+            return fallback_path
 
     def create_frames(self):
         """
@@ -68,7 +81,7 @@ class LoginPage:
             width=int(self.props.WIDTH * 0.7),
             height=int(self.props.HEIGHT * 0.4))
 
-        self.collapsible_menu = collapsible_menu.CollapsibleMenu(
+        self.collapsible_menu = CollapsibleMenu(
             self.props,
             self.return_to_gui,
             self.user,
@@ -84,44 +97,67 @@ class LoginPage:
         """
         Open images
         """
-        self.logo_icon_img = Image.open('assests/menu-icon.png')
+        self.logo_icon_img = Image.open(
+            self.open_file_with_check(self.parent_dir,
+                                      'assests/solace-window-icon.ico',
+                                      'assests/solace-window-icon.ico'))
         self.logo_icon = ctk.CTkImage(self.logo_icon_img,
                                       size=(int(self.props.WIDTH * 0.08),
                                             int(self.props.HEIGHT * 0.05)))
 
-        self.logo_full_img = Image.open('assests/solace-logo-transparent.png')
+        self.logo_full_img = Image.open(
+            self.open_file_with_check(self.parent_dir,
+                                      'assests/solace-logo-transparent.png',
+                                      'assests/solace-logo-transparent.png'))
         self.logo_full = ctk.CTkImage(self.logo_full_img,
                                       size=(int(self.props.WIDTH * 0.77),
                                             int(self.props.HEIGHT * 0.19)))
 
-        self.password_icon_img = Image.open('assests/password-icon.png')
+        self.password_icon_img = Image.open(
+            self.open_file_with_check(self.parent_dir,
+                                      'assests/password-icon.png',
+                                      'assests/password-icon.png'))
         self.password_icon = ctk.CTkImage(
             self.password_icon_img,
             size=(int(self.props.WIDTH * 0.06),
                   int(self.props.HEIGHT * 0.042)))
 
-        self.email_icon_img = Image.open('assests/username-icon.png')
+        self.email_icon_img = Image.open(
+            self.open_file_with_check(self.parent_dir,
+                                      'assests/username-icon.png',
+                                      'assests/username-icon.png'))
         self.email_icon = ctk.CTkImage(self.email_icon_img,
                                        size=(int(self.props.WIDTH * 0.06),
                                              int(self.props.HEIGHT * 0.042)))
 
-        self.copyright_img = Image.open('assests/Copyright.png')
+        self.copyright_img = Image.open(
+            self.open_file_with_check(self.parent_dir,
+                                      'assests/Copyright.png',
+                                      'assests/Copyright.png'))
         self.copyright = ctk.CTkImage(self.copyright_img,
                                       size=(int(self.props.WIDTH * 0.83),
                                             int(self.props.HEIGHT * 0.14)))
 
-        self.line_img = Image.open('assests/line-without-sides.png')
+        self.line_img = Image.open(
+            self.open_file_with_check(self.parent_dir,
+                                      'assests/line-without-sides.png',
+                                      'assests/line-without-sides.png'))
         self.line_img = ctk.CTkImage(self.line_img,
                                      size=(int(self.props.WIDTH * 1.05),
                                            int(self.props.HEIGHT * 0.08)))
 
         self.show_image = ctk.CTkImage(
-            Image.open('assests/show-password.png'),
+            Image.open(self.open_file_with_check(self.parent_dir,
+                                                 'assests/show-password.png',
+                                                 'assests/show-password.png')),
             size=(int(self.props.HEIGHT * 0.03),
                   int(self.props.HEIGHT * 0.035))
-        )
+                  )
+        
         self.hide_image = ctk.CTkImage(
-            Image.open('assests/hide-password.png'),
+            Image.open(self.open_file_with_check(self.parent_dir,
+                                                 'assests/hide-password.png',
+                                                 'assests/hide-password.png')),
             size=(int(self.props.HEIGHT * 0.03),
                   int(self.props.HEIGHT * 0.035))
         )
@@ -341,7 +377,10 @@ class LoginPage:
     def add_collapsible_menu(self):
         self.collapsible_menu.lower()
 
-        self.collapsable_menu_img = Image.open('assests/menu-icon.png')
+        open = self.open_file_with_check(self.parent_dir,
+                                         'assests/menu-icon.png',
+                                         'assests/menu-icon.png')
+        self.collapsable_menu_img = Image.open(open)
         self.collapsable_menu_img = ctk.CTkImage(
             self.collapsable_menu_img,
             size=(int(self.props.WIDTH * 0.08),
