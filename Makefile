@@ -10,7 +10,8 @@ TEST_DIR := tests
 # ------------------------------------
 
 #The file where the code program runs
-MAIN_FILE := $(SRC_DIR)/gui.py
+MAIN_FILE_EXE := $(SRC_DIR)/gui.py
+MAIN_FILE_RUN := $(SRC_DIR).gui
 
 # ------------------------------------
 
@@ -37,7 +38,7 @@ install:
 .PHONY: run
 run:
 	@$(call MESSAGE, Running the Solace application...)
-	$(PYTHON) $(MAIN_FILE)
+	$(PYTHON) -m $(MAIN_FILE_RUN)
 
 
 .PHONY: clean
