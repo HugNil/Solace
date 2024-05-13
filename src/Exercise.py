@@ -38,24 +38,34 @@ class Exercise:
         )
         self.main_frame1.pack(fill='both', expand=True)
 
-        self.start_breathing_exercise_button = ctk.CTkButton(
-            self.main_frame1,
-            text="Open breathing exercise",
+        self.start_breathing_exercise = ctk.CTkButton(
+            master=self.main_frame1,
+            text='  Open breathing Exercise',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
+            width=int(self.props.WIDTH * 0.5),
+            corner_radius=32,
+            fg_color=self.props.BUTTON_COLOR,
+            text_color='black',
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            hover_color='white',
             command=self.start_breathing_exercise
         )
+        self.start_breathing_exercise.place(relx=0.5, rely=0.76,
+                                            anchor='center')
 
         self.frames = [self.main_frame1]
-        self.add_back_button()
-        self.start_breathing_exercise_button.place(relx=0.5, rely=0.5,
-                                                   anchor='center')
+        self.add_back_button(self.main_frame1, 'profile')
 
     def create_breathing_label(self):
         initial_text = "Get ready to breathe..."
         self.breathing_label = ctk.CTkLabel(master=self.breathing_frame,
-                                            text=initial_text)
+                                            text=initial_text,
+                                            font=('Helvetica', 16))
         self.breathing_label.pack()
+        self.breathing_label.pack(side='top', pady=(150, 60))
 
-    def add_back_button(self):
+    def add_back_button(self, frame, place):
         self.back_button_img = Image.open(self.open_file_with_check(
             self.parent_dir,
             'assests/back-button.png',
@@ -66,10 +76,10 @@ class Exercise:
                   int(self.props.HEIGHT * 0.0375))
         )
         self.back_button = ctk.CTkButton(
-            master=self.main_frame1,
+            master=frame,
             image=self.back_button_img,
             fg_color=self.props.BACKGROUND_DARK,
-            command=lambda: self.return_to_gui("profile", self.user),
+            command=lambda: self.return_to_gui(place, self.user),
             text='',
             width=int(self.props.WIDTH * 0.15),
             height=int(self.props.HEIGHT * 0.0375)
@@ -77,6 +87,7 @@ class Exercise:
         self.back_button.place(relx=0.85, rely=0.05, anchor='center')
 
     def start_breathing_exercise(self):
+        self.count = 0
         self.clear_frame()
         self.create_breathing_frame()
 
@@ -95,38 +106,45 @@ class Exercise:
         self.breathing_frame.pack(fill='both', expand=True)
 
         self.frames = [self.breathing_frame]
-        self.add_back_button()
         self.create_breathing_label()
         self.create_progress_bar()
+        self.add_back_button(self.breathing_frame, 'exercise')
         self.update_progress_bar()
 
     def create_progress_bar(self):
         self.progress_bar = ctk.CTkProgressBar(master=self.breathing_frame,
-                                               width=200, height=20)
+                                               width=200, height=20,
+                                               determinate_speed=0.33,
+                                               mode='determinate'
+                                               )
+        self.progress_bar.set(0)
         self.progress_bar.pack()
+        self.progress_bar.pack(side='top', pady=30)
 
     def update_progress_bar(self):
-        phase_duration = 4000
-        phases = ['Inhale...', 'Hold...', 'Exhale...', 'Hold...']
-        for phase_index in range(5):
-            self.breathing_label.configure(text=phases[self.count % 4])
+        """
+        Four stages of breathing exercise.
+        Breathe in, hold, breathe out, hold.
+        The text should change to match the stage.
+        and the progress bar should update 25% each stage.
+        each stage lasts 4 seconds.
+        """
 
-        if phase_index == 0:
-            self.progress_bar['value'] = 0
-        elif phase_index == 1:
-            self.progress_bar['value'] = 25
-        elif phase_index == 2:
-            self.progress_bar['value'] = 50
-        elif phase_index == 3:
-            self.progress_bar['value'] = 75
+        self.progress_bar.stop()
+        phase_duration = 4000
+        phases = ['Breathe in', 'Hold', 'Breathe out', 'Hold']
+        # values = [0.25, 0.50, 0.75, 1]
+
+        # Uppdatera label och progress bar baserat på nuvarande count
+        self.breathing_label.configure(text=phases[self.count % 4])
+        self.progress_bar.start()
 
         self.count += 1
-
-        if self.count < 16:
+        if self.count < 16:  # Kör fyra rundor av fyra faser
             self.breathing_frame.after(phase_duration,
                                        self.update_progress_bar)
         else:
-            self.count = 0
+            self.count = 0  # Återställ räknaren efter alla faser är genomförda
 
     def clear_frame(self):
         """
