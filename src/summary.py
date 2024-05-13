@@ -45,7 +45,8 @@ class Summary:
 
     def add_back_button(self):
         """
-        Creates the back button image and the feature.
+        Creates the back button image
+        and the feature.
         """
         self.back_button_img = Image.open('assests/back-button.png')
         self.back_button_img = ctk.CTkImage(
@@ -66,7 +67,8 @@ class Summary:
 
     def create_info_label(self):
         """
-        Creates the title and also adds a shorter description of the feature.
+        Creates the title and also adds a
+        shorter description of the feature.
         """
         self.feature_title = ctk.CTkLabel(
             master=self.main_frame,
