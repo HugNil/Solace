@@ -44,6 +44,9 @@ class Summary:
         self.add_update_button()
 
     def add_back_button(self):
+        """
+        Creates the back button feature.
+        """
         self.back_button_img = Image.open('assests/back-button.png')
         self.back_button_img = ctk.CTkImage(
             self.back_button_img,
