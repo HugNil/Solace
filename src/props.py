@@ -16,10 +16,11 @@ class Props:
         """
         Initialize the default values.
         """
-        screen_width = self.app.winfo_screenwidth()
-        screen_height = self.app.winfo_screenheight()
-        self.WIDTH = int(screen_width * 0.21)
-        self.HEIGHT = int(screen_height * 0.6)
+        self.screen_width = self.app.winfo_screenwidth()
+        self.screen_height = self.app.winfo_screenheight()
+        print(self.screen_width, self.screen_height)
+        self.WIDTH = int(self.screen_width * 0.21)
+        self.HEIGHT = int(self.screen_height * 0.6)
         self.BACKGROUND_DARK = '#014F86'
         self.BACKGROUND_LIGHT = '#89C2D9'
         self.BUTTON_COLOR = '#A9D6E5'

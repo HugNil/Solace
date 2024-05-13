@@ -9,12 +9,19 @@ class Graph:
     def __init__(self, master, props):
         self.master = master
         self.props = props
-        self.fig = Figure(figsize=(7, 5), dpi=100)
+        dpi = self.get_dpi()
+        self.fig = Figure(figsize=(7, 5), dpi=dpi)
         self.ax = self.fig.add_subplot(111)
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.master)
         self.widget = self.canvas.get_tk_widget()
         self.fig.subplots_adjust(bottom=0.2)
         self.show_graph()
+
+    def get_dpi(self):
+        if self.props.screen_width >= 1700:
+            return 100
+        else:
+            return 50
 
     def show_graph(self):
         # Ställ in bakgrundsfärger och basinställningar för grafen
