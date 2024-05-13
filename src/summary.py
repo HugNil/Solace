@@ -24,7 +24,7 @@ class Summary:
 
     def create_f(self):
         """
-        Creates the frames for the Summary.
+        Creates the frame for the Summary.
         """
         self.main_frame = ctk.CTkFrame(
             master=self.app,
@@ -45,7 +45,7 @@ class Summary:
 
     def add_back_button(self):
         """
-        Creates the back button feature.
+        Creates the back button image and the feature.
         """
         self.back_button_img = Image.open('assests/back-button.png')
         self.back_button_img = ctk.CTkImage(
