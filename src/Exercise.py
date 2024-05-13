@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from PIL import Image
 import log_writer
-import collapsible_menu
 
 
 class Exercise:
@@ -29,20 +28,20 @@ class Exercise:
         self.main_frame1.pack(fill='both', expand=True)
 
         self.start_breathing_exercise_button = ctk.CTkButton(
-         self.main_frame1,
-         text="Start breathing exercise",
-         command=self.start_breathing_exercise
+            self.main_frame1,
+            text="Open breathing exercise",
+            command=self.start_breathing_exercise
         )
 
         self.frames = [self.main_frame1]
         self.add_back_button()
-        self.add_collapsible_menu()
-        self.frames = [self.main_frame1]
         self.start_breathing_exercise_button.place(relx=0.5, rely=0.5,
                                                    anchor='center')
 
     def create_breathing_label(self):
-        self.breathing_label = ctk.CTkLabel(master=self.main_frame1, text='')
+        initial_text = "Get ready to breathe..."
+        self.breathing_label = ctk.CTkLabel(master=self.breathing_frame,
+                                            text=initial_text)
         self.breathing_label.pack()
 
     def add_back_button(self):
@@ -64,66 +63,64 @@ class Exercise:
         self.back_button.place(relx=0.85, rely=0.05, anchor='center')
 
     def start_breathing_exercise(self):
-        self.update_progress_bar()
-        start_button = ctk.CTkButton(
-            self.main_frame1,
-            text='Start breathing Exercise',
+        self.clear_frame()
+        self.create_breathing_frame()
+
+    def create_breathing_frame(self):
+        """
+        Creates the frame for the breathing exercise.
+        """
+        self.breathing_frame = ctk.CTkFrame(
+            master=self.app,
+            fg_color=self.props.BACKGROUND_DARK,
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            width=self.props.WIDTH,
+            height=self.props.HEIGHT
         )
-        start_button.pack()
+        self.breathing_frame.pack(fill='both', expand=True)
+
+        self.frames = [self.breathing_frame]
+        self.add_back_button()
+        self.create_breathing_label()
+        self.create_progress_bar()
+        self.update_progress_bar()
+
+    def create_progress_bar(self):
+        self.progress_bar = ctk.CTkProgressBar(master=self.breathing_frame,
+                                               width=200, height=20)
+        self.progress_bar.pack()
 
     def update_progress_bar(self):
+        phase_duration = 4000
+        phases = ['Inhale...', 'Hold...', 'Exhale...', 'Hold...']
+        for phase_index in range(5):
+            self.breathing_label.configure(text=phases[self.count % 4])
 
-        if self.count % 4 == 0:
-            self.breathing_label.configure(text='Inhale...')
-        elif self.count % 4 == 1:
-            self.breathing_label.configure(text='Hold...')
-        elif self.count % 4 == 2:
-            self.breathing_label.configure(text='Blow out...')
-        elif self.count % 4 == 3:
-            self.breathing_label.configure(text='Hold...')
+        if phase_index == 0:
+            self.progress_bar['value'] = 0
+        elif phase_index == 1:
+            self.progress_bar['value'] = 25
+        elif phase_index == 2:
+            self.progress_bar['value'] = 50
+        elif phase_index == 3:
+            self.progress_bar['value'] = 75
 
         self.count += 1
+
         if self.count < 16:
-            self.main_frame1.after(4000)
-
-    def breathing_sequence(self):
-        self.count = 0
-        self.update_progress_bar()
-
-    def add_collapsible_menu(self):
-        self.collapsible_menu = collapsible_menu.CollapsibleMenu(
-            self.props,
-            self.return_to_gui,
-            self.user,
-            self.main_frame1
-        )
-        self.collapsible_menu.lower()
-
-        self.collapsable_menu_img = Image.open('assests/menu-icon.png')
-        self.collapsable_menu_img = ctk.CTkImage(
-            self.collapsable_menu_img,
-            size=(int(self.props.WIDTH * 0.08),
-                  int(self.props.HEIGHT * 0.05))
-            )
-        self.collapsable_menu_img = ctk.CTkButton(
-            master=self.main_frame1,
-            image=self.collapsable_menu_img,
-            text='',
-            fg_color=self.props.BACKGROUND_DARK,
-            command=self.collapsible_menu.toggle,
-            width=int(self.props.WIDTH * 0.08),
-            height=int(self.props.HEIGHT * 0.05)
-        )
-        self.collapsable_menu_img.place(relx=0.075,
-                                        rely=0.05,
-                                        anchor='center')
+            self.breathing_frame.after(phase_duration,
+                                       self.update_progress_bar)
+        else:
+            self.count = 0
 
     def clear_frame(self):
         """
-
         Clears the frame
         """
-
         for frame in self.frames:
             frame.pack_forget()
         self.logger.log('Cleared exercise frame')
+
+
+
