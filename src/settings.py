@@ -15,17 +15,15 @@ class Settings:
 
         self.app = app
 
-
     def stop(self):
         """
-        Stops the menu music
+        Stops the menu music.
         """
         pygame.mixer.music.stop()
   
-
     def play(self):
         """
-        Plays the menu music
+        Plays the menu music.
         """
         pygame.mixer.music.load("assests/Menu music1.mp3")
         pygame.mixer.music.play(loops=1)
@@ -33,12 +31,23 @@ class Settings:
         pygame.mixer.music.set_volume(0.009)
 
     def switcher(self):
+
+        """
+        Mutes and turns on music.
+        """
         
         if self.switch_var.get() == "on":
             self.play()
         else:
             self.stop()
 
+    def change_volume(self, value):
+
+        """
+        Slider that controls volume.
+        """ 
+        pass
+            
     def create_frames(self):
         self.settings_window = ctk.CTkToplevel(self.app)
         self.settings_window .title("Settings")
@@ -53,6 +62,9 @@ class Settings:
         window_height = int(self.props.HEIGHT * 0.5)
         self.settings_window.geometry(f"{window_width}x{window_height}")
         
+        """
+        On and off switch.
+        """
         self.switch_var = ctk.StringVar(value="on")
         self.mute_switch = ctk.CTkSwitch(
             self.settings_frame,
@@ -61,10 +73,31 @@ class Settings:
             onvalue="on",
             offvalue="off"
         )
-        self.mute_switch.pack(pady=80,
+        self.mute_switch.pack(pady=100,
                               padx=20)
         self.mute_switch.bind('<Button-1>', lambda e: self.switcher())
 
+        """
+        Volume slider.
+        """
+        self.volume_slider = ctk.CTkSlider(self.settings_frame,
+                                          from_=0,
+                                          to=10,
+                                          number_of_steps=10
+                                        )
+        
+        self.volume_slider.pack(pady=30,
+                                padx=20
+                                )
+        self.volume_slider.bind('<Button->', lambda e: self.change_volume())
+
+        self.volume_slider.set(1)
+
+        
+
+        """
+        Settings window title.
+        """
         self.feature_title = ctk.CTkLabel(
             master=self.settings_window,
             text='Music volume',
@@ -74,7 +107,7 @@ class Settings:
             justify='left'
         )
         self.feature_title.place(relx=0.5, rely=0.15, anchor='center')
-   
+        
 
     def open_settings(self):
         self.create_frames()
