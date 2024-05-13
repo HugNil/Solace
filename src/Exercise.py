@@ -27,16 +27,24 @@ class Exercise:
         )
         self.main_frame1.pack(fill='both', expand=True)
 
-        self.start_breathing_exercise_button = ctk.CTkButton(
-            self.main_frame1,
-            text="Open breathing exercise",
+        self.start_breathing_exercise = ctk.CTkButton(
+            master=self.main_frame1,
+            text='  Open breathing Exercise',
+            font=('Arial', int(self.props.HEIGHT * 0.02)),
+            width=int(self.props.WIDTH * 0.5),
+            corner_radius=32,
+            fg_color=self.props.BUTTON_COLOR,
+            text_color='black',
+            border_color=self.props.BACKGROUND_LIGHT,
+            border_width=2,
+            hover_color='white',
             command=self.start_breathing_exercise
         )
+        self.start_breathing_exercise.place(relx=0.5, rely=0.76,
+                                            anchor='center')
 
         self.frames = [self.main_frame1]
         self.add_back_button(self.main_frame1, 'profile')
-        self.start_breathing_exercise_button.place(relx=0.5, rely=0.5,
-                                                   anchor='center')
 
     def create_breathing_label(self):
         initial_text = "Get ready to breathe..."
