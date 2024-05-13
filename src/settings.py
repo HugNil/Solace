@@ -48,8 +48,22 @@ class Settings:
             border_color=self.props.BACKGROUND_LIGHT,
             border_width=2
             )
-        self.settings_frame.configure(width=int(self.props.WIDTH * 0.8),
-                                      height=int(self.props.HEIGHT * 0.5))
+        
+        window_width = int(self.props.WIDTH * 0.8)
+        window_height = int(self.props.HEIGHT * 0.5)
+        self.settings_window.geometry(f"{window_width}x{window_height}")
+        
+        self.switch_var = ctk.StringVar(value="on")
+        self.mute_switch = ctk.CTkSwitch(
+            self.settings_frame,
+            text="On/Off",
+            variable=self.switch_var,
+            onvalue="on",
+            offvalue="off"
+        )
+        self.mute_switch.pack(pady=40)
+        self.mute_switch.bind('<Button-1>', lambda e: self.switcher())
+   
 
     def open_settings(self):
         self.create_frames()
