@@ -66,7 +66,7 @@ class Summary:
 
     def create_info_label(self):
         """
-        Creates the title and also adds a shorter description of the feature
+        Creates the title and also adds a shorter description of the feature.
         """
         self.feature_title = ctk.CTkLabel(
             master=self.main_frame,
