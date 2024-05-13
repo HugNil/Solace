@@ -15,6 +15,30 @@ class Settings:
 
         self.app = app
 
+
+    def stop(self):
+        """
+        Stops the menu music
+        """
+        pygame.mixer.music.stop()
+  
+
+    def play(self):
+        """
+        Plays the menu music
+        """
+        pygame.mixer.music.load("assests/Menu music1.mp3")
+        pygame.mixer.music.play(loops=1)
+
+        pygame.mixer.music.set_volume(0.009)
+
+    def switcher(self):
+        
+        if self.switch_var.get() == "on":
+            self.play()
+        else:
+            self.stop()
+
     def create_frames(self):
         self.settings_window = ctk.CTkToplevel(self.app)
         self.settings_window .title("Settings")
