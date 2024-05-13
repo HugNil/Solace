@@ -34,17 +34,19 @@ class Exercise:
         )
 
         self.frames = [self.main_frame1]
-        self.add_back_button()
+        self.add_back_button(self.main_frame1, 'profile')
         self.start_breathing_exercise_button.place(relx=0.5, rely=0.5,
                                                    anchor='center')
 
     def create_breathing_label(self):
         initial_text = "Get ready to breathe..."
         self.breathing_label = ctk.CTkLabel(master=self.breathing_frame,
-                                            text=initial_text)
+                                            text=initial_text,
+                                            font=('Helvetica', 16))
         self.breathing_label.pack()
+        self.breathing_label.pack(side='top', pady=(150, 60))
 
-    def add_back_button(self):
+    def add_back_button(self, frame, place):
         self.back_button_img = Image.open('assests/back-button.png')
         self.back_button_img = ctk.CTkImage(
             self.back_button_img,
@@ -52,10 +54,10 @@ class Exercise:
                   int(self.props.HEIGHT * 0.0375))
         )
         self.back_button = ctk.CTkButton(
-            master=self.main_frame1,
+            master=frame,
             image=self.back_button_img,
             fg_color=self.props.BACKGROUND_DARK,
-            command=lambda: self.return_to_gui("profile", self.user),
+            command=lambda: self.return_to_gui(place, self.user),
             text='',
             width=int(self.props.WIDTH * 0.15),
             height=int(self.props.HEIGHT * 0.0375)
@@ -82,9 +84,9 @@ class Exercise:
         self.breathing_frame.pack(fill='both', expand=True)
 
         self.frames = [self.breathing_frame]
-        self.add_back_button()
         self.create_breathing_label()
         self.create_progress_bar()
+        self.add_back_button(self.breathing_frame, 'exercise')
         self.update_progress_bar()
 
     def create_progress_bar(self):
@@ -95,6 +97,7 @@ class Exercise:
                                                )
         self.progress_bar.set(0)
         self.progress_bar.pack()
+        self.progress_bar.pack(side='top', pady=30)
 
     def update_progress_bar(self):
         """
