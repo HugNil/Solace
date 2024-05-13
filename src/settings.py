@@ -61,8 +61,19 @@ class Settings:
             onvalue="on",
             offvalue="off"
         )
-        self.mute_switch.pack(pady=40)
+        self.mute_switch.pack(pady=80,
+                              padx=20)
         self.mute_switch.bind('<Button-1>', lambda e: self.switcher())
+
+        self.feature_title = ctk.CTkLabel(
+            master=self.settings_window,
+            text='Music volume',
+            font=('Arial', int(self.props.HEIGHT * 0.05), 'bold'),
+            text_color=self.props.BACKGROUND_LIGHT,
+            fg_color=self.props.BACKGROUND_DARK,
+            justify='left'
+        )
+        self.feature_title.place(relx=0.5, rely=0.15, anchor='center')
    
 
     def open_settings(self):
