@@ -183,6 +183,7 @@ the past 7 days.
         Extract the data from the recent_docs.
 
         """
+        self.logger.log('User clicked on "Show past 7 days"-button.')
         dates = sorted(data.keys())
         mood_values = []
         stress_values = []
@@ -215,6 +216,8 @@ the past 7 days.
 
             current_date += timedelta(days=1)
         print(mood_values, stress_values)
+        self.logger.log(f'Extracted mood and stress data: {mood_values[-7:]},'
+                        f' {stress_values[-7:]}')
 
         return mood_values[-7:], stress_values[-7:]
 

@@ -1,12 +1,23 @@
 import numpy as np
 from matplotlib.figure import Figure
-# from matplotlib.backends.backend_agg import FigureCanvasAgg
-# from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class Graph:
+    """
+    This class represents a graphical component that
+    displays a mood and stress graph
+    using Matplotlib integrated with Tkinter.
+    """
     def __init__(self, master, props):
+        """
+        Initializes the Graph object.
+
+        Parameters:
+        master (tkinter widget): The parent widget.
+        props (object): An object containing various properties
+        like screen dimensions and colors.
+        """
         self.master = master
         self.props = props
         dpi = self.get_dpi()
@@ -18,13 +29,24 @@ class Graph:
         self.show_graph()
 
     def get_dpi(self):
+        """
+        Determines the dots per inch (DPI) for the
+        graph based on screen width.
+
+        Returns:
+        int: DPI value.
+        """
         if self.props.screen_width >= 1700:
             return 100
         else:
             return 50
 
     def show_graph(self):
-        # Ställ in bakgrundsfärger och basinställningar för grafen
+        """
+        Configures the initial appearance and settings for the graph,
+        including axis labels, ticks, and background colors.
+        """
+        # Set background colors and base settings for the graph
         fg_color = self.props.BACKGROUND_LIGHT
         self.ax.clear()
         self.ax.set_xlabel("Day", color=fg_color, fontsize=20)
@@ -51,6 +73,13 @@ class Graph:
         self.display()
 
     def plot_data(self, mood_y, stress_y):
+        """
+        Plots the mood and stress data on the graph.
+
+        Parameters:
+        mood_y (list): List of mood values for the past 7 days.
+        stress_y (list): List of stress values for the past 7 days.
+        """
         x = np.array(list(range(1, len(mood_y) + 1)))
 
         mood_y = np.array([y if y is not None else np.nan for y in mood_y])
@@ -84,6 +113,10 @@ class Graph:
             )
 
         self.canvas.draw()
+        self.logger.log('Graph updated')
 
     def display(self):
+        """
+        Places the graph widget within the parent widget.
+        """
         self.widget.place(relx=0.5, rely=0.48, anchor='center')

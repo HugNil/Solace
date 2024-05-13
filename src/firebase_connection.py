@@ -144,6 +144,7 @@ class FirebaseConnection:
             if day not in daily_docs:
                 daily_docs[day] = []
 
+        self.logger.log(f"Read data from the last 7 days for user: {email}")
         return daily_docs
 
     def test_write_read_to_db():
