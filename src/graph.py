@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from log_writer import Log_writer
 
 
 class Graph:
@@ -20,6 +21,7 @@ class Graph:
         """
         self.master = master
         self.props = props
+        self.logger = Log_writer()
         dpi = self.get_dpi()
         self.fig = Figure(figsize=(7, 5), dpi=dpi)
         self.ax = self.fig.add_subplot(111)
