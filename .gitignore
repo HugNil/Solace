@@ -8,6 +8,6 @@ htmlcov/
 .pytest_cache/
 .coverage
 .venv
-dist/
+run_exe/
 build/
 gui.spec
