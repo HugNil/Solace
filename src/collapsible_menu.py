@@ -6,7 +6,19 @@ from src.log_writer import Log_writer
 
 
 class CollapsibleMenu:
+    """
+    This class is responsible for creating a collapsible menu.
+    """
     def __init__(self, props, return_to_gui, user, master_frame) -> None:
+        """
+        Initializes the CollapsibleMenu class.
+
+        Parameters:
+        props (object): UI settings like colors and dimensions.
+        return_to_gui (function): Callback function to switch frames.
+        user (object): The current user object.
+        master_frame (tk.Frame): The parent frame for the menu.
+        """
         self.props = props
         self.return_to_gui = return_to_gui
         self.user = user
@@ -21,14 +33,14 @@ class CollapsibleMenu:
         )
         self.is_visible = False
 
-        self.menu.place(
-            relx=0.19,
-            rely=0.23,
-            anchor='center')
+        self.menu.place(relx=0.19, rely=0.23, anchor='center')
 
         self.add_buttons()
 
     def add_buttons(self):
+        """
+        Adds buttons to the collapsible menu.
+        """
         self.home_button = ctk.CTkButton(
             master=self.menu,
             text='Home',
@@ -87,15 +99,31 @@ class CollapsibleMenu:
         self.logout_button.pack(pady=(5, 10), padx=10)
 
     def switch_frame(self, frame, user):
+        """
+        Switches to the specified frame.
+
+        Parameters:
+        frame (str): The name of the frame to switch to.
+        user (object): The current user object.
+        """
         self.return_to_gui(frame, user)
 
     def logout(self, user, return_to_gui):
+        """
+        Logs out the current user.
+
+        Parameters:
+        user (object): The current user object.
+        return_to_gui (function): Callback function to return to home frame.
+        """
         self.logger.log(f'User {user.email} logged out.')
-        print(f'User {user.email} logged out.')
         user.logout()
         return_to_gui('home', user)
 
     def toggle(self):
+        """
+        Toggles the visibility of the collapsible menu.
+        """
         if self.is_visible:
             self.lower()
         else:
@@ -103,7 +131,13 @@ class CollapsibleMenu:
         self.is_visible = not self.is_visible
 
     def lift(self):
+        """
+        Brings the menu to the front.
+        """
         self.menu.lift()
 
     def lower(self):
+        """
+        Sends the menu to the back.
+        """
         self.menu.lower()

@@ -17,6 +17,15 @@ class MoodRegistration:
     then stored in variables for further use.
     """
     def __init__(self, app, props, user, return_to_gui):
+        """
+        Initializes the MoodRegistration class.
+
+        Parameters:
+        app (tk.Tk): The main application window.
+        props (object): UI settings like colors and dimensions.
+        user (object): The current user object.
+        return_to_gui (function): Callback function to return to the main GUI.
+        """
         self.app = app
         self.props = props
         self.user = user
@@ -42,7 +51,7 @@ class MoodRegistration:
 
     def create_widgets(self):
         """
-        Creates the widgets for the mood registration. Such as the sliders.
+        Creates the widgets for the mood registration.
         """
         self.main_frame = ctk.CTkFrame(
             master=self.app,
@@ -61,10 +70,13 @@ class MoodRegistration:
         self.create_sliders()
 
     def add_back_button(self):
-        open = self.open_file_with_check(self.parent_dir,
-                                         "assests/back-button.png",
-                                         "assests/back-button.png")
-        self.back_button_img = Image.open(open)
+        """
+        Creates the back button image and its functionality.
+        """
+        self.back_button_img = Image.open(
+            self.open_file_with_check(self.parent_dir,
+                                      "assests/back-button.png",
+                                      "assests/back-button.png"))
         self.back_button_img = ctk.CTkImage(
             self.back_button_img,
             size=(int(self.props.WIDTH * 0.15),
@@ -83,8 +95,7 @@ class MoodRegistration:
 
     def create_info_label(self):
         """
-        Creates a bolder title of the name of this feature. It also adds
-        a shorter description and guide of the feature.
+        Creates the title and description of the feature.
         """
         self.feature_title = ctk.CTkLabel(
             master=self.main_frame,
@@ -114,6 +125,9 @@ summary page.
         self.feature_description.place(relx=0.45, rely=0.3, anchor='center')
 
     def create_sliders(self):
+        """
+        Creates sliders for mood and stress level selection.
+        """
         self.slider_frame = ctk.CTkFrame(
             master=self.main_frame,
             fg_color=self.props.BACKGROUND_DARK,
@@ -268,9 +282,14 @@ summary page.
             data,
             date
         )
+        self.logger.log(f'Submitted mood: {mood_value}, '
+                        'stress: {stress_value}')
         self.display_confirmation()
 
     def display_confirmation(self):
+        """
+        Displays a confirmation message after submission.
+        """
         self.confirmation_label = ctk.CTkLabel(
             master=self.main_frame,
             text='Mood and stress submitted!',
@@ -356,15 +375,16 @@ summary page.
                                         anchor='center')
 
     def back(self):
+        """
+        Destroys the current frame and returns to the main dashboard.
+        """
         self.main_frame.destroy()
         self.return_to_gui("reinitialize_dashboard", self.user)
 
     def clear_frame(self):
-        frames = [
-            self.main_frame,
-            self.image_frame,
-            self.slider_frame
-        ]
-        for frame in frames:
+        """
+        Clears all frames in the current view.
+        """
+        for frame in [self.main_frame, self.image_frame, self.slider_frame]:
             frame.pack_forget()
         self.logger.log('Cleared mood registration frame')

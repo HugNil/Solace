@@ -11,9 +11,18 @@ import numpy as np
 
 class Summary:
     """
-    This class is responsible for the Summary.
+    This class is responsible for displaying the summary of the user's mood.
     """
     def __init__(self, app, props, user, return_to_gui):
+        """
+        Initializes the Summary class.
+
+        Parameters:
+        app (tk.Tk): The main application window.
+        props (object): UI settings like colors and dimensions.
+        user (object): The current user object.
+        return_to_gui (function): Callback function to return to the main GUI.
+        """
         self.app = app
         self.props = props
         self.user = user
@@ -35,7 +44,7 @@ class Summary:
 
     def create_f(self):
         """
-        Creates the frame for the Summary.
+        Creates the main frame for the Summary.
         """
         self.main_frame = ctk.CTkFrame(
             master=self.app,
@@ -56,8 +65,7 @@ class Summary:
 
     def add_back_button(self):
         """
-        Creates the back button image
-        and the feature.
+        Creates the back button image and its functionality.
         """
         self.back_button_img = Image.open(self.open_file_with_check(
             self.parent_dir,
@@ -81,8 +89,7 @@ class Summary:
 
     def create_info_label(self):
         """
-        Creates the title and also adds a
-        shorter description of the feature.
+        Creates the title and description of the feature.
         """
         self.feature_title = ctk.CTkLabel(
             master=self.main_frame,
@@ -109,7 +116,7 @@ the past 7 days.
 
     def create_image_frame(self):
         """
-        Creates a separate frame for images to not overlap the border.
+        Creates a separate frame for images to avoid overlapping the border.
         """
         self.image_frame = ctk.CTkFrame(
             master=self.main_frame,
@@ -118,9 +125,7 @@ the past 7 days.
             height=int(self.props.HEIGHT * 0.95),
             corner_radius=50
         )
-        self.image_frame.place(relx=0.498,
-                               rely=0.5,
-                               anchor='center')
+        self.image_frame.place(relx=0.498, rely=0.5, anchor='center')
 
         self.line = Image.open(self.open_file_with_check(
             self.parent_dir,
@@ -165,11 +170,12 @@ the past 7 days.
             width=int(self.props.WIDTH * 0.08),
             height=int(self.props.HEIGHT * 0.05)
         )
-        self.collapsable_menu_img.place(relx=0.075,
-                                        rely=0.05,
-                                        anchor='center')
+        self.collapsable_menu_img.place(relx=0.075, rely=0.05, anchor='center')
 
     def add_update_button(self):
+        """
+        Adds the update button to fetch and display the past 7 days' data.
+        """
         self.update_button = ctk.CTkButton(
             master=self.image_frame,
             text='  Show past 7 days  ',
@@ -185,24 +191,33 @@ the past 7 days.
         self.update_button.place(relx=0.5, rely=0.76, anchor='center')
 
     def add_graph(self):
+        """
+        Adds the graph component to the frame.
+        """
         self.graph = Graph(self.image_frame, self.props)
         self.graph.display()
 
     def show_past_seven(self):
         """
-        Get the user data from the database.
+        Retrieves the user data for the past 7 days from the database.
         """
+        self.logger.log('User clicked on "Show past 7 days" button.')
         recent_docs = self.firebase.read_past_seven(
             self.user.email, 'mood-form')
-        print(recent_docs)
         mood_value, stress_values = self.extract_data(recent_docs)
         self.graph.plot_data(mood_value, stress_values)
 
     def extract_data(self, data):
         """
-        Extract the data from the recent_docs.
+        Extracts mood and stress data from the recent documents.
 
+        Parameters:
+        data (dict): Dictionary containing recent documents with dates as keys.
+
+        Returns:
+        tuple: Two lists containing mood and stress values for the past 7 days.
         """
+        self.logger.log('User clicked on "Show past 7 days"-button.')
         dates = sorted(data.keys())
         mood_values = []
         stress_values = []
@@ -234,19 +249,22 @@ the past 7 days.
             stress_values.append(stress_avg)
 
             current_date += timedelta(days=1)
-        print(mood_values, stress_values)
+
+        self.logger.log(f'Extracted mood and stress data: {mood_values[-7:]},'
+                        f' {stress_values[-7:]}')
 
         return mood_values[-7:], stress_values[-7:]
 
     def back(self):
+        """
+        Destroys the current frame and returns to the main dashboard.
+        """
         self.main_frame.destroy()
         self.return_to_gui("reinitialize_dashboard", self.user)
 
     def clear_frame(self):
-        frames = [
-            self.main_frame,
-            self.image_frame,
-        ]
-        for frame in frames:
+        """
+        Clears all frames in the current view.
+        """
+        for frame in [self.main_frame, self.image_frame]:
             frame.pack_forget()
-        self.logger.log('Cleared mood registration frame')
