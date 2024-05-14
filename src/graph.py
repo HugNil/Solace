@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from log_writer import Log_writer
+from src.log_writer import Log_writer
 
 
 class Graph:
