@@ -58,7 +58,7 @@ test:
 .PHONY: exe
 exe:
 	@$(call MESSAGE, Creating an executable file...)
-	pyinstaller --onefile --windowed --distpath=./run_exe $(MAIN_FILE_EXE)
+	pyinstaller --onefile --windowed --name "Solace" --distpath=./run_exe $(MAIN_FILE_EXE)
 
 
 .PHONY: help
