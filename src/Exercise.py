@@ -38,6 +38,11 @@ class Exercise:
         )
         self.main_frame1.pack(fill='both', expand=True)
 
+        self.prepare_label = ctk.CTkLabel(master=self.main_frame1,
+                                          text="Get ready to relax...",
+                                          font=('Helvetica', 16))
+        self.prepare_label.pack(side='top', pady=(150, 60))
+
         self.start_breathing_exercise_button = ctk.CTkButton(
             master=self.main_frame1,
             text='  Open breathing Exercise',
@@ -51,7 +56,7 @@ class Exercise:
             hover_color='white',
             command=self.start_breathing_exercise
         )
-        self.start_breathing_exercise_button.place(relx=0.5, rely=0.76,
+        self.start_breathing_exercise_button.place(relx=0.5, rely=0.5,
                                                    anchor='center')
 
         self.frames = [self.main_frame1]
