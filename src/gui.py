@@ -54,7 +54,7 @@ class GUI:
 
         pygame.mixer.init()
         self.play()
-    
+
     def open_file_with_check(self, parent_dir, relative_path, fallback_path):
         file_path = os.path.join(parent_dir, relative_path)
         if os.path.exists(file_path):
