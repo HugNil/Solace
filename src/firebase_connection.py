@@ -29,7 +29,6 @@ else:
     exit(1)
 
 
-
 class FirebaseConnection:
     """
     Handles the firebase connection.

@@ -153,7 +153,7 @@ class LoginPage:
             size=(int(self.props.HEIGHT * 0.03),
                   int(self.props.HEIGHT * 0.035))
                   )
-        
+
         self.hide_image = ctk.CTkImage(
             Image.open(self.open_file_with_check(self.parent_dir,
                                                  'assests/hide-password.png',

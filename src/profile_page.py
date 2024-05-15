@@ -30,7 +30,7 @@ class ProfilePage():
         self.app = app
 
         current_dir = os.getcwd()
-        self.parent_dir = os.path.abspath(os.path.join(current_dir, 
+        self.parent_dir = os.path.abspath(os.path.join(current_dir,
                                                        "../../Solace"))
 
         self.dashboardPage()
@@ -41,7 +41,7 @@ class ProfilePage():
             self.button_frame,
             self.image_frame
             ]
-    
+
     def open_file_with_check(self, parent_dir, relative_path, fallback_path):
         file_path = os.path.join(parent_dir, relative_path)
         if os.path.exists(file_path):
@@ -245,7 +245,7 @@ class ProfilePage():
 
         self.collapsable_menu_img = Image.open(self.open_file_with_check(
             self.parent_dir,
-            'assests/menu-icon.png', 
+            'assests/menu-icon.png',
             'assests/menu-icon.png'))
         self.collapsable_menu_img = ctk.CTkImage(
             self.collapsable_menu_img,
