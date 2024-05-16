@@ -9,8 +9,11 @@ This desktop application is designed to help people deal with stress and anxiety
 
 <img src="assests/readme/login.png" width="30%" alt="Login" /> <img src="assests/readme/dashboard.png" width="30%" alt="Dashboard" /> <img src="assests/readme/mood-registration.png" width="30%" alt="Mood Registration" />
 
+## Download
 
-## Installation
+If you want to test the application, you can download the latest version as an .exe from the [releases page](https://github.com/HugNil/Solace/releases/tag/v0.1.0-alpha).
+
+## Installation for developers
 
 To run this application, you need to have Python installed on your machine. You can download Python from the official website: https://www.python.org/downloads/
 
