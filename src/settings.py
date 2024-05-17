@@ -3,6 +3,7 @@ import tkinter as tk
 from PIL import Image
 import pygame
 from src.props import Props
+import os
 
 
 class Settings:
@@ -12,6 +13,9 @@ class Settings:
     def __init__(self, app, props, return_to_gui):
         self.props = props
         self.return_to_gui = return_to_gui
+        current_dir = os.getcwd()
+        self.parent_dir = os.path.abspath(os.path.join(current_dir,
+                                                       "../../Solace")) 
 
         self.app = app
 
@@ -25,7 +29,9 @@ class Settings:
         """
         Plays the menu music.
         """
-        pygame.mixer.music.load("assests/Menu music1.mp3")
+        pygame.mixer.music.load(self.open_file_with_check(self.parent_dir,
+                                                        "assests/music-menu.mp3",
+                                                        "assests/music-menu.mp3"))
         pygame.mixer.music.play(loops=1)
 
         pygame.mixer.music.set_volume(0.1)
@@ -41,6 +47,12 @@ class Settings:
         else:
             self.stop()
 
+    def open_file_with_check(self, parent_dir, relative_path, fallback_path):
+        file_path = os.path.join(parent_dir, relative_path)
+        if os.path.exists(file_path):
+            return file_path
+        else:
+            return fallback_path
             
     def create_frames(self):
         self.settings_window = ctk.CTkToplevel(self.app)
