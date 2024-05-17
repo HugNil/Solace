@@ -2,7 +2,7 @@ import customtkinter as ctk
 import tkinter as tk
 from PIL import Image
 import pygame
-from props import Props
+from src.props import Props
 
 
 class Settings:
@@ -28,7 +28,7 @@ class Settings:
         pygame.mixer.music.load("assests/Menu music1.mp3")
         pygame.mixer.music.play(loops=1)
 
-        pygame.mixer.music.set_volume(0.009)
+        pygame.mixer.music.set_volume(0.1)
 
     def switcher(self):
 
