@@ -1,0 +1,20 @@
+# Changelog
+
+## **Sprint 1** - 2024-04-25
+
+### Added
+- **Login Feature**: Added a feature for login and registration, connected to a Firebase database.
+- **Dashboard**: Added a screen that appears after the user logs in, displaying four feature buttons (not yet implemented).
+- **Collapsible menu**: Added a collapsible menu.
+
+### Changed
+- N/A
+
+## **Sprint 2** - 2024-04-30
+
+### Added
+- **Mood Registration**: This feature displays two sliders, one for mood and one for stress. It enables the user to log their current mood and stress. When the submit button is pressed, the data is sent to the Firebase database for later use.
+
+### Changed
+- **Collapsible menu**: The collapsible menu has been refactored into a reusable class that can be imported. It is now implemented as a button instead of just an image.
+- **Remember me**: The 'Remember me' feature has been fixed and is now functioning as intended.

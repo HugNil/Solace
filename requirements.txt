@@ -1,6 +1,12 @@
 customtkinter
-tkinter
 pillow
 firebase_admin
 requests
 pygame
+cryptography
+pytest
+matplotlib
+tzdata
+screeninfo
+pyinstaller
+coverage
