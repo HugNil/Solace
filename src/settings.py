@@ -41,12 +41,6 @@ class Settings:
         else:
             self.stop()
 
-    def change_volume(self, value):
-
-        """
-        Slider that controls volume.
-        """ 
-        pass
             
     def create_frames(self):
         self.settings_window = ctk.CTkToplevel(self.app)
@@ -77,23 +71,6 @@ class Settings:
                               padx=20)
         self.mute_switch.bind('<Button-1>', lambda e: self.switcher())
 
-        """
-        Volume slider.
-        """
-        self.volume_slider = ctk.CTkSlider(self.settings_frame,
-                                          from_=0,
-                                          to=10,
-                                          number_of_steps=10
-                                        )
-        
-        self.volume_slider.pack(pady=30,
-                                padx=20
-                                )
-        self.volume_slider.bind('<Button->', lambda e: self.change_volume())
-
-        self.volume_slider.set(1)
-
-        
 
         """
         Settings window title.
