@@ -14,8 +14,8 @@ class Settings:
         self.props = props
         self.return_to_gui = return_to_gui
         current_dir = os.getcwd()
-        self.parent_dir = os.path.abspath(os.path.join(current_dir,
-                                                       "../../Solace")) 
+        self.parent_dir = os.path.abspath(os.path.join(
+            current_dir, "../../Solace"))
 
         self.app = app
 
@@ -24,14 +24,15 @@ class Settings:
         Stops the menu music.
         """
         pygame.mixer.music.stop()
-  
+
     def play(self):
         """
         Plays the menu music.
         """
-        pygame.mixer.music.load(self.open_file_with_check(self.parent_dir,
-                                                        "assests/music-menu.mp3",
-                                                        "assests/music-menu.mp3"))
+        pygame.mixer.music.load(self.open_file_with_check(
+            self.parent_dir,
+            "assests/music-menu.mp3",
+            "assests/music-menu.mp3"))
         pygame.mixer.music.play(loops=1)
 
         pygame.mixer.music.set_volume(0.1)
@@ -41,7 +42,7 @@ class Settings:
         """
         Mutes and turns on music.
         """
-        
+
         if self.switch_var.get() == "on":
             self.play()
         else:
@@ -53,7 +54,7 @@ class Settings:
             return file_path
         else:
             return fallback_path
-            
+
     def create_frames(self):
         self.settings_window = ctk.CTkToplevel(self.app)
         self.settings_window .title("Settings")
@@ -63,11 +64,11 @@ class Settings:
             border_color=self.props.BACKGROUND_LIGHT,
             border_width=2
             )
-        
+
         window_width = int(self.props.WIDTH * 0.8)
         window_height = int(self.props.HEIGHT * 0.5)
         self.settings_window.geometry(f"{window_width}x{window_height}")
-        
+
         """
         On and off switch.
         """
@@ -83,7 +84,6 @@ class Settings:
                               padx=20)
         self.mute_switch.bind('<Button-1>', lambda e: self.switcher())
 
-
         """
         Settings window title.
         """
@@ -96,7 +96,6 @@ class Settings:
             justify='left'
         )
         self.feature_title.place(relx=0.5, rely=0.15, anchor='center')
-        
 
     def open_settings(self):
         self.create_frames()
