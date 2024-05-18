@@ -1,8 +1,8 @@
 import customtkinter as ctk
 import tkinter as tk
-from PIL import Image
+# from PIL import Image
 import pygame
-from src.props import Props
+# from src.props import Props
 import os
 
 
